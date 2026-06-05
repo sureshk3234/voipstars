@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoIP Stars — Enterprise IT & Communications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:       #0B0F1A;
+  --ink2:      #1C2133;
+  --slate:     #2E3A55;
+  --body:      #4A5568;
+  --muted:     #8895A7;
+  --rule:      #E2E8F0;
+  --surface:   #F7F8FC;
+  --surface2:  #EEF1F8;
+  --white:     #FFFFFF;
+  --blue:      #1A56DB;
+  --blue-lt:   #EBF2FF;
+  --blue-md:   #3B6FEA;
+  --cyan:      #0891B2;
+  --cyan-lt:   #ECFEFF;
+  --gold:      #B45309;
+  --gold-lt:   #FFFBEB;
+  --green:     #059669;
+  --green-lt:  #ECFDF5;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── UTILS ─── */
+.serif { font-family: 'Instrument Serif', serif; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+@media(max-width:768px){ .container { padding: 0 24px; } }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 68px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule);
+  transition: box-shadow 0.3s;
+}
+nav.elevated { box-shadow: 0 4px 24px rgba(11,15,26,0.07); }
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 48px;
+  height: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; flex-shrink: 0;
+}
+.logo-mark {
+  width: 36px; height: 36px;
+  background: var(--ink);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  flex-shrink: 0;
+}
+.logo-text {
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.logo-text span { color: var(--blue-md); }
+
+.nav-menu {
+  display: flex; align-items: center; gap: 2rem; list-style: none;
+}
+.nav-menu a {
+  text-decoration: none; color: var(--slate);
+  font-size: 0.875rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-menu a:hover { color: var(--ink); }
+
+.nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+.btn-text {
+  font-size: 0.875rem; font-weight: 600; color: var(--slate);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-text:hover { background: var(--surface); color: var(--ink); }
+
+.btn-solid {
+  background: var(--ink);
+  color: #fff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.875rem; font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-solid:hover { background: var(--ink2); transform: translateY(-1px); }
+
+/* ─── HERO ─── */
+#hero {
+  padding: 148px 0 100px;
+  position: relative;
+  overflow: hidden;
+  background: var(--white);
+}
+
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none;
+}
+.hero-bg svg { width: 100%; height: 100%; }
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 5rem;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--blue-md);
+  background: var(--blue-lt); border: 1px solid #C7D9FD;
+  padding: 5px 12px; border-radius: 100px;
+  margin-bottom: 1.5rem;
+}
+
+h1.hero-h1 {
+  font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+h1.hero-h1 em {
+  font-style: normal;
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  color: var(--blue-md);
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--body);
+  line-height: 1.75;
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+  font-weight: 400;
+}
+
+.hero-cta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+
+.btn-hero {
+  background: var(--blue);
+  color: #fff;
+  padding: 0.85rem 1.75rem;
+  border-radius: 10px;
+  font-size: 0.95rem; font-weight: 700;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(26,86,219,0.3);
+}
+.btn-hero:hover { background: var(--blue-md); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,86,219,0.35); }
+
+.btn-outline {
+  border: 1.5px solid var(--rule);
+  color: var(--ink);
+  padding: 0.85rem 1.75rem;
+  border-radius: 10px;
+  font-size: 0.95rem; font-weight: 600;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.btn-outline:hover { border-color: var(--ink); background: var(--surface); }
+
+.hero-proof {
+  display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+}
+.proof-item { display: flex; flex-direction: column; }
+.proof-num {
+  font-size: 1.5rem; font-weight: 800; color: var(--ink);
+  letter-spacing: -0.03em; line-height: 1;
+}
+.proof-label { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
+.proof-divider { width: 1px; height: 32px; background: var(--rule); }
+
+/* Hero card panel */
+.hero-panel {
+  position: relative;
+}
+.panel-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(11,15,26,0.08), 0 2px 8px rgba(11,15,26,0.04);
+}
+.panel-header {
+  background: var(--ink);
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.panel-title {
+  color: #fff; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.01em;
+}
+.panel-dots { display: flex; gap: 6px; }
+.panel-dots span {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+}
+.panel-dots span:first-child { background: #EF4444; }
+.panel-dots span:nth-child(2) { background: #F59E0B; }
+.panel-dots span:nth-child(3) { background: #10B981; }
+
+.panel-body { padding: 1.5rem; }
+
+.service-pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+.service-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.78rem; font-weight: 600;
+  padding: 5px 12px; border-radius: 100px;
+  border: 1px solid;
+}
+.pill-blue { background: var(--blue-lt); color: var(--blue); border-color: #C7D9FD; }
+.pill-cyan { background: var(--cyan-lt); color: var(--cyan); border-color: #A5F3FC; }
+.pill-gold { background: var(--gold-lt); color: var(--gold); border-color: #FDE68A; }
+.pill-green { background: var(--green-lt); color: var(--green); border-color: #A7F3D0; }
+
+.metric-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
+.metric-box {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 1rem;
+}
+.metric-val { font-size: 1.3rem; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.metric-lbl { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+.status-list { display: flex; flex-direction: column; gap: 8px; }
+.status-row {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.8rem;
+}
+.status-name { color: var(--slate); font-weight: 500; }
+.status-bar-wrap { flex: 1; height: 4px; background: var(--rule); border-radius: 4px; margin: 0 12px; }
+.status-bar {
+  height: 100%; border-radius: 4px;
+  background: var(--blue-md);
+  transition: width 1.5s ease;
+}
+.status-val { color: var(--muted); font-size: 0.75rem; width: 36px; text-align: right; }
+
+.floating-badge {
+  position: absolute;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 4px 20px rgba(11,15,26,0.1);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.78rem; font-weight: 600;
+  animation: floatBadge 4s ease-in-out infinite;
+}
+.badge-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.badge1 { top: -20px; right: -20px; animation-delay: 0s; }
+.badge2 { bottom: -16px; left: -20px; animation-delay: -2s; }
+@keyframes floatBadge {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ─── TICKER ─── */
+#ticker {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 1.25rem 0;
+  background: var(--surface);
+  overflow: hidden;
+}
+.ticker-label {
+  text-align: center; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 1rem;
+}
+.ticker-track {
+  display: flex; gap: 3rem; align-items: center;
+  white-space: nowrap;
+  animation: ticker 25s linear infinite;
+}
+.ticker-item {
+  font-size: 0.85rem; font-weight: 700; color: var(--muted);
+  letter-spacing: 0.02em; flex-shrink: 0;
+  transition: color 0.2s;
+}
+.ticker-item:hover { color: var(--ink); }
+.ticker-dot { color: var(--rule); margin-right: -2rem; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── SECTION COMMON ─── */
+.section { padding: 100px 0; }
+.section-alt { background: var(--surface); }
+.section-border { border-top: 1px solid var(--rule); }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--blue-md);
+  margin-bottom: 1rem;
+}
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 18px; height: 2px;
+  background: var(--blue-md);
+  border-radius: 2px;
+}
+
+h2.h2 {
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+h2.h2 em {
+  font-style: normal;
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  color: var(--blue-md);
+}
+
+.section-desc {
+  font-size: 1rem; color: var(--body); line-height: 1.75;
+  max-width: 480px; font-weight: 400;
+}
+
+/* ─── SERVICES ─── */
+.services-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem; align-items: end;
+  margin-bottom: 4rem;
+}
+.services-header-right {
+  display: flex; align-items: flex-end;
+}
+
+.tag-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-tag {
+  font-size: 0.78rem; font-weight: 600;
+  padding: 5px 14px; border-radius: 100px;
+  border: 1.5px solid var(--rule);
+  color: var(--muted);
+  background: none; cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.filter-tag.active, .filter-tag:hover {
+  background: var(--ink); color: #fff; border-color: var(--ink);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.svc-card {
+  background: var(--white);
+  padding: 2rem;
+  position: relative;
+  transition: background 0.2s;
+  cursor: default;
+}
+.svc-card:hover { background: var(--surface); }
+
+.svc-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; margin-bottom: 1.1rem;
+}
+.ic-blue { background: var(--blue-lt); }
+.ic-cyan { background: var(--cyan-lt); }
+.ic-gold { background: var(--gold-lt); }
+.ic-green { background: var(--green-lt); }
+
+.svc-cat {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.cat-voip { color: var(--blue-md); }
+.cat-infra { color: var(--cyan); }
+.cat-security { color: var(--gold); }
+.cat-network { color: var(--green); }
+
+.svc-card h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+.svc-card p { font-size: 0.85rem; color: var(--body); line-height: 1.65; }
+
+.svc-arrow {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1.5px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; color: var(--muted);
+  transition: all 0.2s;
+}
+.svc-card:hover .svc-arrow {
+  border-color: var(--blue); color: var(--blue);
+  background: var(--blue-lt);
+}
+
+/* ─── FEATURES / WHY ─── */
+.features-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: center;
+}
+.features-list { display: flex; flex-direction: column; gap: 0; }
+.feat {
+  display: flex; gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--rule);
+  transition: padding-left 0.2s;
+  cursor: default;
+}
+.feat:first-child { border-top: 1px solid var(--rule); }
+.feat:hover { padding-left: 0.5rem; }
+
+.feat-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.6rem; color: var(--rule);
+  line-height: 1; flex-shrink: 0; width: 36px;
+  transition: color 0.2s;
+}
+.feat:hover .feat-num { color: var(--blue-lt); }
+.feat-body h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem; }
+.feat-body p { font-size: 0.85rem; color: var(--body); line-height: 1.65; }
+
+.stats-panel {
+  background: var(--ink);
+  border-radius: 20px;
+  padding: 2.5rem;
+  color: #fff;
+}
+.stats-panel-title {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+  margin-bottom: 2rem;
+}
+.big-stat { margin-bottom: 2rem; }
+.big-stat-num {
+  font-size: 3.5rem; font-weight: 800; letter-spacing: -0.04em;
+  line-height: 1; font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.big-stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
+.mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+.mini-stat {
+  background: rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 1rem;
+}
+.mini-stat-val { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; }
+.mini-stat-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-top: 3px; }
+
+.uptime-bar {
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 1rem;
+}
+.uptime-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.uptime-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+.uptime-val { font-size: 0.85rem; font-weight: 700; color: #10B981; }
+.uptime-track {
+  height: 6px; background: rgba(255,255,255,0.1);
+  border-radius: 4px; overflow: hidden;
+}
+.uptime-fill {
+  height: 100%; background: linear-gradient(90deg, #10B981, #34D399);
+  border-radius: 4px; width: 99.9%;
+}
+
+/* ─── PROCESS ─── */
+#process { text-align: center; }
+.process-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem;
+  margin-top: 4rem;
+  position: relative;
+}
+.process-grid::before {
+  content: '';
+  position: absolute;
+  top: 28px; left: calc(12.5% + 14px); right: calc(12.5% + 14px);
+  height: 1px; background: var(--rule);
+}
+
+.step-card {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1rem; padding: 1.5rem 1rem;
+  border-radius: 14px;
+  transition: background 0.2s, transform 0.2s;
+  cursor: default;
+}
+.step-card:hover { background: var(--surface); transform: translateY(-3px); }
+
+.step-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: var(--white); border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  position: relative; z-index: 2;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.step-card:hover .step-icon {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px var(--blue-lt);
+}
+.step-num {
+  position: absolute; top: -8px; right: -8px;
+  width: 20px; height: 20px;
+  background: var(--blue); color: #fff;
+  border-radius: 50%; font-size: 0.65rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.step-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); }
+.step-card p { font-size: 0.82rem; color: var(--body); line-height: 1.6; }
+
+/* ─── TESTIMONIAL / CTA ─── */
+#cta {
+  background: var(--ink);
+  color: #fff;
+  padding: 100px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+#cta::before {
+  content: '';
+  position: absolute; top: -300px; left: 50%;
+  transform: translateX(-50%);
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,86,219,0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+  margin-bottom: 1.5rem;
+}
+.cta-eyebrow::before { content:''; display:inline-block; width:18px; height:2px; background:rgba(255,255,255,0.2); border-radius:2px; }
+
+.cta-h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.1; margin-bottom: 1rem; color: #fff;
+}
+.cta-h2 em {
+  font-style: normal;
+  font-family: 'Instrument Serif', serif; font-weight: 400;
+  color: #93C5FD;
+}
+
+.cta-sub { font-size: 1rem; color: rgba(255,255,255,0.55); margin-bottom: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+.cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+.btn-white {
+  background: #fff; color: var(--ink);
+  padding: 0.85rem 1.75rem; border-radius: 10px;
+  font-size: 0.95rem; font-weight: 700;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-white:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.btn-ghost-white {
+  border: 1.5px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.85);
+  padding: 0.85rem 1.75rem; border-radius: 10px;
+  font-size: 0.95rem; font-weight: 600;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.btn-ghost-white:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.4); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 64px 0 32px;
+  color: #fff;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-bottom: 1rem; }
+.footer-logo-mark { width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px; }
+.footer-logo-text { font-size: 1.05rem; font-weight:700; color:#fff; letter-spacing:-0.02em; }
+.footer-logo-text span { color: #93C5FD; }
+
+.footer-tagline { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 260px; margin-bottom: 1.5rem; }
+
+.footer-socials { display: flex; gap: 8px; }
+.social-btn {
+  width: 34px; height: 34px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.5); font-size: 0.8rem;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.social-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+.footer-col h5 {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+  margin-bottom: 1.25rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+.footer-col a {
+  font-size: 0.85rem; color: rgba(255,255,255,0.55);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-col a:hover { color: #fff; }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+.footer-legal { display: flex; gap: 1.5rem; }
+.footer-legal a { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-decoration: none; }
+.footer-legal a:hover { color: rgba(255,255,255,0.6); }
+
+/* ─── REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+  .hero-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-panel { display: none; }
+  .services-grid { grid-template-columns: repeat(2,1fr); }
+  .features-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media(max-width:768px){
+  .nav-menu { display: none; }
+  .services-header { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: repeat(2,1fr); }
+  .process-grid::before { display: none; }
+  .services-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">VS</div>
+      <span class="logo-text">VoIP <span>Stars</span></span>
+    </a>
+    <ul class="nav-menu">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#cta">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="tel:+10000000000" class="btn-text">📞 &nbsp;Call Us</a>
+      <a href="#cta" class="btn-solid">Get a Quote →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg">
+    <svg viewBox="0 0 1440 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#E2E8F0" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" opacity="0.6"/>
+      <circle cx="1200" cy="150" r="350" fill="#EBF2FF" opacity="0.5"/>
+      <circle cx="100" cy="600" r="250" fill="#ECFEFF" opacity="0.35"/>
+    </svg>
+  </div>
+
+  <div class="container">
+    <div class="hero-layout">
+      <div>
+        <div class="hero-eyebrow reveal">★ &nbsp;Enterprise IT &amp; VoIP Partner</div>
+        <h1 class="hero-h1 reveal delay-1">
+          Modern Comms &<br>
+          <em>IT Infrastructure</em><br>
+          That Scales With You
+        </h1>
+        <p class="hero-desc reveal delay-2">
+          From Asterisk to MS Teams, VPS to firewalls — VoIP Stars designs, deploys, and manages the full communications and IT stack for growing enterprises.
+        </p>
+        <div class="hero-cta reveal delay-3">
+          <a href="#services" class="btn-hero">Explore Services →</a>
+          <a href="#cta" class="btn-outline">Talk to an Expert</a>
+        </div>
+        <div class="hero-proof reveal delay-4">
+          <div class="proof-item">
+            <span class="proof-num" data-target="500">0</span>
+            <span class="proof-label">Clients Served</span>
+          </div>
+          <div class="proof-divider"></div>
+          <div class="proof-item">
+            <span class="proof-num" data-target="10" data-suffix="+yrs">0</span>
+            <span class="proof-label">Experience</span>
+          </div>
+          <div class="proof-divider"></div>
+          <div class="proof-item">
+            <span class="proof-num" data-target="99" data-suffix=".9%">0</span>
+            <span class="proof-label">Uptime SLA</span>
+          </div>
+          <div class="proof-divider"></div>
+          <div class="proof-item">
+            <span class="proof-num" data-target="24" data-suffix="/7">0</span>
+            <span class="proof-label">Support</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-panel reveal delay-2">
+        <div class="floating-badge badge1">
+          <div class="badge-icon" style="background:#ECFDF5;">✅</div>
+          <span style="color:#065F46">System Online</span>
+        </div>
+        <div class="panel-card">
+          <div class="panel-header">
+            <span class="panel-title">VoIP Stars Dashboard</span>
+            <div class="panel-dots"><span></span><span></span><span></span></div>
+          </div>
+          <div class="panel-body">
+            <div class="service-pill-row">
+              <span class="service-pill pill-blue">☎ Asterisk</span>
+              <span class="service-pill pill-cyan">💬 Dialpad</span>
+              <span class="service-pill pill-blue">🔵 3CX</span>
+              <span class="service-pill pill-gold">📡 RingCentral</span>
+              <span class="service-pill pill-green">🎙 Zoom Phone</span>
+              <span class="service-pill pill-cyan">🟦 MS Teams</span>
+            </div>
+            <div class="metric-row">
+              <div class="metric-box">
+                <div class="metric-val">2,847</div>
+                <div class="metric-lbl">Active Extensions</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-val">148</div>
+                <div class="metric-lbl">Concurrent Calls</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-val">99.9%</div>
+                <div class="metric-lbl">Uptime Today</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-val">12ms</div>
+                <div class="metric-lbl">Avg Latency</div>
+              </div>
+            </div>
+            <div class="status-list">
+              <div class="status-row">
+                <span class="status-name">VoIP Core</span>
+                <div class="status-bar-wrap"><div class="status-bar" style="width:97%"></div></div>
+                <span class="status-val" style="color:#059669">97%</span>
+              </div>
+              <div class="status-row">
+                <span class="status-name">Firewall</span>
+                <div class="status-bar-wrap"><div class="status-bar" style="width:100%;background:var(--green)"></div></div>
+                <span class="status-val" style="color:#059669">100%</span>
+              </div>
+              <div class="status-row">
+                <span class="status-name">VPS Cluster</span>
+                <div class="status-bar-wrap"><div class="status-bar" style="width:94%;background:var(--cyan)"></div></div>
+                <span class="status-val" style="color:#0891B2">94%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-badge badge2">
+          <div class="badge-icon" style="background:#FFFBEB;">⚡</div>
+          <span style="color:#92400E">99.9% Uptime SLA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div id="ticker">
+  <p class="ticker-label">Technology Partners &amp; Platforms</p>
+  <div class="ticker-track">
+    <span class="ticker-item">Asterisk</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Dialpad</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">3CX</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">RingCentral</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Zoom Phone</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Microsoft Teams</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Cisco</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Fortinet</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Ubiquiti</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">pfSense</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Asterisk</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Dialpad</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">3CX</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">RingCentral</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Zoom Phone</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Microsoft Teams</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Cisco</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Fortinet</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Ubiquiti</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">pfSense</span><span class="ticker-dot"> · </span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services" class="section section-border">
+  <div class="container">
+    <div class="services-header">
+      <div>
+        <p class="eyebrow reveal">What We Do</p>
+        <h2 class="h2 reveal delay-1">Complete IT &amp; <em>VoIP Services</em><br>Under One Roof</h2>
+        <p class="section-desc reveal delay-2">One trusted partner for your telephony, infrastructure, and network — end to end.</p>
+      </div>
+      <div class="services-header-right reveal delay-2">
+        <div class="tag-row">
+          <button class="filter-tag active">All</button>
+          <button class="filter-tag">VoIP</button>
+          <button class="filter-tag">Infrastructure</button>
+          <button class="filter-tag">Network</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="services-grid reveal">
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-blue">☎️</div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>Asterisk PBX</h3>
+        <p>Custom IVR, call routing, voicemail and enterprise PBX on the world's most flexible open-source telephony engine.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-cyan">💬</div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>Dialpad</h3>
+        <p>AI-powered cloud communications — voice, video, and messaging unified. Smart transcription built in.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-blue">🔵</div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>3CX</h3>
+        <p>Software PBX for Windows and Linux with WebRTC, mobile apps, and live chat integration out of the box.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-cyan">📡</div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>RingCentral</h3>
+        <p>Enterprise UCaaS — reliable cloud calling, team messaging, and HD video conferencing at scale.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-blue">🎙️</div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>Zoom Phone</h3>
+        <p>Cloud phone fully integrated with Zoom meetings. One app, zero friction — calling and meetings in one.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-cyan">🟦</div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>MS Teams Voice</h3>
+        <p>Direct Routing and Calling Plans that turn Microsoft Teams into a full enterprise phone system.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-cyan">🖥️</div>
+        <p class="svc-cat cat-infra">Infrastructure</p>
+        <h3>VPS Solutions</h3>
+        <p>High-performance virtual servers with managed hosting, automated backups, and guaranteed uptime SLAs.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-gold">⚡</div>
+        <p class="svc-cat cat-infra">Infrastructure</p>
+        <h3>IT Infrastructure</h3>
+        <p>End-to-end design, procurement, installation, and management of your entire IT environment.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-gold">🔐</div>
+        <p class="svc-cat cat-security">Security</p>
+        <h3>System &amp; Security</h3>
+        <p>Hardening, patch management, vulnerability assessments, and incident response — proactive not reactive.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-green">🔌</div>
+        <p class="svc-cat cat-network">Network</p>
+        <h3>Passive Network</h3>
+        <p>Structured cabling, fiber optic, server room design, and data center physical layer installations.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-gold">🛡️</div>
+        <p class="svc-cat cat-security">Security</p>
+        <h3>Firewalls</h3>
+        <p>Next-gen firewall deployment and management — Fortinet, Palo Alto, pfSense for every scale.</p>
+      </div>
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-icon ic-green">🔀</div>
+        <p class="svc-cat cat-network">Network</p>
+        <h3>Routers &amp; Switches</h3>
+        <p>Layer 2/3 switching, SD-WAN, VLAN segmentation, and QoS tuned for crystal-clear VoIP traffic.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why" class="section section-alt section-border">
+  <div class="container">
+    <div class="features-layout">
+      <div>
+        <p class="eyebrow reveal">Why VoIP Stars</p>
+        <h2 class="h2 reveal delay-1">Built for Businesses<br>That <em>Can't Afford</em> Downtime</h2>
+        <p class="section-desc reveal delay-2" style="margin-bottom:2.5rem">Deep telecom expertise meets modern IT operations. We deliver solutions that work — and stay working.</p>
+        <div class="features-list">
+          <div class="feat reveal delay-1">
+            <span class="feat-num">01</span>
+            <div class="feat-body">
+              <h4>Certified Engineers, Not Salespeople</h4>
+              <p>Our team holds active Cisco, Microsoft, and VoIP platform certifications. You're talking to people who actually build the systems.</p>
+            </div>
+          </div>
+          <div class="feat reveal delay-2">
+            <span class="feat-num">02</span>
+            <div class="feat-body">
+              <h4>24/7 Monitoring &amp; Support</h4>
+              <p>Round-the-clock NOC monitoring with guaranteed SLAs and structured escalation — so issues are caught before you notice them.</p>
+            </div>
+          </div>
+          <div class="feat reveal delay-3">
+            <span class="feat-num">03</span>
+            <div class="feat-body">
+              <h4>End-to-End Delivery</h4>
+              <p>From needs assessment and architecture design to go-live and ongoing management — we own the full lifecycle.</p>
+            </div>
+          </div>
+          <div class="feat reveal delay-4">
+            <span class="feat-num">04</span>
+            <div class="feat-body">
+              <h4>Vendor-Agnostic Advice</h4>
+              <p>We recommend what fits your needs and budget. No vendor lock-in pressure, no inflated margins — just the right solution.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-panel reveal delay-2">
+        <p class="stats-panel-title">Performance at a Glance</p>
+        <div class="big-stat">
+          <div class="big-stat-num" data-target="500" data-suffix="+">0+</div>
+          <div class="big-stat-label">Happy clients across 20+ industries</div>
+        </div>
+        <div class="mini-stats">
+          <div class="mini-stat">
+            <div class="mini-stat-val" data-target="10" data-suffix="yrs">0</div>
+            <div class="mini-stat-lbl">Years in operation</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-val" data-target="48" data-suffix="h">0</div>
+            <div class="mini-stat-lbl">Avg. deployment time</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-val" data-target="15" data-suffix="min">0</div>
+            <div class="mini-stat-lbl">Support response time</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-val" data-target="20" data-suffix="+">0</div>
+            <div class="mini-stat-lbl">Tech certifications</div>
+          </div>
+        </div>
+        <div class="uptime-bar">
+          <div class="uptime-top">
+            <span class="uptime-label">Network Uptime (Last 90 Days)</span>
+            <span class="uptime-val">99.9%</span>
+          </div>
+          <div class="uptime-track"><div class="uptime-fill"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="section section-border">
+  <div class="container">
+    <p class="eyebrow reveal" style="justify-content:center">How It Works</p>
+    <h2 class="h2 reveal delay-1" style="text-align:center">From First Call to <em>Go-Live</em><br>in Four Clear Steps</h2>
+
+    <div class="process-grid">
+      <div class="step-card reveal">
+        <div class="step-icon">
+          🔍
+          <span class="step-num">1</span>
+        </div>
+        <h4>Discovery</h4>
+        <p>We audit your current setup, map out your goals, and identify gaps in your infrastructure.</p>
+      </div>
+      <div class="step-card reveal delay-1">
+        <div class="step-icon">
+          📐
+          <span class="step-num">2</span>
+        </div>
+        <h4>Architecture</h4>
+        <p>Our engineers produce a tailored solution design with full documentation and a clear cost breakdown.</p>
+      </div>
+      <div class="step-card reveal delay-2">
+        <div class="step-icon">
+          🚀
+          <span class="step-num">3</span>
+        </div>
+        <h4>Deployment</h4>
+        <p>Seamless implementation with minimal disruption — we handle migration, config, and testing.</p>
+      </div>
+      <div class="step-card reveal delay-3">
+        <div class="step-icon">
+          🛠️
+          <span class="step-num">4</span>
+        </div>
+        <h4>Manage &amp; Optimize</h4>
+        <p>Ongoing monitoring, support, and continuous tuning so your systems improve over time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-eyebrow reveal">Ready to get started</div>
+    <h2 class="cta-h2 reveal delay-1">Let's Build <em>Something</em><br>Exceptional Together</h2>
+    <p class="cta-sub reveal delay-2">Whether you need one VoIP line or a complete infrastructure overhaul — we're ready to scope it out, free of charge.</p>
+    <div class="cta-buttons reveal delay-3">
+      <a href="mailto:hello@voipstars.com" class="btn-white">📩 &nbsp;Free Consultation</a>
+      <a href="tel:+10000000000" class="btn-ghost-white">📞 &nbsp;Call Us Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="footer-logo">
+          <div class="footer-logo-mark">VS</div>
+          <span class="footer-logo-text">VoIP <span>Stars</span></span>
+        </a>
+        <p class="footer-tagline">Enterprise IT Services &amp; VoIP solutions for businesses that demand reliability, performance, and expert support.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn">𝕏</a>
+          <a href="#" class="social-btn">in</a>
+          <a href="#" class="social-btn">f</a>
+          <a href="#" class="social-btn">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>VoIP Services</h5>
+        <ul>
+          <li><a href="#">Asterisk PBX</a></li>
+          <li><a href="#">Dialpad</a></li>
+          <li><a href="#">3CX</a></li>
+          <li><a href="#">RingCentral</a></li>
+          <li><a href="#">Zoom Phone</a></li>
+          <li><a href="#">MS Teams Voice</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>IT Services</h5>
+        <ul>
+          <li><a href="#">VPS Hosting</a></li>
+          <li><a href="#">IT Infrastructure</a></li>
+          <li><a href="#">System &amp; Security</a></li>
+          <li><a href="#">Passive Network</a></li>
+          <li><a href="#">Firewalls</a></li>
+          <li><a href="#">Routers &amp; Switches</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 VoIP Stars. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* NAV */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('elevated', window.scrollY > 20);
+});
+
+/* REVEAL */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* COUNT-UP */
+function countUp(el, target, suffix) {
+  const dur = 1600, start = Date.now();
+  const tick = () => {
+    const p = Math.min((Date.now() - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(ease * target) + (suffix || '');
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-target]').forEach(el => {
+        countUp(el, +el.dataset.target, el.dataset.suffix || '+');
+      });
+      countObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.hero-proof, .stats-panel').forEach(el => countObs.observe(el));
+
+/* FILTER TAGS (visual only) */
+document.querySelectorAll('.filter-tag').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tag').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
