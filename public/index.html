@@ -681,6 +681,106 @@ footer {
 .delay-3 { transition-delay: 0.3s; }
 .delay-4 { transition-delay: 0.4s; }
 
+/* ─── ANIMATED SVG LOGOS ─── */
+.svc-logo {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.1rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.svc-card:hover .svc-logo { transform: scale(1.08); }
+.svc-logo svg { width: 32px; height: 32px; }
+
+/* Asterisk logo animation */
+@keyframes asteriskSpin { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(30deg)} }
+.logo-asterisk:hover svg { animation: asteriskSpin 0.6s ease; }
+
+/* Dialpad dots animation */
+@keyframes dialpadPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
+.svc-card:hover .dp-dot { animation: dialpadPulse 0.5s ease infinite; }
+.svc-card:hover .dp-dot:nth-child(2){animation-delay:0.08s}
+.svc-card:hover .dp-dot:nth-child(3){animation-delay:0.16s}
+.svc-card:hover .dp-dot:nth-child(4){animation-delay:0.24s}
+.svc-card:hover .dp-dot:nth-child(5){animation-delay:0.32s}
+.svc-card:hover .dp-dot:nth-child(6){animation-delay:0.4s}
+.svc-card:hover .dp-dot:nth-child(7){animation-delay:0.48s}
+.svc-card:hover .dp-dot:nth-child(8){animation-delay:0.56s}
+.svc-card:hover .dp-dot:nth-child(9){animation-delay:0.64s}
+
+/* 3CX wave animation */
+@keyframes waveBounce { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(1.6)} }
+.svc-card:hover .wave-bar { animation: waveBounce 0.5s ease infinite; }
+.svc-card:hover .wave-bar:nth-child(2){animation-delay:0.1s}
+.svc-card:hover .wave-bar:nth-child(3){animation-delay:0.2s}
+.svc-card:hover .wave-bar:nth-child(4){animation-delay:0.1s}
+
+/* RingCentral ring animation */
+@keyframes ringExpand { 0%{r:6;opacity:1} 100%{r:14;opacity:0} }
+.svc-card:hover .rc-pulse { animation: ringExpand 1s ease-out infinite; }
+
+/* Zoom animation */
+@keyframes zoomCam { 0%,100%{transform:translateX(0)} 50%{transform:translateX(3px)} }
+.svc-card:hover .zoom-cam { animation: zoomCam 0.5s ease infinite; }
+
+/* Teams animation */
+@keyframes teamsShift { 0%,100%{transform:translateX(0)} 50%{transform:translateX(-2px)} }
+.svc-card:hover .teams-t { animation: teamsShift 0.5s ease infinite; }
+
+/* VPS server blink */
+@keyframes serverBlink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.svc-card:hover .vps-light { animation: serverBlink 0.6s ease infinite; }
+.svc-card:hover .vps-light:nth-child(2){animation-delay:0.2s}
+.svc-card:hover .vps-light:nth-child(3){animation-delay:0.4s}
+
+/* Infrastructure gear */
+@keyframes gearSpin { from{transform:rotate(0deg) translate(-16px,-16px)} to{transform:rotate(360deg) translate(-16px,-16px)} }
+.svc-card:hover .gear-path { animation: gearSpin 2s linear infinite; transform-origin: 16px 16px; }
+
+/* Security shield pulse */
+@keyframes shieldPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+.svc-card:hover .shield-icon { animation: shieldPulse 0.6s ease infinite; }
+
+/* Passive network signal */
+@keyframes signalFade { 0%,100%{opacity:0.3} 50%{opacity:1} }
+.svc-card:hover .sig1{animation:signalFade 0.8s ease infinite;}
+.svc-card:hover .sig2{animation:signalFade 0.8s 0.15s ease infinite;}
+.svc-card:hover .sig3{animation:signalFade 0.8s 0.3s ease infinite;}
+
+/* Firewall flame */
+@keyframes flameDance { 0%,100%{d:path("M16 28 C10 22 8 16 12 10 C14 15 16 13 16 13 C16 13 18 15 20 10 C24 16 22 22 16 28Z")} 50%{d:path("M16 28 C9 21 7 15 13 9 C14 14 15 12 16 12 C16 12 18 14 19 9 C25 15 23 21 16 28Z")} }
+.svc-card:hover .flame { animation: flameDance 0.4s ease infinite; }
+
+/* Router signal waves */
+@keyframes routerPing { 0%{opacity:0;transform:scale(0.5)} 50%{opacity:1} 100%{opacity:0;transform:scale(1.3)} }
+.svc-card:hover .router-wave { animation: routerPing 1s ease-out infinite; }
+.svc-card:hover .router-wave:nth-child(2){animation-delay:0.3s}
+.svc-card:hover .router-wave:nth-child(3){animation-delay:0.6s}
+
+/* ─── LOGO TICKER ─── */
+.logo-ticker-wrap { overflow: hidden; }
+.logo-ticker {
+  display: flex; gap: 2.5rem; align-items: center;
+  animation: ticker 30s linear infinite;
+  width: max-content;
+}
+.logo-ticker-item {
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity 0.3s;
+  cursor: default;
+}
+.logo-ticker-item:hover { opacity: 1; }
+.logo-ticker-item svg { width: 28px; height: 28px; }
+.logo-ticker-item span {
+  font-size: 0.85rem; font-weight: 700;
+  color: var(--slate); white-space: nowrap;
+}
+.ticker-sep { color: var(--rule); font-size: 1.2rem; flex-shrink:0; }
+
 /* ─── RESPONSIVE ─── */
 @media(max-width:1024px){
   .hero-layout { grid-template-columns: 1fr; gap: 3rem; }
@@ -840,30 +940,222 @@ footer {
   </div>
 </section>
 
-<!-- TICKER -->
+<!-- LOGO TICKER -->
 <div id="ticker">
   <p class="ticker-label">Technology Partners &amp; Platforms</p>
-  <div class="ticker-track">
-    <span class="ticker-item">Asterisk</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Dialpad</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">3CX</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">RingCentral</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Zoom Phone</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Microsoft Teams</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Cisco</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Fortinet</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Ubiquiti</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">pfSense</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Asterisk</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Dialpad</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">3CX</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">RingCentral</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Zoom Phone</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Microsoft Teams</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Cisco</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Fortinet</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">Ubiquiti</span><span class="ticker-dot"> · </span>
-    <span class="ticker-item">pfSense</span><span class="ticker-dot"> · </span>
+  <div class="logo-ticker-wrap">
+    <div class="logo-ticker" id="logoTicker">
+
+      <!-- Asterisk -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#FF6B00"/>
+          <line x1="16" y1="5" x2="16" y2="27" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <line x1="5.5" y1="10.5" x2="26.5" y2="21.5" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <line x1="26.5" y1="10.5" x2="5.5" y2="21.5" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <span>Asterisk</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Dialpad -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#7C3AED"/>
+          <circle class="dp-dot" cx="10" cy="10" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="16" cy="10" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="22" cy="10" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="10" cy="16" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="16" cy="16" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="22" cy="16" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="10" cy="22" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="16" cy="22" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="22" cy="22" r="2.2" fill="white"/>
+        </svg>
+        <span>Dialpad</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- 3CX -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#00AEEF"/>
+          <rect class="wave-bar" x="6" y="14" width="3" height="8" rx="1.5" fill="white" style="transform-origin:7.5px 18px"/>
+          <rect class="wave-bar" x="11" y="11" width="3" height="14" rx="1.5" fill="white" style="transform-origin:12.5px 18px"/>
+          <rect class="wave-bar" x="16" y="8" width="3" height="17" rx="1.5" fill="white" style="transform-origin:17.5px 18px"/>
+          <rect class="wave-bar" x="21" y="11" width="3" height="14" rx="1.5" fill="white" style="transform-origin:22.5px 18px"/>
+          <rect x="26" y="14" width="3" height="8" rx="1.5" fill="white"/>
+        </svg>
+        <span>3CX</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- RingCentral -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#FF8800"/>
+          <circle cx="16" cy="16" r="5" fill="white"/>
+          <circle class="rc-pulse" cx="16" cy="16" r="6" stroke="white" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="16" r="2.5" fill="#FF8800"/>
+        </svg>
+        <span>RingCentral</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Zoom -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#2D8CFF"/>
+          <rect x="5" y="10" width="15" height="12" rx="3" fill="white"/>
+          <polygon class="zoom-cam" points="22,12 27,9 27,23 22,20" fill="white"/>
+        </svg>
+        <span>Zoom Phone</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- MS Teams -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#5059C9"/>
+          <rect x="14" y="9" width="12" height="10" rx="3" fill="#7B83EB"/>
+          <rect x="6" y="13" width="14" height="12" rx="3" fill="white"/>
+          <text class="teams-t" x="9" y="23" font-size="9" font-weight="800" fill="#5059C9" font-family="Arial">T</text>
+        </svg>
+        <span>MS Teams</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- VPS -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#1E293B"/>
+          <rect x="5" y="7" width="22" height="6" rx="2" fill="#334155"/>
+          <circle class="vps-light" cx="23" cy="10" r="1.5" fill="#22C55E"/>
+          <rect x="5" y="15" width="22" height="6" rx="2" fill="#334155"/>
+          <circle class="vps-light" cx="23" cy="18" r="1.5" fill="#22C55E"/>
+          <rect x="5" y="23" width="22" height="4" rx="2" fill="#334155"/>
+          <circle class="vps-light" cx="23" cy="25" r="1.5" fill="#F59E0B"/>
+        </svg>
+        <span>VPS</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- IT Infrastructure -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#0F766E"/>
+          <g transform="translate(16,16)">
+            <path class="gear-path" transform="translate(-8,-8)" d="M8 0 L9.5 3 L13 2 L13 5 L16 6.5 L14 9.5 L16 12.5 L13 14 L13 17 L9.5 16 L8 19 L6.5 16 L3 17 L3 14 L0 12.5 L2 9.5 L0 6.5 L3 5 L3 2 L6.5 3 Z" fill="white" opacity="0.9"/>
+            <circle cx="0" cy="0" r="3.5" fill="#0F766E"/>
+          </g>
+        </svg>
+        <span>IT Infrastructure</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Security -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#7C3AED"/>
+          <path class="shield-icon" d="M16 5 L26 9 L26 16 C26 21.5 21.5 26 16 27 C10.5 26 6 21.5 6 16 L6 9 Z" fill="white" opacity="0.95"/>
+          <path d="M12 16 L15 19 L20 13" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Security</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Passive Network -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#0891B2"/>
+          <path class="sig1" d="M8 20 Q16 8 24 20" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path class="sig2" d="M11 23 Q16 14 21 23" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path class="sig3" d="M13.5 26 Q16 20 18.5 26" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="16" cy="27" r="1.5" fill="white"/>
+        </svg>
+        <span>Passive Network</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Firewall -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#DC2626"/>
+          <path class="flame" d="M16 28 C10 22 8 16 12 10 C14 15 16 13 16 13 C16 13 18 15 20 10 C24 16 22 22 16 28Z" fill="white" opacity="0.95"/>
+          <path d="M16 28 C13 24 12 20 14 17 C15 19 16 18 16 18 C16 18 17 19 18 17 C20 20 19 24 16 28Z" fill="#DC2626"/>
+        </svg>
+        <span>Firewalls</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Routers & Switches -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#059669"/>
+          <rect x="6" y="13" width="20" height="7" rx="3" fill="white"/>
+          <circle cx="10" cy="16.5" r="1.5" fill="#059669"/>
+          <circle cx="14" cy="16.5" r="1.5" fill="#059669"/>
+          <circle cx="18" cy="16.5" r="1.5" fill="#059669"/>
+          <circle cx="22" cy="16.5" r="1.5" fill="#059669"/>
+          <circle class="router-wave" cx="16" cy="16.5" r="9" stroke="white" stroke-width="1" fill="none" opacity="0"/>
+          <circle class="router-wave" cx="16" cy="16.5" r="6" stroke="white" stroke-width="1" fill="none" opacity="0"/>
+        </svg>
+        <span>Routers &amp; Switches</span>
+      </div>
+
+      <!-- DUPLICATE SET for seamless loop -->
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#FF6B00"/><line x1="16" y1="5" x2="16" y2="27" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="5.5" y1="10.5" x2="26.5" y2="21.5" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="26.5" y1="10.5" x2="5.5" y2="21.5" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>
+        <span>Asterisk</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7C3AED"/><circle cx="10" cy="10" r="2.2" fill="white"/><circle cx="16" cy="10" r="2.2" fill="white"/><circle cx="22" cy="10" r="2.2" fill="white"/><circle cx="10" cy="16" r="2.2" fill="white"/><circle cx="16" cy="16" r="2.2" fill="white"/><circle cx="22" cy="16" r="2.2" fill="white"/><circle cx="10" cy="22" r="2.2" fill="white"/><circle cx="16" cy="22" r="2.2" fill="white"/><circle cx="22" cy="22" r="2.2" fill="white"/></svg>
+        <span>Dialpad</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#00AEEF"/><rect x="6" y="14" width="3" height="8" rx="1.5" fill="white"/><rect x="11" y="11" width="3" height="14" rx="1.5" fill="white"/><rect x="16" y="8" width="3" height="17" rx="1.5" fill="white"/><rect x="21" y="11" width="3" height="14" rx="1.5" fill="white"/><rect x="26" y="14" width="3" height="8" rx="1.5" fill="white"/></svg>
+        <span>3CX</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#FF8800"/><circle cx="16" cy="16" r="5" fill="white"/><circle cx="16" cy="16" r="2.5" fill="#FF8800"/></svg>
+        <span>RingCentral</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2D8CFF"/><rect x="5" y="10" width="15" height="12" rx="3" fill="white"/><polygon points="22,12 27,9 27,23 22,20" fill="white"/></svg>
+        <span>Zoom Phone</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#5059C9"/><rect x="14" y="9" width="12" height="10" rx="3" fill="#7B83EB"/><rect x="6" y="13" width="14" height="12" rx="3" fill="white"/><text x="9" y="23" font-size="9" font-weight="800" fill="#5059C9" font-family="Arial">T</text></svg>
+        <span>MS Teams</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1E293B"/><rect x="5" y="7" width="22" height="6" rx="2" fill="#334155"/><circle cx="23" cy="10" r="1.5" fill="#22C55E"/><rect x="5" y="15" width="22" height="6" rx="2" fill="#334155"/><circle cx="23" cy="18" r="1.5" fill="#22C55E"/><rect x="5" y="23" width="22" height="4" rx="2" fill="#334155"/><circle cx="23" cy="25" r="1.5" fill="#F59E0B"/></svg>
+        <span>VPS</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#0F766E"/><g transform="translate(16,16)"><path transform="translate(-8,-8)" d="M8 0 L9.5 3 L13 2 L13 5 L16 6.5 L14 9.5 L16 12.5 L13 14 L13 17 L9.5 16 L8 19 L6.5 16 L3 17 L3 14 L0 12.5 L2 9.5 L0 6.5 L3 5 L3 2 L6.5 3 Z" fill="white" opacity="0.9"/><circle cx="0" cy="0" r="3.5" fill="#0F766E"/></g></svg>
+        <span>IT Infrastructure</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#DC2626"/><path d="M16 28 C10 22 8 16 12 10 C14 15 16 13 16 13 C16 13 18 15 20 10 C24 16 22 22 16 28Z" fill="white" opacity="0.95"/><path d="M16 28 C13 24 12 20 14 17 C15 19 16 18 16 18 C16 18 17 19 18 17 C20 20 19 24 16 28Z" fill="#DC2626"/></svg>
+        <span>Firewalls</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#059669"/><rect x="6" y="13" width="20" height="7" rx="3" fill="white"/><circle cx="10" cy="16.5" r="1.5" fill="#059669"/><circle cx="14" cy="16.5" r="1.5" fill="#059669"/><circle cx="18" cy="16.5" r="1.5" fill="#059669"/><circle cx="22" cy="16.5" r="1.5" fill="#059669"/></svg>
+        <span>Routers &amp; Switches</span>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -887,86 +1179,190 @@ footer {
     </div>
 
     <div class="services-grid reveal">
+      <!-- Asterisk -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-blue">☎️</div>
+        <div class="svc-logo logo-asterisk" style="background:#FFF3E8;">
+          <svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg>
+        </div>
         <p class="svc-cat cat-voip">VoIP</p>
         <h3>Asterisk PBX</h3>
         <p>Custom IVR, call routing, voicemail and enterprise PBX on the world's most flexible open-source telephony engine.</p>
       </div>
+
+      <!-- Dialpad -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-cyan">💬</div>
+        <div class="svc-logo" style="background:#F3EEFF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle class="dp-dot" cx="10" cy="10" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="16" cy="10" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="22" cy="10" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="10" cy="16" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="16" cy="16" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="22" cy="16" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="10" cy="22" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="16" cy="22" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="22" cy="22" r="2.5" fill="#7C3AED"/>
+          </svg>
+        </div>
         <p class="svc-cat cat-voip">VoIP</p>
         <h3>Dialpad</h3>
         <p>AI-powered cloud communications — voice, video, and messaging unified. Smart transcription built in.</p>
       </div>
+
+      <!-- 3CX -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-blue">🔵</div>
+        <div class="svc-logo" style="background:#E0F5FF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect class="wave-bar" x="3" y="16" width="4" height="10" rx="2" fill="#00AEEF" style="transform-origin:5px 21px"/>
+            <rect class="wave-bar" x="9" y="12" width="4" height="14" rx="2" fill="#00AEEF" style="transform-origin:11px 19px"/>
+            <rect class="wave-bar" x="15" y="8" width="4" height="18" rx="2" fill="#00AEEF" style="transform-origin:17px 17px"/>
+            <rect class="wave-bar" x="21" y="12" width="4" height="14" rx="2" fill="#00AEEF" style="transform-origin:23px 19px"/>
+            <rect x="27" y="16" width="3" height="10" rx="1.5" fill="#00AEEF"/>
+          </svg>
+        </div>
         <p class="svc-cat cat-voip">VoIP</p>
         <h3>3CX</h3>
         <p>Software PBX for Windows and Linux with WebRTC, mobile apps, and live chat integration out of the box.</p>
       </div>
+
+      <!-- RingCentral -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-cyan">📡</div>
+        <div class="svc-logo" style="background:#FFF2E0;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="10" stroke="#FF8800" stroke-width="2.5" fill="none"/>
+            <circle cx="16" cy="16" r="6" stroke="#FF8800" stroke-width="2.5" fill="none"/>
+            <circle class="rc-pulse" cx="16" cy="16" r="10" stroke="#FF8800" stroke-width="1.5" fill="none"/>
+            <circle cx="16" cy="16" r="3" fill="#FF8800"/>
+          </svg>
+        </div>
         <p class="svc-cat cat-voip">VoIP</p>
         <h3>RingCentral</h3>
         <p>Enterprise UCaaS — reliable cloud calling, team messaging, and HD video conferencing at scale.</p>
       </div>
+
+      <!-- Zoom -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-blue">🎙️</div>
+        <div class="svc-logo" style="background:#E6F2FF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect x="3" y="9" width="17" height="14" rx="4" fill="#2D8CFF"/>
+            <polygon class="zoom-cam" points="22,12 29,8 29,24 22,20" fill="#2D8CFF"/>
+          </svg>
+        </div>
         <p class="svc-cat cat-voip">VoIP</p>
         <h3>Zoom Phone</h3>
         <p>Cloud phone fully integrated with Zoom meetings. One app, zero friction — calling and meetings in one.</p>
       </div>
+
+      <!-- MS Teams -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-cyan">🟦</div>
+        <div class="svc-logo" style="background:#EDEEFF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect x="15" y="7" width="14" height="12" rx="3.5" fill="#7B83EB"/>
+            <rect x="4" y="12" width="17" height="14" rx="3.5" fill="#5059C9"/>
+            <text class="teams-t" x="8" y="23.5" font-size="10" font-weight="800" fill="white" font-family="Arial, sans-serif">T</text>
+          </svg>
+        </div>
         <p class="svc-cat cat-voip">VoIP</p>
         <h3>MS Teams Voice</h3>
         <p>Direct Routing and Calling Plans that turn Microsoft Teams into a full enterprise phone system.</p>
       </div>
+
+      <!-- VPS -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-cyan">🖥️</div>
+        <div class="svc-logo" style="background:#EFF6FF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect x="3" y="5" width="26" height="7" rx="2.5" fill="#1E40AF"/>
+            <circle class="vps-light" cx="26" cy="8.5" r="2" fill="#22C55E"/>
+            <rect x="3" y="14" width="26" height="7" rx="2.5" fill="#1E40AF"/>
+            <circle class="vps-light" cx="26" cy="17.5" r="2" fill="#22C55E"/>
+            <rect x="3" y="23" width="26" height="5" rx="2.5" fill="#1E40AF"/>
+            <circle class="vps-light" cx="26" cy="25.5" r="2" fill="#F59E0B"/>
+          </svg>
+        </div>
         <p class="svc-cat cat-infra">Infrastructure</p>
         <h3>VPS Solutions</h3>
         <p>High-performance virtual servers with managed hosting, automated backups, and guaranteed uptime SLAs.</p>
       </div>
+
+      <!-- IT Infrastructure -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-gold">⚡</div>
+        <div class="svc-logo" style="background:#ECFDF5;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="5" stroke="#0F766E" stroke-width="2.5"/>
+            <path class="gear-path" d="M16 2 L17.8 6.2 L22.4 5 L22.4 9 L26.6 11.2 L24 15.4 L26.6 19.6 L22.4 21.8 L22.4 25.8 L17.8 24.6 L16 28.8 L14.2 24.6 L9.6 25.8 L9.6 21.8 L5.4 19.6 L8 15.4 L5.4 11.2 L9.6 9 L9.6 5 L14.2 6.2 Z" stroke="#0F766E" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
         <p class="svc-cat cat-infra">Infrastructure</p>
         <h3>IT Infrastructure</h3>
         <p>End-to-end design, procurement, installation, and management of your entire IT environment.</p>
       </div>
+
+      <!-- Security -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-gold">🔐</div>
+        <div class="svc-logo" style="background:#FDF4FF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path class="shield-icon" d="M16 3 L27 7.5 L27 16 C27 22.5 22 27.5 16 29 C10 27.5 5 22.5 5 16 L5 7.5 Z" fill="#7C3AED" opacity="0.15" stroke="#7C3AED" stroke-width="2"/>
+            <path d="M11 16 L14.5 19.5 L21 12.5" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
         <p class="svc-cat cat-security">Security</p>
         <h3>System &amp; Security</h3>
         <p>Hardening, patch management, vulnerability assessments, and incident response — proactive not reactive.</p>
       </div>
+
+      <!-- Passive Network -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-green">🔌</div>
+        <div class="svc-logo" style="background:#ECFEFF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path class="sig1" d="M4 22 Q16 4 28 22" stroke="#0891B2" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path class="sig2" d="M8 25 Q16 11 24 25" stroke="#0891B2" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path class="sig3" d="M12 28 Q16 19 20 28" stroke="#0891B2" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <circle cx="16" cy="29.5" r="2" fill="#0891B2"/>
+          </svg>
+        </div>
         <p class="svc-cat cat-network">Network</p>
         <h3>Passive Network</h3>
         <p>Structured cabling, fiber optic, server room design, and data center physical layer installations.</p>
       </div>
+
+      <!-- Firewall -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-gold">🛡️</div>
+        <div class="svc-logo" style="background:#FEF2F2;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path class="flame" d="M16 29 C9 22 7 15 11.5 8 C13.5 14 16 12 16 12 C16 12 18.5 14 20.5 8 C25 15 23 22 16 29Z" fill="#EF4444"/>
+            <path d="M16 29 C12.5 24 11.5 19.5 13.5 15.5 C14.5 18 16 17 16 17 C16 17 17.5 18 18.5 15.5 C20.5 19.5 19.5 24 16 29Z" fill="#FCA5A5"/>
+          </svg>
+        </div>
         <p class="svc-cat cat-security">Security</p>
         <h3>Firewalls</h3>
         <p>Next-gen firewall deployment and management — Fortinet, Palo Alto, pfSense for every scale.</p>
       </div>
+
+      <!-- Routers & Switches -->
       <div class="svc-card">
         <div class="svc-arrow">↗</div>
-        <div class="svc-icon ic-green">🔀</div>
+        <div class="svc-logo" style="background:#ECFDF5;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect x="3" y="12" width="26" height="9" rx="3" fill="#059669"/>
+            <circle cx="8" cy="16.5" r="2" fill="white"/>
+            <circle cx="14" cy="16.5" r="2" fill="white"/>
+            <circle cx="20" cy="16.5" r="2" fill="white"/>
+            <circle cx="26" cy="16.5" r="2" fill="white"/>
+            <circle class="router-wave" cx="16" cy="16.5" r="12" stroke="#059669" stroke-width="1.5" fill="none"/>
+            <circle class="router-wave" cx="16" cy="16.5" r="8" stroke="#059669" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
         <p class="svc-cat cat-network">Network</p>
         <h3>Routers &amp; Switches</h3>
         <p>Layer 2/3 switching, SD-WAN, VLAN segmentation, and QoS tuned for crystal-clear VoIP traffic.</p>
