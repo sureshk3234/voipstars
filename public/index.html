@@ -781,6 +781,240 @@ footer {
 }
 .ticker-sep { color: var(--rule); font-size: 1.2rem; flex-shrink:0; }
 
+/* ─── SLOGANS MARQUEE ─── */
+#slogans {
+  background: var(--ink);
+  padding: 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.slogan-track-wrap { display: flex; flex-direction: column; gap: 0; }
+.slogan-row {
+  display: flex; align-items: center; gap: 0;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  white-space: nowrap;
+}
+.slogan-row:last-child { border-bottom: none; }
+.slogan-inner {
+  display: flex; gap: 3rem; align-items: center;
+  animation: ticker 35s linear infinite;
+}
+.slogan-inner.reverse { animation-direction: reverse; animation-duration: 28s; }
+.slogan-item {
+  display: inline-flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.slogan-text {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.01em;
+}
+.slogan-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.slogan-dot {
+  width: 5px; height: 5px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.slogan-star {
+  font-size: 0.8rem;
+  color: #F59E0B;
+  flex-shrink: 0;
+}
+
+/* ─── CALLING SOLUTIONS SECTION ─── */
+#calling {
+  padding: 100px 0;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+#calling::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(circle at 10% 50%, rgba(26,86,219,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 90% 50%, rgba(8,145,178,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.calling-header { text-align: center; margin-bottom: 4rem; }
+
+.calling-platforms {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.platform-card {
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 2rem;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  cursor: default;
+}
+.platform-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(11,15,26,0.1);
+  border-color: transparent;
+}
+.platform-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 20px;
+  padding: 1px;
+  background: var(--card-gradient);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.platform-card:hover::before { opacity: 1; }
+
+.platform-logo-wrap {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+.platform-logo-wrap svg { width: 40px; height: 40px; }
+
+.platform-ring {
+  position: absolute; inset: -4px;
+  border-radius: 20px;
+  border: 2px solid currentColor;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.platform-card:hover .platform-ring {
+  opacity: 0.2; transform: scale(1);
+}
+
+.platform-name {
+  font-size: 1.1rem; font-weight: 800;
+  color: var(--ink); margin-bottom: 0.35rem;
+  letter-spacing: -0.02em;
+}
+.platform-tag {
+  display: inline-block;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 100px;
+  margin-bottom: 0.85rem;
+}
+.platform-desc {
+  font-size: 0.85rem; color: var(--body);
+  line-height: 1.65; margin-bottom: 1.25rem;
+}
+.platform-features {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.platform-feat {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; color: var(--slate);
+}
+.platform-feat::before {
+  content: '';
+  width: 16px; height: 16px; flex-shrink: 0;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  background: var(--feat-bg);
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 5L4 7L8 3' stroke='%23059669' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Calling banner */
+.calling-banner {
+  background: var(--ink);
+  border-radius: 20px;
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+.calling-banner::before {
+  content: '';
+  position: absolute; top: -80px; right: -80px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,86,219,0.3) 0%, transparent 70%);
+  pointer-events: none;
+}
+.calling-banner::after {
+  content: '';
+  position: absolute; bottom: -60px; left: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(8,145,178,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.banner-left { position: relative; z-index: 1; }
+.banner-label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-bottom: 0.6rem;
+}
+.banner-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2rem; font-weight: 400;
+  color: #fff; line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+.banner-sub { font-size: 0.9rem; color: rgba(255,255,255,0.5); }
+
+.banner-right {
+  display: flex; align-items: center; gap: 1rem;
+  flex-wrap: wrap; position: relative; z-index: 1;
+}
+
+/* Phone pulse animation */
+@keyframes phonePulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(26,86,219,0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(26,86,219,0); }
+}
+.phone-cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--blue);
+  color: #fff;
+  padding: 0.9rem 1.75rem;
+  border-radius: 100px;
+  font-size: 0.95rem; font-weight: 700;
+  text-decoration: none;
+  animation: phonePulse 2s ease-in-out infinite;
+  transition: background 0.2s;
+}
+.phone-cta-btn:hover { background: var(--blue-md); }
+
+.phone-icon-wrap {
+  width: 48px; height: 48px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+
 /* ─── RESPONSIVE ─── */
 @media(max-width:1024px){
   .hero-layout { grid-template-columns: 1fr; gap: 3rem; }
@@ -788,6 +1022,7 @@ footer {
   .services-grid { grid-template-columns: repeat(2,1fr); }
   .features-layout { grid-template-columns: 1fr; gap: 3rem; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  .calling-platforms { grid-template-columns: repeat(2,1fr); }
 }
 @media(max-width:768px){
   .nav-menu { display: none; }
@@ -796,6 +1031,10 @@ footer {
   .process-grid::before { display: none; }
   .services-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
+  .calling-platforms { grid-template-columns: 1fr; }
+  .calling-banner { flex-direction: column; text-align: center; }
+  .banner-right { justify-content: center; }
+  .slogan-text { font-size: 1rem; }
 }
 </style>
 </head>
@@ -1159,6 +1398,133 @@ footer {
   </div>
 </div>
 
+<!-- SLOGANS MARQUEE -->
+<section id="slogans">
+  <div class="slogan-track-wrap">
+
+    <!-- Row 1 — forward -->
+    <div class="slogan-row">
+      <div class="slogan-inner">
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(59,130,246,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="#3B6FEA"/></svg>
+          </div>
+          <span class="slogan-text">Your Voice, Everywhere</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(8,145,178,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#0891B2" stroke-width="2"/><path d="M12 6v6l4 2" stroke="#0891B2" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span class="slogan-text">Always On. Always Connected.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(245,158,11,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">Crystal Clear Calls, Zero Compromise</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(5,150,105,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#059669" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">Secure Lines. Smarter Business.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(124,58,237,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#7C3AED" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span class="slogan-text">One Platform. Infinite Reach.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(59,130,246,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.08 2.18 2 2 0 012.08 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" fill="#3B6FEA"/></svg>
+          </div>
+          <span class="slogan-text">Enterprise Calling, Simplified</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <!-- repeat for seamless loop -->
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(59,130,246,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="#3B6FEA"/></svg></div><span class="slogan-text">Your Voice, Everywhere</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(8,145,178,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#0891B2" stroke-width="2"/><path d="M12 6v6l4 2" stroke="#0891B2" stroke-width="2" stroke-linecap="round"/></svg></div><span class="slogan-text">Always On. Always Connected.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(245,158,11,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="slogan-text">Crystal Clear Calls, Zero Compromise</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(5,150,105,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#059669" stroke-width="2" stroke-linejoin="round"/></svg></div><span class="slogan-text">Secure Lines. Smarter Business.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(124,58,237,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#7C3AED" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/></svg></div><span class="slogan-text">One Platform. Infinite Reach.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(59,130,246,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.08 2.18 2 2 0 012.08 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" fill="#3B6FEA"/></svg></div><span class="slogan-text">Enterprise Calling, Simplified</span></div>
+      </div>
+    </div>
+
+    <!-- Row 2 — reverse -->
+    <div class="slogan-row">
+      <div class="slogan-inner reverse">
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(239,68,68,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#EF4444" stroke-width="2" stroke-linejoin="round"/><polyline points="9,22 9,12 15,12 15,22" stroke="#EF4444" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">Connect Every Office. Empower Every Call.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(59,130,246,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="#3B6FEA"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" stroke="#3B6FEA" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span class="slogan-text">Built for Uptime. Designed for Growth.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(8,145,178,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#0891B2" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">From PBX to Cloud — We've Got You</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(245,158,11,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="#F59E0B" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">5-Star IT. Every Single Time.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(5,150,105,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">99.9% Uptime. 100% Confidence.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(124,58,237,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" stroke="#7C3AED" stroke-width="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span class="slogan-text">Talk Smarter. Work Faster.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <!-- repeat -->
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(239,68,68,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#EF4444" stroke-width="2"/><polyline points="9,22 9,12 15,12 15,22" stroke="#EF4444" stroke-width="2"/></svg></div><span class="slogan-text">Connect Every Office. Empower Every Call.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(59,130,246,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="#3B6FEA"/></svg></div><span class="slogan-text">Built for Uptime. Designed for Growth.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(8,145,178,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#0891B2" stroke-width="2"/></svg></div><span class="slogan-text">From PBX to Cloud — We've Got You</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(245,158,11,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="#F59E0B" stroke-width="2"/></svg></div><span class="slogan-text">5-Star IT. Every Single Time.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(5,150,105,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="#059669" stroke-width="2" stroke-linecap="round"/></svg></div><span class="slogan-text">99.9% Uptime. 100% Confidence.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(124,58,237,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" stroke="#7C3AED" stroke-width="2"/></svg></div><span class="slogan-text">Talk Smarter. Work Faster.</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- SERVICES -->
 <section id="services" class="section section-border">
   <div class="container">
@@ -1442,6 +1808,175 @@ footer {
           </div>
           <div class="uptime-track"><div class="uptime-fill"></div></div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALLING SOLUTIONS -->
+<section id="calling" class="section-border">
+  <div class="container">
+    <div class="calling-header reveal">
+      <p class="eyebrow" style="justify-content:center">Calling Platforms</p>
+      <h2 class="h2" style="text-align:center">Industry-Leading <em>VoIP Platforms</em><br>We Deploy &amp; Manage</h2>
+      <p class="section-desc" style="margin:1rem auto 0;text-align:center">We are certified partners across every major cloud calling platform. Pick your stack — we'll make it work.</p>
+    </div>
+
+    <div class="calling-platforms">
+
+      <!-- Asterisk -->
+      <div class="platform-card reveal" style="--card-gradient:linear-gradient(135deg,#FF6B00,#FF9A3C);">
+        <div class="platform-ring" style="color:#FF6B00;"></div>
+        <div class="platform-logo-wrap" style="background:#FFF3E8;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <line x1="20" y1="3" x2="20" y2="37" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
+            <line x1="4" y1="11.5" x2="36" y2="28.5" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
+            <line x1="36" y1="11.5" x2="4" y2="28.5" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="platform-name">Asterisk PBX</div>
+        <span class="platform-tag" style="background:#FFF3E8;color:#FF6B00;">Open Source</span>
+        <p class="platform-desc">The world's most widely deployed open-source telephony engine. Fully customisable IVR, call flows, and integrations.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Custom IVR &amp; Call Routing</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">SIP Trunking &amp; Codecs</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Voicemail &amp; Conference</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">CRM &amp; API Integration</span>
+        </div>
+      </div>
+
+      <!-- Dialpad -->
+      <div class="platform-card reveal delay-1" style="--card-gradient:linear-gradient(135deg,#7C3AED,#A855F7);">
+        <div class="platform-ring" style="color:#7C3AED;"></div>
+        <div class="platform-logo-wrap" style="background:#F3EEFF;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="12" cy="12" r="3.5" fill="#7C3AED"/>
+            <circle cx="20" cy="12" r="3.5" fill="#7C3AED"/>
+            <circle cx="28" cy="12" r="3.5" fill="#7C3AED"/>
+            <circle cx="12" cy="20" r="3.5" fill="#7C3AED"/>
+            <circle cx="20" cy="20" r="3.5" fill="#7C3AED"/>
+            <circle cx="28" cy="20" r="3.5" fill="#7C3AED"/>
+            <circle cx="12" cy="28" r="3.5" fill="#7C3AED"/>
+            <circle cx="20" cy="28" r="3.5" fill="#7C3AED"/>
+            <circle cx="28" cy="28" r="3.5" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <div class="platform-name">Dialpad</div>
+        <span class="platform-tag" style="background:#F3EEFF;color:#7C3AED;">AI-Powered</span>
+        <p class="platform-desc">AI-native cloud communications with real-time transcription, sentiment analysis, and unified voice + messaging.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Real-Time AI Transcription</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Voice + Video + SMS</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Google Workspace Integration</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Analytics Dashboard</span>
+        </div>
+      </div>
+
+      <!-- 3CX -->
+      <div class="platform-card reveal delay-2" style="--card-gradient:linear-gradient(135deg,#00AEEF,#38BDF8);">
+        <div class="platform-ring" style="color:#00AEEF;"></div>
+        <div class="platform-logo-wrap" style="background:#E0F5FF;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="4" y="20" width="5" height="14" rx="2.5" fill="#00AEEF"/>
+            <rect x="12" y="15" width="5" height="19" rx="2.5" fill="#00AEEF"/>
+            <rect x="20" y="9" width="5" height="25" rx="2.5" fill="#00AEEF"/>
+            <rect x="28" y="15" width="5" height="19" rx="2.5" fill="#00AEEF"/>
+          </svg>
+        </div>
+        <div class="platform-name">3CX</div>
+        <span class="platform-tag" style="background:#E0F5FF;color:#0284C7;">Software PBX</span>
+        <p class="platform-desc">Feature-rich software PBX for Windows & Linux with WebRTC browser calling, mobile apps, and live chat.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">WebRTC Browser Calling</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">iOS &amp; Android Apps</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Live Chat &amp; WhatsApp</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Video Conferencing</span>
+        </div>
+      </div>
+
+      <!-- RingCentral -->
+      <div class="platform-card reveal" style="--card-gradient:linear-gradient(135deg,#FF8800,#FFA940);">
+        <div class="platform-ring" style="color:#FF8800;"></div>
+        <div class="platform-logo-wrap" style="background:#FFF2E0;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="14" stroke="#FF8800" stroke-width="3" fill="none"/>
+            <circle cx="20" cy="20" r="8" stroke="#FF8800" stroke-width="3" fill="none"/>
+            <circle cx="20" cy="20" r="4" fill="#FF8800"/>
+            <line x1="20" y1="6" x2="20" y2="2" stroke="#FF8800" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="34" y1="20" x2="38" y2="20" stroke="#FF8800" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="platform-name">RingCentral</div>
+        <span class="platform-tag" style="background:#FFF2E0;color:#FF8800;">Enterprise UCaaS</span>
+        <p class="platform-desc">Global cloud communications platform with enterprise-grade voice, team messaging, and HD video conferencing.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Global PSTN Coverage</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Team Messaging &amp; Files</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">HD Video Meetings</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Salesforce &amp; MS365 Integration</span>
+        </div>
+      </div>
+
+      <!-- Zoom Phone -->
+      <div class="platform-card reveal delay-1" style="--card-gradient:linear-gradient(135deg,#2D8CFF,#60A5FA);">
+        <div class="platform-ring" style="color:#2D8CFF;"></div>
+        <div class="platform-logo-wrap" style="background:#E6F2FF;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="3" y="11" width="22" height="18" rx="5" fill="#2D8CFF"/>
+            <polygon points="27,15 37,10 37,30 27,25" fill="#2D8CFF"/>
+            <rect x="9" y="17" width="10" height="2.5" rx="1.25" fill="white" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="platform-name">Zoom Phone</div>
+        <span class="platform-tag" style="background:#E6F2FF;color:#2D8CFF;">Cloud Calling</span>
+        <p class="platform-desc">Native cloud phone system inside Zoom. Switch between calls and meetings instantly with one unified app.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Seamless Zoom Meetings</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Call Recording &amp; Voicemail</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Auto Attendant</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Number Porting</span>
+        </div>
+      </div>
+
+      <!-- MS Teams -->
+      <div class="platform-card reveal delay-2" style="--card-gradient:linear-gradient(135deg,#5059C9,#818CF8);">
+        <div class="platform-ring" style="color:#5059C9;"></div>
+        <div class="platform-logo-wrap" style="background:#EDEEFF;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="20" y="8" width="17" height="14" rx="4" fill="#7B83EB"/>
+            <rect x="5" y="16" width="22" height="18" rx="4" fill="#5059C9"/>
+            <text x="10" y="30" font-size="13" font-weight="800" fill="white" font-family="Arial, sans-serif">T</text>
+          </svg>
+        </div>
+        <div class="platform-name">MS Teams Voice</div>
+        <span class="platform-tag" style="background:#EDEEFF;color:#5059C9;">Microsoft 365</span>
+        <p class="platform-desc">Transform Microsoft Teams into a full enterprise phone system via Direct Routing or Microsoft Calling Plans.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Direct Routing Setup</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Microsoft 365 Integration</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Auto Attendant &amp; Hunt Groups</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Compliance Recording</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Calling Banner -->
+    <div class="calling-banner reveal">
+      <div class="banner-left">
+        <p class="banner-label">Ready to upgrade your communications?</p>
+        <h3 class="banner-title">Not sure which platform fits?<br>We'll choose for you — free.</h3>
+        <p class="banner-sub">Our engineers analyse your team size, workflow, and budget to recommend the perfect fit.</p>
+      </div>
+      <div class="banner-right">
+        <div class="phone-icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="rgba(255,255,255,0.6)"/></svg>
+        </div>
+        <a href="tel:+10000000000" class="phone-cta-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="white"/></svg>
+          Call Now — It's Free
+        </a>
+        <a href="mailto:hello@voipstars.com" class="btn-ghost-white" style="border-radius:100px;">Get a Proposal →</a>
       </div>
     </div>
   </div>
