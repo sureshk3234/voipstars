@@ -1053,270 +1053,143 @@ footer {
 }
 
 /* ─── PRICING SECTION ─── */
-#pricing { padding: 100px 0; background: var(--surface); }
+#pricing { padding: 80px 0; background: var(--surface); }
 
-.pricing-tabs {
-  display: flex; align-items: center; gap: 8px;
+/* Toggle pill */
+.pricing-toggle {
+  display: flex; align-items: center; justify-content: center; gap: 0;
   background: var(--white); border: 1px solid var(--rule);
-  padding: 5px; border-radius: 12px;
-  width: fit-content; margin: 2rem auto 3.5rem;
+  border-radius: 100px; padding: 4px;
+  width: fit-content; margin: 1.5rem auto 2.5rem;
 }
 .ptab {
-  padding: 0.5rem 1.4rem; border-radius: 8px;
-  font-size: 0.875rem; font-weight: 600; cursor: pointer;
+  padding: 0.45rem 1.25rem; border-radius: 100px;
+  font-size: 0.82rem; font-weight: 600; cursor: pointer;
   border: none; background: none; color: var(--muted);
-  transition: all 0.2s; font-family: inherit;
+  transition: all 0.2s; font-family: inherit; white-space: nowrap;
 }
 .ptab.active { background: var(--ink); color: #fff; }
-
-.pricing-category { margin-bottom: 4rem; }
-.pricing-cat-title {
-  display: flex; align-items: center; gap: 12px;
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--muted);
-  margin-bottom: 1.5rem;
-}
-.pricing-cat-title::after {
-  content: ''; flex: 1; height: 1px; background: var(--rule);
+.save-badge {
+  background: #DCFCE7; color: #15803D;
+  font-size: 0.65rem; font-weight: 700;
+  padding: 1px 7px; border-radius: 100px; margin-left: 5px;
 }
 
-.pricing-grid {
+/* Category tabs */
+.pricing-cats {
+  display: flex; gap: 8px; margin-bottom: 2rem; flex-wrap: wrap;
+}
+.pcat-btn {
+  display: flex; align-items: center; gap: 7px;
+  padding: 0.45rem 1rem; border-radius: 8px;
+  border: 1px solid var(--rule); background: var(--white);
+  font-size: 0.8rem; font-weight: 600; color: var(--muted);
+  cursor: pointer; transition: all 0.2s; font-family: inherit;
+}
+.pcat-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pcat-btn:not(.active):hover { border-color: var(--slate); color: var(--ink); }
+.pcat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* Compact pricing row */
+.pricing-panel { display: none; }
+.pricing-panel.active { display: block; animation: fadeUp 0.35s ease both; }
+
+.price-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
 }
-.pricing-grid.cols-2 { grid-template-columns: repeat(2, 1fr); max-width: 780px; }
-.pricing-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
 
-.price-card {
-  background: var(--white);
-  border: 1.5px solid var(--rule);
-  border-radius: 18px;
-  padding: 1.75rem;
-  position: relative;
-  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
-  display: flex; flex-direction: column;
+/* Compact price card */
+.pc {
+  background: var(--white); border: 1px solid var(--rule);
+  border-radius: 14px; padding: 1.25rem 1.25rem 1rem;
+  display: flex; flex-direction: column; gap: 0;
+  position: relative; overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: default;
 }
-.price-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 48px rgba(11,15,26,0.1);
-}
-.price-card.featured {
-  border-color: var(--blue);
-  background: var(--white);
-  box-shadow: 0 8px 32px rgba(26,86,219,0.12);
-}
-.price-card.featured:hover { box-shadow: 0 20px 56px rgba(26,86,219,0.2); }
+.pc:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(11,15,26,0.09); border-color: var(--blue); }
+.pc.pop { border-color: var(--blue); background: linear-gradient(145deg,#EBF2FF,#fff 55%); box-shadow: 0 6px 24px rgba(26,86,219,0.13); }
+.pc.dark { background: var(--ink); border-color: var(--ink); }
 
-.featured-badge {
-  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+/* Popular ribbon */
+.pc.pop::after {
+  content: '★ Popular';
+  position: absolute; top: 0; right: 0;
   background: var(--blue); color: #fff;
-  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; padding: 3px 14px; border-radius: 100px;
-  white-space: nowrap;
+  font-size: 0.6rem; font-weight: 800; letter-spacing: 0.06em;
+  padding: 3px 10px; border-radius: 0 14px 0 10px;
 }
 
-.price-logo {
-  width: 40px; height: 40px; border-radius: 10px;
+/* Header row inside card */
+.pc-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;
+}
+.pc-icon {
+  width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1rem;
 }
-.price-logo svg { width: 24px; height: 24px; }
+.pc-icon svg { width: 20px; height: 20px; }
+.pc-title { flex: 1; }
+.pc-name { font-size: 0.88rem; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.pc.dark .pc-name { color: #fff; }
+.pc-sub { font-size: 0.68rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; }
+.pc.dark .pc-sub { color: rgba(255,255,255,0.4); }
 
-.price-service { font-size: 1rem; font-weight: 800; color: var(--ink); margin-bottom: 0.2rem; letter-spacing: -0.01em; }
-.price-tier { font-size: 0.72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.1rem; }
-
-.price-amount {
-  display: flex; align-items: flex-end; gap: 4px;
+/* Price */
+.pc-price {
+  display: flex; align-items: baseline; gap: 3px;
   margin-bottom: 0.25rem;
 }
-.price-currency { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
-.price-num {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 2.4rem; font-weight: 800; color: var(--ink);
-  letter-spacing: -0.04em; line-height: 1;
-}
-.price-period { font-size: 0.8rem; color: var(--muted); margin-bottom: 4px; }
-.price-desc { font-size: 0.8rem; color: var(--muted); margin-bottom: 1.25rem; line-height: 1.5; }
+.pc-curr { font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+.pc.dark .pc-curr { color: #fff; }
+.pc-amt { font-size: 1.9rem; font-weight: 800; color: var(--ink); letter-spacing: -0.04em; line-height: 1; }
+.pc.dark .pc-amt { color: #fff; }
+.pc-per { font-size: 0.75rem; color: var(--muted); }
+.pc.dark .pc-per { color: rgba(255,255,255,0.4); }
+.pc-cap { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.85rem; line-height: 1.4; }
+.pc.dark .pc-cap { color: rgba(255,255,255,0.35); }
 
-.price-divider { height: 1px; background: var(--rule); margin-bottom: 1.25rem; }
+/* Divider */
+.pc-div { height: 1px; background: var(--rule); margin-bottom: 0.85rem; }
+.pc.dark .pc-div { background: rgba(255,255,255,0.1); }
 
-.price-features { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; flex: 1; }
-.price-feat {
-  display: flex; align-items: flex-start; gap: 8px;
-  font-size: 0.82rem; color: var(--slate); line-height: 1.4;
+/* Features — compact chips */
+.pc-feats {
+  display: flex; flex-wrap: wrap; gap: 5px;
+  margin-bottom: 1rem; flex: 1;
 }
-.feat-check {
-  width: 16px; height: 16px; border-radius: 50%;
-  background: var(--green-lt); flex-shrink: 0; margin-top: 1px;
-  display: flex; align-items: center; justify-content: center;
+.pc-feat {
+  font-size: 0.7rem; font-weight: 500; color: var(--slate);
+  background: var(--surface); border: 1px solid var(--rule);
+  padding: 2px 8px; border-radius: 100px;
 }
-.feat-check svg { width: 9px; height: 9px; }
+.pc.dark .pc-feat { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.65); }
+.pc.pop .pc-feat { background: #EBF2FF; border-color: #C7D9FD; color: var(--blue); }
 
-.price-btn {
-  display: block; text-align: center;
-  padding: 0.75rem; border-radius: 10px;
-  font-size: 0.875rem; font-weight: 700;
+/* CTA button */
+.pc-btn {
+  display: block; text-align: center; padding: 0.55rem;
+  border-radius: 8px; font-size: 0.8rem; font-weight: 700;
   text-decoration: none; transition: all 0.2s;
   border: 1.5px solid var(--rule); color: var(--ink);
-}
-.price-btn:hover { border-color: var(--ink); background: var(--ink); color: #fff; }
-.price-btn.primary { background: var(--blue); border-color: var(--blue); color: #fff; }
-.price-btn.primary:hover { background: var(--blue-md); border-color: var(--blue-md); }
-
-.price-note {
-  text-align: center; font-size: 0.8rem; color: var(--muted);
-  margin-top: 2rem;
-}
-.price-note a { color: var(--blue); text-decoration: none; font-weight: 600; }
-
-/* ─── PRICING SECTION ─── */
-#pricing { padding: 100px 0; background: var(--surface); }
-
-.pricing-tabs {
-  display: flex; align-items: center; justify-content: center;
-  gap: 4px; background: var(--white);
-  border: 1px solid var(--rule); border-radius: 12px;
-  padding: 5px; width: fit-content; margin: 2rem auto 3.5rem;
-}
-.ptab {
-  padding: 0.5rem 1.4rem; border-radius: 8px;
-  font-size: 0.85rem; font-weight: 600; cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  color: var(--muted); background: none; border: none;
-  font-family: inherit;
-}
-.ptab.active { background: var(--ink); color: #fff; }
-
-/* Category heading */
-.pricing-cat-label {
-  display: flex; align-items: center; gap: 12px;
-  margin: 3rem 0 1.5rem;
-}
-.pricing-cat-label:first-of-type { margin-top: 0; }
-.pcat-icon {
-  width: 36px; height: 36px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; flex-shrink: 0;
-}
-.pcat-title { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); }
-.pcat-line { flex: 1; height: 1px; background: var(--rule); }
-
-/* Pricing grid */
-.pricing-grid {
-  display: grid; grid-template-columns: repeat(3,1fr); gap: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-.pricing-grid-2 { grid-template-columns: repeat(2,1fr); }
-.pricing-grid-4 { grid-template-columns: repeat(4,1fr); }
-
-.price-card {
-  background: var(--white); border: 1px solid var(--rule);
-  border-radius: 16px; padding: 1.75rem;
-  position: relative; overflow: hidden;
-  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
-  display: flex; flex-direction: column;
-}
-.price-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 36px rgba(11,15,26,0.1);
-  border-color: var(--blue);
-}
-.price-card.featured {
-  border-color: var(--blue);
-  background: linear-gradient(160deg, #EBF2FF 0%, #fff 60%);
-  box-shadow: 0 8px 32px rgba(26,86,219,0.12);
-}
-.price-card.featured::before {
-  content: 'Most Popular';
-  position: absolute; top: 1.1rem; right: 1.1rem;
-  background: var(--blue); color: #fff;
-  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; padding: 3px 10px; border-radius: 100px;
-}
-
-.price-service-logo {
-  width: 44px; height: 44px; border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1rem; flex-shrink: 0;
-}
-.price-service-logo svg { width: 26px; height: 26px; }
-
-.price-name { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
-.price-tier { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
-
-.price-amount {
-  display: flex; align-items: flex-end; gap: 4px;
-  margin-bottom: 0.35rem;
-}
-.price-currency { font-size: 1.1rem; font-weight: 700; color: var(--ink); padding-bottom: 6px; }
-.price-value { font-size: 2.4rem; font-weight: 800; color: var(--ink); letter-spacing: -0.04em; line-height: 1; }
-.price-period { font-size: 0.8rem; color: var(--muted); padding-bottom: 4px; }
-.price-note { font-size: 0.75rem; color: var(--muted); margin-bottom: 1.25rem; }
-
-.price-divider { height: 1px; background: var(--rule); margin: 1.1rem 0; }
-
-.price-features { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; flex: 1; }
-.price-features li {
-  display: flex; align-items: flex-start; gap: 8px;
-  font-size: 0.82rem; color: var(--slate); line-height: 1.4;
-}
-.price-features li::before {
-  content: '';
-  width: 16px; height: 16px; flex-shrink: 0; margin-top: 1px;
-  border-radius: 50%;
-  background: var(--green-lt) url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 5L4 7L8 3' stroke='%23059669' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center no-repeat;
-}
-.price-features li.na { color: var(--muted); }
-.price-features li.na::before {
-  background: var(--surface) url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3 3L7 7M7 3L3 7' stroke='%238895A7' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") center no-repeat;
-}
-
-.price-cta {
-  display: block; text-align: center;
-  padding: 0.65rem 1rem; border-radius: 8px;
-  font-size: 0.85rem; font-weight: 700;
-  text-decoration: none; transition: all 0.2s;
   margin-top: auto;
 }
-.price-cta-outline {
-  border: 1.5px solid var(--rule); color: var(--ink);
-}
-.price-cta-outline:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-lt); }
-.price-cta-solid {
-  background: var(--blue); color: #fff;
-  box-shadow: 0 2px 10px rgba(26,86,219,0.25);
-}
-.price-cta-solid:hover { background: var(--blue-md); box-shadow: 0 4px 16px rgba(26,86,219,0.35); }
+.pc-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pc.pop .pc-btn { background: var(--blue); color: #fff; border-color: var(--blue); }
+.pc.pop .pc-btn:hover { background: var(--blue-md); }
+.pc.dark .pc-btn { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.8); }
+.pc.dark .pc-btn:hover { background: rgba(255,255,255,0.12); }
 
-/* Annual savings badge */
-.save-badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  background: #ECFDF5; color: #065F46;
-  font-size: 0.7rem; font-weight: 700;
-  padding: 2px 8px; border-radius: 100px;
-  margin-left: 8px;
-}
-
-/* Custom / enterprise card */
-.price-card.enterprise { background: var(--ink); border-color: var(--ink); }
-.price-card.enterprise .price-name,
-.price-card.enterprise .price-value,
-.price-card.enterprise .price-currency { color: #fff; }
-.price-card.enterprise .price-tier,
-.price-card.enterprise .price-period,
-.price-card.enterprise .price-note { color: rgba(255,255,255,0.45); }
-.price-card.enterprise .price-divider { background: rgba(255,255,255,0.1); }
-.price-card.enterprise .price-features li { color: rgba(255,255,255,0.7); }
-.price-card.enterprise .price-features li::before {
-  background: rgba(255,255,255,0.1) url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 5L4 7L8 3' stroke='%2393C5FD' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center no-repeat;
-}
-
-/* Pricing note */
+/* Footer note */
 .pricing-footnote {
-  text-align: center; font-size: 0.8rem; color: var(--muted);
-  margin-top: 2.5rem; line-height: 1.7;
+  text-align: center; font-size: 0.78rem; color: var(--muted);
+  margin-top: 2rem; line-height: 1.7;
+  padding: 1.25rem; background: var(--white);
+  border: 1px solid var(--rule); border-radius: 12px;
 }
+.pricing-footnote a { color: var(--blue); font-weight: 600; text-decoration: none; }
 
 /* ─── RESPONSIVE ─── */
 @media(max-width:1024px){
@@ -2309,1180 +2182,323 @@ footer {
 
     <div style="text-align:center;" class="reveal">
       <p class="eyebrow" style="justify-content:center">Transparent Pricing</p>
-      <h2 class="h2">Simple, Competitive <em>Plans</em><br>for Every Business Size</h2>
-      <p class="section-desc" style="margin:1rem auto 0;text-align:center">No hidden fees. No long-term lock-in. All prices in USD/month unless noted.</p>
-    </div>
-
-    <div class="pricing-tabs reveal">
-      <button class="ptab active" onclick="showPricing('voip',this)">VoIP Platforms</button>
-      <button class="ptab" onclick="showPricing('infra',this)">IT Infrastructure</button>
-      <button class="ptab" onclick="showPricing('network',this)">Network & Security</button>
-    </div>
-
-    <!-- ══ VOIP PLATFORMS ══ -->
-    <div id="pricing-voip" class="pricing-section">
-
-      <!-- Asterisk -->
-      <div class="pricing-category reveal">
-        <div class="pricing-cat-title">
-          <svg width="16" height="16" viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg>
-          Asterisk PBX
-        </div>
-        <div class="pricing-grid">
-          <div class="price-card reveal">
-            <div class="price-logo" style="background:#FFF3E8;"><svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg></div>
-            <div class="price-service">Asterisk Starter</div>
-            <div class="price-tier">Up to 20 Users</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">149</span></div>
-            <div class="price-period">/month + $299 one-time setup</div>
-            <div class="price-desc">Perfect for SMBs needing a reliable on-premise PBX with basic IVR and call routing.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>20 SIP extensions</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Basic IVR & auto-attendant</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Voicemail to email</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>2 SIP trunks included</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Business hours support</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Get Started</a>
-          </div>
-          <div class="price-card featured reveal delay-1">
-            <div class="featured-badge">⭐ Most Popular</div>
-            <div class="price-logo" style="background:#FFF3E8;"><svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg></div>
-            <div class="price-service">Asterisk Business</div>
-            <div class="price-tier">Up to 100 Users</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">349</span></div>
-            <div class="price-period">/month + $699 one-time setup</div>
-            <div class="price-desc">Advanced IVR, call queues, CRM integration and full redundancy for growing businesses.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>100 SIP extensions</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Advanced IVR & call queues</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>CRM & API integration</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>10 SIP trunks + failover</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Call recording & analytics</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>24/7 priority support</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn primary">Get Started</a>
-          </div>
-          <div class="price-card reveal delay-2">
-            <div class="price-logo" style="background:#FFF3E8;"><svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg></div>
-            <div class="price-service">Asterisk Enterprise</div>
-            <div class="price-tier">Unlimited Users</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">799</span></div>
-            <div class="price-period">/month + custom setup</div>
-            <div class="price-desc">Full enterprise deployment with HA clustering, custom development and dedicated support.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Unlimited extensions</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>HA clustering & geo-redundancy</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Custom IVR & dialplan dev</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Unlimited SIP trunks</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Dedicated account manager</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>SLA 99.99% uptime guarantee</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Contact Sales</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Cloud VoIP Platforms -->
-      <div class="pricing-category reveal">
-        <div class="pricing-cat-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" stroke="#3B6FEA" stroke-width="2"/></svg>
-          Cloud VoIP Platforms (3CX · Dialpad · RingCentral · Zoom · MS Teams)
-        </div>
-        <div class="pricing-grid">
-          <div class="price-card reveal">
-            <div class="price-logo" style="background:#F0FDF4;">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" stroke="#059669" stroke-width="2"/></svg>
-            </div>
-            <div class="price-service">Cloud Starter</div>
-            <div class="price-tier">1–15 Users · Any Platform</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">19</span></div>
-            <div class="price-period">/user/month · min 5 users</div>
-            <div class="price-desc">Ideal for startups and small teams getting their first cloud phone system.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Platform setup & number porting</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Basic IVR & voicemail</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Mobile & desktop apps</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Email support</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Get Started</a>
-          </div>
-          <div class="price-card featured reveal delay-1">
-            <div class="featured-badge">⭐ Best Value</div>
-            <div class="price-logo" style="background:#EBF2FF;">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" stroke="#1A56DB" stroke-width="2"/></svg>
-            </div>
-            <div class="price-service">Cloud Professional</div>
-            <div class="price-tier">16–100 Users · Any Platform</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">29</span></div>
-            <div class="price-period">/user/month</div>
-            <div class="price-desc">Full-featured cloud calling with integrations, analytics and priority support.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Everything in Starter</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>CRM & MS365 / Google integration</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Call recording & reporting</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Hunt groups & call queues</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>24/7 phone & chat support</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn primary">Get Started</a>
-          </div>
-          <div class="price-card reveal delay-2">
-            <div class="price-logo" style="background:#FDF4FF;">
-              <svg viewBox="0 0 24 24" fill="none"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" stroke="#7C3AED" stroke-width="2"/></svg>
-            </div>
-            <div class="price-service">Cloud Enterprise</div>
-            <div class="price-tier">100+ Users · Any Platform</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">45</span></div>
-            <div class="price-period">/user/month · volume discounts</div>
-            <div class="price-desc">Enterprise-grade deployment with compliance, analytics, and a dedicated success manager.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Everything in Professional</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Compliance recording & archiving</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Custom analytics & reporting</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Dedicated success manager</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>99.99% SLA + priority SBC</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Contact Sales</a>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /pricing-voip -->
-
-    <!-- ══ IT INFRASTRUCTURE ══ -->
-    <div id="pricing-infra" class="pricing-section" style="display:none">
-
-      <!-- VPS -->
-      <div class="pricing-category reveal">
-        <div class="pricing-cat-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="6" rx="2" stroke="#1E40AF" stroke-width="1.8"/><rect x="2" y="12" width="20" height="6" rx="2" stroke="#1E40AF" stroke-width="1.8"/><circle cx="18" cy="6" r="1" fill="#22C55E"/><circle cx="18" cy="15" r="1" fill="#22C55E"/></svg>
-          VPS Hosting
-        </div>
-        <div class="pricing-grid cols-4">
-          <div class="price-card reveal">
-            <div class="price-service">VPS Micro</div>
-            <div class="price-tier">Dev & Testing</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">29</span></div>
-            <div class="price-period">/month</div>
-            <div class="price-desc">2 vCPU · 4 GB RAM · 80 GB SSD · 2 TB bandwidth</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>cPanel / Plesk option</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Daily backups</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>99.9% uptime SLA</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Order Now</a>
-          </div>
-          <div class="price-card featured reveal delay-1">
-            <div class="featured-badge">Most Popular</div>
-            <div class="price-service">VPS Business</div>
-            <div class="price-tier">Production Ready</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">79</span></div>
-            <div class="price-period">/month</div>
-            <div class="price-desc">4 vCPU · 16 GB RAM · 200 GB NVMe · 5 TB bandwidth</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Managed OS patching</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Hourly snapshots</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>DDoS protection</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>24/7 NOC monitoring</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn primary">Order Now</a>
-          </div>
-          <div class="price-card reveal delay-2">
-            <div class="price-service">VPS Pro</div>
-            <div class="price-tier">High Traffic</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">159</span></div>
-            <div class="price-period">/month</div>
-            <div class="price-desc">8 vCPU · 32 GB RAM · 500 GB NVMe · 10 TB bandwidth</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Everything in Business</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Load balancer included</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Private VLAN</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>99.99% SLA</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Order Now</a>
-          </div>
-          <div class="price-card reveal delay-3">
-            <div class="price-service">VPS Dedicated</div>
-            <div class="price-tier">Bare Metal</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">349</span></div>
-            <div class="price-period">/month</div>
-            <div class="price-desc">16 vCPU · 64 GB RAM · 1 TB NVMe RAID · Unmetered</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Dedicated hardware</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Fully managed stack</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Custom configuration</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>White-glove onboarding</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Contact Sales</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- IT Infra & System Security -->
-      <div class="pricing-category reveal">
-        <div class="pricing-cat-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" stroke="#0F766E" stroke-width="1.8"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="#0F766E" stroke-width="1.8" stroke-linecap="round"/></svg>
-          IT Infrastructure &amp; System Security
-        </div>
-        <div class="pricing-grid">
-          <div class="price-card reveal">
-            <div class="price-service">IT Essentials</div>
-            <div class="price-tier">Small Office · Up to 25 Devices</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">299</span></div>
-            <div class="price-period">/month managed</div>
-            <div class="price-desc">Complete IT management for small offices including security patching and helpdesk.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Remote monitoring (RMM)</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Patch management</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Antivirus & EDR</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>8×5 helpdesk support</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Get Started</a>
-          </div>
-          <div class="price-card featured reveal delay-1">
-            <div class="featured-badge">⭐ Most Popular</div>
-            <div class="price-service">IT Professional</div>
-            <div class="price-tier">Medium Business · Up to 100 Devices</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">699</span></div>
-            <div class="price-period">/month managed</div>
-            <div class="price-desc">Full-stack IT management with cybersecurity, backup and 24/7 NOC coverage.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Everything in Essentials</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Vulnerability scanning</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Cloud backup (1 TB)</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>24/7 NOC & SOC monitoring</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Incident response SLA 4h</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn primary">Get Started</a>
-          </div>
-          <div class="price-card reveal delay-2">
-            <div class="price-service">IT Enterprise</div>
-            <div class="price-tier">Large Org · 100+ Devices</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">1,499</span></div>
-            <div class="price-period">/month managed</div>
-            <div class="price-desc">Enterprise IT + security operations with vCISO advisory and compliance reporting.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Everything in Professional</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>vCISO advisory (4h/month)</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>ISO 27001 / SOC2 support</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Pentest (annual)</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Incident response SLA 1h</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Contact Sales</a>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /pricing-infra -->
-
-    <!-- ══ NETWORK & SECURITY ══ -->
-    <div id="pricing-network" class="pricing-section" style="display:none">
-
-      <div class="pricing-category reveal">
-        <div class="pricing-cat-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#DC2626" stroke-width="1.8" stroke-linejoin="round"/></svg>
-          Firewall Management
-        </div>
-        <div class="pricing-grid">
-          <div class="price-card reveal">
-            <div class="price-service">Firewall Basic</div>
-            <div class="price-tier">SMB · Up to 50 Users</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">199</span></div>
-            <div class="price-period">/month + hardware cost</div>
-            <div class="price-desc">Managed pfSense or Fortinet 60F deployment with policy management and monitoring.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Firewall rule management</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>IPS/IDS enabled</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>VPN setup (5 tunnels)</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Monthly security report</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Get Started</a>
-          </div>
-          <div class="price-card featured reveal delay-1">
-            <div class="featured-badge">⭐ Most Popular</div>
-            <div class="price-service">Firewall Advanced</div>
-            <div class="price-tier">Mid-Market · Up to 250 Users</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">449</span></div>
-            <div class="price-period">/month + hardware cost</div>
-            <div class="price-desc">Fortinet 100F / Palo Alto PA-220 with NGFW, SD-WAN and full threat management.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>NGFW + deep packet inspection</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>SD-WAN & failover links</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Unlimited VPN tunnels</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>24/7 threat monitoring</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Weekly security report</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn primary">Get Started</a>
-          </div>
-          <div class="price-card reveal delay-2">
-            <div class="price-service">Firewall Enterprise</div>
-            <div class="price-tier">Large Enterprise · 250+ Users</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">999</span></div>
-            <div class="price-period">/month + hardware cost</div>
-            <div class="price-desc">HA firewall cluster with SIEM integration, SOC management and compliance.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>HA active/passive cluster</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>SIEM & log management</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Dedicated SOC analyst</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Zero-trust architecture</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>4-hour incident response SLA</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Contact Sales</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pricing-category reveal">
-        <div class="pricing-cat-title">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="10" width="20" height="8" rx="2" stroke="#059669" stroke-width="1.8"/><circle cx="6" cy="14" r="1" fill="#059669"/><circle cx="10" cy="14" r="1" fill="#059669"/><path d="M8 10V6a4 4 0 0 1 8 0v4" stroke="#059669" stroke-width="1.8" stroke-linecap="round"/></svg>
-          Passive Network &amp; Structured Cabling
-        </div>
-        <div class="pricing-grid cols-2" style="margin:0 auto;">
-          <div class="price-card reveal">
-            <div class="price-service">Network Cabling</div>
-            <div class="price-tier">Per-Project Pricing</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">4</span></div>
-            <div class="price-period">/linear foot (Cat6A) · Min 200ft</div>
-            <div class="price-desc">Structured cabling, patch panels, cable management and testing certification included.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Cat6A / Cat7 / Fiber options</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Patch panels & keystone jacks</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Fluke certified testing</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>As-built documentation</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn">Get a Quote</a>
-          </div>
-          <div class="price-card featured reveal delay-1">
-            <div class="featured-badge">⭐ Full Network Build</div>
-            <div class="price-service">Network Turnkey</div>
-            <div class="price-tier">Complete Office Network</div>
-            <div class="price-amount"><span class="price-currency">$</span><span class="price-num">2,499</span></div>
-            <div class="price-period">one-time · up to 50 drops</div>
-            <div class="price-desc">Complete network infrastructure for a single office — cabling, switches, WiFi, rack and management.</div>
-            <div class="price-divider"></div>
-            <div class="price-features">
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>Up to 50 network drops</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>24-port managed switch</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>2× enterprise WiFi APs</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>12U wall-mount rack</div>
-              <div class="price-feat"><span class="feat-check"><svg viewBox="0 0 10 10" fill="none"><path d="M2 5l2 2 4-4" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/></svg></span>VLAN & QoS configuration</div>
-            </div>
-            <a href="mailto:info@voipstars.com" class="price-btn primary">Get a Quote</a>
-          </div>
-        </div>
-      </div>
-
-    </div><!-- /pricing-network -->
-
-    <p class="price-note reveal">All plans are billed monthly. Annual billing saves up to 20%. Hardware costs quoted separately. <a href="mailto:info@voipstars.com">Talk to our team</a> for custom enterprise pricing.</p>
-
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing" class="section section-border" style="background:var(--surface);">
-  <div class="container">
-
-    <div style="text-align:center;margin-bottom:3.5rem;" class="reveal">
-      <p class="eyebrow" style="justify-content:center">Transparent Pricing</p>
-      <h2 class="h2" style="text-align:center">Competitive Plans for <em>Every Business</em></h2>
-      <p class="section-desc" style="margin:1rem auto 0;text-align:center;max-width:560px;">No hidden fees. No lock-in surprises. All plans include free onboarding, dedicated support, and a 30-day satisfaction guarantee.</p>
-
-      <!-- Toggle -->
-      <div style="display:inline-flex;align-items:center;gap:0;background:var(--white);border:1px solid var(--rule);border-radius:100px;padding:4px;margin-top:2rem;">
-        <button id="toggleMonthly" onclick="setPricingPeriod('monthly')" style="padding:0.45rem 1.25rem;border-radius:100px;border:none;font-family:inherit;font-size:0.85rem;font-weight:700;cursor:pointer;background:var(--ink);color:#fff;transition:all 0.2s;">Monthly</button>
-        <button id="toggleAnnual"  onclick="setPricingPeriod('annual')"  style="padding:0.45rem 1.25rem;border-radius:100px;border:none;font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer;background:none;color:var(--muted);transition:all 0.2s;">Annual <span style="background:#ECFDF5;color:#059669;font-size:0.7rem;padding:2px 7px;border-radius:100px;margin-left:4px;">Save 20%</span></button>
-      </div>
-    </div>
-
-    <!-- ── VoIP SERVICES ── -->
-    <div style="margin-bottom:3.5rem;">
-      <p class="eyebrow reveal" style="margin-bottom:1.5rem;">☎ VoIP &amp; Calling Platforms</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;" class="pricing-grid">
-
-        <!-- Asterisk Starter -->
-        <div class="price-card reveal">
-          <div class="price-card-top" style="background:#FFF3E8;">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;">
-              <div style="width:36px;height:36px;background:#FF6B00;border-radius:9px;display:flex;align-items:center;justify-content:center;">
-                <svg width="18" height="18" viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="white" stroke-width="3.5" stroke-linecap="round"/></svg>
-              </div>
-              <div>
-                <div style="font-weight:800;font-size:0.95rem;color:var(--ink);">Asterisk PBX</div>
-                <div style="font-size:0.7rem;color:#FF6B00;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Starter</div>
-              </div>
-            </div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:2.2rem;font-weight:800;color:var(--ink);letter-spacing:-0.03em;" class="price-val" data-monthly="49" data-annual="39">$49</span>
-              <span style="font-size:0.85rem;color:var(--muted);" class="price-period">/mo</span>
-            </div>
-            <div style="font-size:0.78rem;color:var(--body);margin-top:2px;">Up to 10 extensions</div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features">
-              <li>✓ Custom IVR setup</li>
-              <li>✓ SIP trunk configuration</li>
-              <li>✓ Voicemail to email</li>
-              <li>✓ Basic call routing</li>
-              <li>✓ Email support</li>
-              <li style="color:var(--muted);">✗ Multi-site support</li>
-            </ul>
-            <a href="mailto:info@voipstars.com" class="price-btn" style="background:#FF6B00;color:#fff;">Get Started →</a>
-          </div>
-        </div>
-
-        <!-- Asterisk Pro -->
-        <div class="price-card price-card-featured reveal delay-1">
-          <div class="price-badge">Most Popular</div>
-          <div class="price-card-top" style="background:var(--ink);">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;">
-              <div style="width:36px;height:36px;background:rgba(255,107,0,0.3);border-radius:9px;display:flex;align-items:center;justify-content:center;">
-                <svg width="18" height="18" viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="white" stroke-width="3.5" stroke-linecap="round"/></svg>
-              </div>
-              <div>
-                <div style="font-weight:800;font-size:0.95rem;color:#fff;">Asterisk PBX</div>
-                <div style="font-size:0.7rem;color:#FF8C42;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Professional</div>
-              </div>
-            </div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:2.2rem;font-weight:800;color:#fff;letter-spacing:-0.03em;" class="price-val" data-monthly="129" data-annual="99">$129</span>
-              <span style="font-size:0.85rem;color:rgba(255,255,255,0.5);" class="price-period">/mo</span>
-            </div>
-            <div style="font-size:0.78rem;color:rgba(255,255,255,0.6);margin-top:2px;">Up to 50 extensions</div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features">
-              <li>✓ Everything in Starter</li>
-              <li>✓ Advanced IVR &amp; queues</li>
-              <li>✓ Call recording</li>
-              <li>✓ Multi-site support</li>
-              <li>✓ CRM integration</li>
-              <li>✓ Priority support 24/7</li>
-            </ul>
-            <a href="mailto:info@voipstars.com" class="price-btn" style="background:var(--blue);color:#fff;">Get Started →</a>
-          </div>
-        </div>
-
-        <!-- Asterisk Enterprise -->
-        <div class="price-card reveal delay-2">
-          <div class="price-card-top" style="background:#FFF3E8;">
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:0.75rem;">
-              <div style="width:36px;height:36px;background:#FF6B00;border-radius:9px;display:flex;align-items:center;justify-content:center;">
-                <svg width="18" height="18" viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="white" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="white" stroke-width="3.5" stroke-linecap="round"/></svg>
-              </div>
-              <div>
-                <div style="font-weight:800;font-size:0.95rem;color:var(--ink);">Asterisk PBX</div>
-                <div style="font-size:0.7rem;color:#FF6B00;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Enterprise</div>
-              </div>
-            </div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:2.2rem;font-weight:800;color:var(--ink);letter-spacing:-0.03em;">Custom</span>
-            </div>
-            <div style="font-size:0.78rem;color:var(--body);margin-top:2px;">Unlimited extensions</div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features">
-              <li>✓ Everything in Pro</li>
-              <li>✓ Custom development</li>
-              <li>✓ Dedicated server</li>
-              <li>✓ HA / Failover setup</li>
-              <li>✓ On-site deployment</li>
-              <li>✓ SLA &amp; dedicated TAM</li>
-            </ul>
-            <a href="tel:+923183159409" class="price-btn" style="background:var(--ink);color:#fff;">Contact Sales →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── CLOUD VOIP PLANS ── -->
-    <div style="margin-bottom:3.5rem;">
-      <p class="eyebrow reveal" style="margin-bottom:1.5rem;">☁ Cloud VoIP Platforms (Dialpad, 3CX, RingCentral, Zoom, MS Teams)</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;" class="pricing-grid">
-
-        <!-- Essentials -->
-        <div class="price-card reveal">
-          <div class="price-card-top" style="background:#F3EEFF;">
-            <div style="font-weight:800;font-size:1rem;color:var(--ink);margin-bottom:0.3rem;">Cloud Essentials</div>
-            <div style="font-size:0.72rem;color:#7C3AED;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;">Per User / Month</div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:2.2rem;font-weight:800;color:var(--ink);letter-spacing:-0.03em;" class="price-val" data-monthly="18" data-annual="14">$18</span>
-              <span style="font-size:0.85rem;color:var(--muted);" class="price-period">/user/mo</span>
-            </div>
-            <div style="font-size:0.78rem;color:var(--body);margin-top:2px;">Min. 5 users</div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features">
-              <li>✓ Platform setup &amp; config</li>
-              <li>✓ Number porting</li>
-              <li>✓ Auto attendant</li>
-              <li>✓ Voicemail + transcription</li>
-              <li>✓ Business hours routing</li>
-              <li style="color:var(--muted);">✗ Call recording</li>
-            </ul>
-            <a href="mailto:info@voipstars.com" class="price-btn" style="background:#7C3AED;color:#fff;">Get Started →</a>
-          </div>
-        </div>
-
-        <!-- Business -->
-        <div class="price-card price-card-featured reveal delay-1">
-          <div class="price-badge">Best Value</div>
-          <div class="price-card-top" style="background:var(--ink);">
-            <div style="font-weight:800;font-size:1rem;color:#fff;margin-bottom:0.3rem;">Cloud Business</div>
-            <div style="font-size:0.72rem;color:#A78BFA;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;">Per User / Month</div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:2.2rem;font-weight:800;color:#fff;letter-spacing:-0.03em;" class="price-val" data-monthly="32" data-annual="25">$32</span>
-              <span style="font-size:0.85rem;color:rgba(255,255,255,0.5);" class="price-period">/user/mo</span>
-            </div>
-            <div style="font-size:0.78rem;color:rgba(255,255,255,0.6);margin-top:2px;">Min. 10 users</div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features">
-              <li>✓ Everything in Essentials</li>
-              <li>✓ Call recording &amp; analytics</li>
-              <li>✓ Microsoft 365 / Google integration</li>
-              <li>✓ Multi-level IVR</li>
-              <li>✓ SMS &amp; team messaging</li>
-              <li>✓ 24/7 priority support</li>
-            </ul>
-            <a href="mailto:info@voipstars.com" class="price-btn" style="background:var(--blue);color:#fff;">Get Started →</a>
-          </div>
-        </div>
-
-        <!-- Enterprise Cloud -->
-        <div class="price-card reveal delay-2">
-          <div class="price-card-top" style="background:#F3EEFF;">
-            <div style="font-weight:800;font-size:1rem;color:var(--ink);margin-bottom:0.3rem;">Cloud Enterprise</div>
-            <div style="font-size:0.72rem;color:#7C3AED;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;">Per User / Month</div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:2.2rem;font-weight:800;color:var(--ink);letter-spacing:-0.03em;" class="price-val" data-monthly="55" data-annual="44">$55</span>
-              <span style="font-size:0.85rem;color:var(--muted);" class="price-period">/user/mo</span>
-            </div>
-            <div style="font-size:0.78rem;color:var(--body);margin-top:2px;">Unlimited users</div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features">
-              <li>✓ Everything in Business</li>
-              <li>✓ AI call summaries</li>
-              <li>✓ Advanced compliance tools</li>
-              <li>✓ Multi-site &amp; global DID</li>
-              <li>✓ Custom SLA agreement</li>
-              <li>✓ Dedicated account manager</li>
-            </ul>
-            <a href="tel:+923183159409" class="price-btn" style="background:var(--ink);color:#fff;">Contact Sales →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── INFRASTRUCTURE PLANS ── -->
-    <div style="margin-bottom:3.5rem;">
-      <p class="eyebrow reveal" style="margin-bottom:1.5rem;">🖥 VPS &amp; IT Infrastructure</p>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;" class="pricing-grid-4">
-
-        <div class="price-card reveal">
-          <div class="price-card-top" style="background:#EFF6FF;">
-            <div style="font-weight:800;font-size:0.95rem;color:var(--ink);">VPS Starter</div>
-            <div style="font-size:0.7rem;color:var(--blue);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin:4px 0 12px;">2 vCPU · 4GB RAM</div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:1.9rem;font-weight:800;color:var(--ink);letter-spacing:-0.03em;" class="price-val" data-monthly="29" data-annual="23">$29</span>
-              <span style="font-size:0.8rem;color:var(--muted);" class="price-period">/mo</span>
-            </div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features" style="font-size:0.8rem;">
-              <li>✓ 60 GB SSD storage</li>
-              <li>✓ Managed OS updates</li>
-              <li>✓ Weekly backups</li>
-              <li>✓ 99.9% uptime SLA</li>
-            </ul>
-            <a href="mailto:info@voipstars.com" class="price-btn" style="background:var(--blue);color:#fff;">Order Now</a>
-          </div>
-        </div>
-
-        <div class="price-card price-card-featured reveal delay-1">
-          <div class="price-badge">Popular</div>
-          <div class="price-card-top" style="background:var(--ink);">
-            <div style="font-weight:800;font-size:0.95rem;color:#fff;">VPS Business</div>
-            <div style="font-size:0.7rem;color:#93C5FD;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin:4px 0 12px;">4 vCPU · 8GB RAM</div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:1.9rem;font-weight:800;color:#fff;letter-spacing:-0.03em;" class="price-val" data-monthly="59" data-annual="47">$59</span>
-              <span style="font-size:0.8rem;color:rgba(255,255,255,0.5);" class="price-period">/mo</span>
-            </div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features" style="font-size:0.8rem;">
-              <li>✓ 120 GB NVMe SSD</li>
-              <li>✓ Daily backups</li>
-              <li>✓ Control panel</li>
-              <li>✓ 24/7 monitoring</li>
-            </ul>
-            <a href="mailto:info@voipstars.com" class="price-btn" style="background:var(--blue);color:#fff;">Order Now</a>
-          </div>
-        </div>
-
-        <div class="price-card reveal delay-2">
-          <div class="price-card-top" style="background:#EFF6FF;">
-            <div style="font-weight:800;font-size:0.95rem;color:var(--ink);">VPS Pro</div>
-            <div style="font-size:0.7rem;color:var(--blue);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin:4px 0 12px;">8 vCPU · 16GB RAM</div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:1.9rem;font-weight:800;color:var(--ink);letter-spacing:-0.03em;" class="price-val" data-monthly="99" data-annual="79">$99</span>
-              <span style="font-size:0.8rem;color:var(--muted);" class="price-period">/mo</span>
-            </div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features" style="font-size:0.8rem;">
-              <li>✓ 240 GB NVMe SSD</li>
-              <li>✓ Hourly snapshots</li>
-              <li>✓ Load balancer ready</li>
-              <li>✓ DDoS protection</li>
-            </ul>
-            <a href="mailto:info@voipstars.com" class="price-btn" style="background:var(--blue);color:#fff;">Order Now</a>
-          </div>
-        </div>
-
-        <div class="price-card reveal delay-3">
-          <div class="price-card-top" style="background:#EFF6FF;">
-            <div style="font-weight:800;font-size:0.95rem;color:var(--ink);">Dedicated Server</div>
-            <div style="font-size:0.7rem;color:var(--blue);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin:4px 0 12px;">Bare Metal</div>
-            <div style="display:flex;align-items:baseline;gap:4px;">
-              <span style="font-size:1.9rem;font-weight:800;color:var(--ink);letter-spacing:-0.03em;">Custom</span>
-            </div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features" style="font-size:0.8rem;">
-              <li>✓ Full hardware control</li>
-              <li>✓ Custom spec builds</li>
-              <li>✓ Colocation available</li>
-              <li>✓ Enterprise SLA</li>
-            </ul>
-            <a href="tel:+923183159409" class="price-btn" style="background:var(--ink);color:#fff;">Contact Us</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── NETWORK & SECURITY ── -->
-    <div>
-      <p class="eyebrow reveal" style="margin-bottom:1.5rem;">🛡 Network, Security &amp; Passive Cabling</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;" class="pricing-grid">
-
-        <div class="price-card reveal">
-          <div class="price-card-top" style="background:#ECFDF5;">
-            <div style="font-weight:800;font-size:1rem;color:var(--ink);margin-bottom:0.3rem;">Network Basic</div>
-            <div style="font-size:0.72rem;color:#059669;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;">Setup + Monthly Retainer</div>
-            <div>
-              <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:2px;">
-                <span style="font-size:1.3rem;font-weight:800;color:var(--ink);" class="price-val" data-monthly="299" data-annual="249">$299</span>
-                <span style="font-size:0.8rem;color:var(--muted);" class="price-period">setup</span>
-              </div>
-              <div style="font-size:0.78rem;color:var(--body);">+ $79/mo management</div>
-            </div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features">
-              <li>✓ Firewall config (pfSense/FortiGate)</li>
-              <li>✓ Up to 2 VLANs</li>
-              <li>✓ Basic switch setup</li>
-              <li>✓ Monthly health check</li>
-              <li style="color:var(--muted);">✗ Passive cabling</li>
-            </ul>
-            <a href="mailto:info@voipstars.com" class="price-btn" style="background:#059669;color:#fff;">Get Started →</a>
-          </div>
-        </div>
-
-        <div class="price-card price-card-featured reveal delay-1">
-          <div class="price-badge">Recommended</div>
-          <div class="price-card-top" style="background:var(--ink);">
-            <div style="font-weight:800;font-size:1rem;color:#fff;margin-bottom:0.3rem;">Network Pro</div>
-            <div style="font-size:0.72rem;color:#6EE7B7;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;">Setup + Monthly Retainer</div>
-            <div>
-              <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:2px;">
-                <span style="font-size:1.3rem;font-weight:800;color:#fff;" class="price-val" data-monthly="699" data-annual="559">$699</span>
-                <span style="font-size:0.8rem;color:rgba(255,255,255,0.5);" class="price-period">setup</span>
-              </div>
-              <div style="font-size:0.78rem;color:rgba(255,255,255,0.55);">+ $149/mo management</div>
-            </div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features">
-              <li>✓ Everything in Basic</li>
-              <li>✓ SD-WAN + QoS for VoIP</li>
-              <li>✓ Full passive cabling (per quote)</li>
-              <li>✓ Up to 10 VLANs</li>
-              <li>✓ IDS/IPS + threat monitoring</li>
-              <li>✓ 24/7 NOC monitoring</li>
-            </ul>
-            <a href="mailto:info@voipstars.com" class="price-btn" style="background:var(--blue);color:#fff;">Get Started →</a>
-          </div>
-        </div>
-
-        <div class="price-card reveal delay-2">
-          <div class="price-card-top" style="background:#ECFDF5;">
-            <div style="font-weight:800;font-size:1rem;color:var(--ink);margin-bottom:0.3rem;">Security Shield</div>
-            <div style="font-size:0.72rem;color:#059669;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:0.75rem;">System + Security Audit</div>
-            <div>
-              <div style="display:flex;align-items:baseline;gap:4px;margin-bottom:2px;">
-                <span style="font-size:1.3rem;font-weight:800;color:var(--ink);">From</span>
-                <span style="font-size:1.3rem;font-weight:800;color:var(--ink);" class="price-val" data-monthly="499" data-annual="399">$499</span>
-              </div>
-              <div style="font-size:0.78rem;color:var(--body);">One-time audit + remediation</div>
-            </div>
-          </div>
-          <div class="price-card-body">
-            <ul class="price-features">
-              <li>✓ Full vulnerability assessment</li>
-              <li>✓ Firewall rule hardening</li>
-              <li>✓ Patch management plan</li>
-              <li>✓ Penetration testing report</li>
-              <li>✓ Compliance checklist</li>
-              <li>✓ Remediation guidance</li>
-            </ul>
-            <a href="tel:+923183159409" class="price-btn" style="background:var(--ink);color:#fff;">Request Audit →</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Guarantee strip -->
-    <div style="margin-top:3rem;background:var(--blue-lt);border:1px solid #C7D9FD;border-radius:16px;padding:1.75rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;" class="reveal">
-      <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:200px;">
-        <div style="width:44px;height:44px;background:var(--blue);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="white"/></svg>
-        </div>
-        <div>
-          <div style="font-weight:800;font-size:0.95rem;color:var(--ink);">30-Day Satisfaction Guarantee</div>
-          <div style="font-size:0.82rem;color:var(--body);">Not happy? We'll refund your first month — no questions asked.</div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:200px;">
-        <div style="width:44px;height:44px;background:#059669;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="white"/></svg>
-        </div>
-        <div>
-          <div style="font-weight:800;font-size:0.95rem;color:var(--ink);">Free Consultation Call</div>
-          <div style="font-size:0.82rem;color:var(--body);">+92 318 315 9409 · Our experts help you pick the right plan.</div>
-        </div>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:200px;">
-        <div style="width:44px;height:44px;background:#F59E0B;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/><path d="M12 6v6l4 2" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
-        </div>
-        <div>
-          <div style="font-weight:800;font-size:0.95rem;color:var(--ink);">Fast Onboarding</div>
-          <div style="font-size:0.82rem;color:var(--body);">Most services go live within 48 hours of signup.</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- PRICING -->
-<section id="pricing">
-  <div class="container">
-    <div style="text-align:center;" class="reveal">
-      <p class="eyebrow" style="justify-content:center">Transparent Pricing</p>
-      <h2 class="h2">Competitive Rates for Every<br><em>Service We Offer</em></h2>
-      <p class="section-desc" style="margin:1rem auto 0;text-align:center">No hidden fees. No lock-in. All prices in USD — billed monthly or annually (save 20%).</p>
+      <h2 class="h2">Simple Plans, <em>Competitive Rates</em></h2>
+      <p class="section-desc" style="margin:.75rem auto 0;text-align:center">No hidden fees. All prices in USD. Save 20% on annual billing.</p>
     </div>
 
     <!-- Billing toggle -->
-    <div class="pricing-tabs reveal">
-      <button class="ptab active" onclick="setPricing('monthly',this)">Monthly</button>
-      <button class="ptab" onclick="setPricing('annual',this)">Annual <span class="save-badge">Save 20%</span></button>
+    <div class="pricing-toggle reveal">
+      <button class="ptab active" onclick="setPricing('m',this)">Monthly</button>
+      <button class="ptab" onclick="setPricing('a',this)">Annual <span class="save-badge">-20%</span></button>
     </div>
 
-    <!-- ══ VOIP SOLUTIONS ══ -->
-    <div class="pricing-cat-label reveal">
-      <div class="pcat-icon" style="background:#EBF2FF;">
-        <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="#1A56DB"/></svg>
-      </div>
-      <span class="pcat-title">VoIP &amp; Communication Platforms</span>
-      <div class="pcat-line"></div>
+    <!-- Category tabs -->
+    <div class="pricing-cats reveal">
+      <button class="pcat-btn active" onclick="showCat('voip',this)">
+        <span class="pcat-dot" style="background:#1A56DB;"></span>VoIP Platforms
+      </button>
+      <button class="pcat-btn" onclick="showCat('vps',this)">
+        <span class="pcat-dot" style="background:#0891B2;"></span>VPS &amp; Infrastructure
+      </button>
+      <button class="pcat-btn" onclick="showCat('net',this)">
+        <span class="pcat-dot" style="background:#DC2626;"></span>Network &amp; Security
+      </button>
     </div>
 
-    <div class="pricing-grid reveal">
-      <!-- Asterisk Starter -->
-      <div class="price-card">
-        <div class="price-service-logo" style="background:#FFF3E8;">
-          <svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg>
-        </div>
-        <div class="price-name">Asterisk PBX</div>
-        <div class="price-tier">Starter</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="149" data-annual="119">149</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-note">Up to 10 extensions · 2 SIP trunks</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>Asterisk setup &amp; configuration</li>
-          <li>IVR menu (up to 3 levels)</li>
-          <li>Voicemail to email</li>
-          <li>Call recording (30 days)</li>
-          <li>Business hours routing</li>
-          <li class="na">Custom integrations</li>
-          <li class="na">Dedicated support manager</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-outline">Get Started</a>
-      </div>
+    <!-- ── VoIP Panel ── -->
+    <div class="pricing-panel active" id="cat-voip">
+      <div class="price-row">
 
-      <!-- Asterisk Professional -->
-      <div class="price-card featured">
-        <div class="price-service-logo" style="background:#FFF3E8;">
-          <svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg>
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#FFF3E8;">
+              <svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Asterisk PBX</div>
+              <div class="pc-sub">Starter · 10 ext</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="149" data-a="119">149</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">2 SIP trunks · Basic IVR · Voicemail</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">IVR Setup</span><span class="pc-feat">Call Recording</span><span class="pc-feat">Voicemail to Email</span><span class="pc-feat">Business Hours</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
         </div>
-        <div class="price-name">Asterisk PBX</div>
-        <div class="price-tier">Professional</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="299" data-annual="239">299</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-note">Up to 50 extensions · 10 SIP trunks</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>Full Asterisk deployment on VPS</li>
-          <li>Advanced IVR &amp; call queues</li>
-          <li>CRM integration (HubSpot/Zoho)</li>
-          <li>Call recording (90 days)</li>
-          <li>Real-time analytics dashboard</li>
-          <li>Failover &amp; redundancy setup</li>
-          <li>Priority email &amp; chat support</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-solid">Get Started</a>
-      </div>
 
-      <!-- Asterisk Enterprise -->
-      <div class="price-card enterprise">
-        <div class="price-service-logo" style="background:rgba(255,255,255,0.1);">
-          <svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="rgba(255,255,255,0.8)" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="rgba(255,255,255,0.8)" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="rgba(255,255,255,0.8)" stroke-width="3.5" stroke-linecap="round"/></svg>
+        <div class="pc pop">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#FFF3E8;">
+              <svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Asterisk PBX</div>
+              <div class="pc-sub">Professional · 50 ext</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="299" data-a="239">299</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">10 SIP trunks · Advanced IVR · CRM integration</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Call Queues</span><span class="pc-feat">CRM Sync</span><span class="pc-feat">Analytics</span><span class="pc-feat">Failover</span><span class="pc-feat">Priority Support</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
         </div>
-        <div class="price-name">Asterisk PBX</div>
-        <div class="price-tier">Enterprise</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="599" data-annual="479">599</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-note">Unlimited extensions · Unlimited trunks</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>Multi-site Asterisk cluster</li>
-          <li>Custom IVR scripting &amp; AGI</li>
-          <li>Full API &amp; ERP integration</li>
-          <li>Unlimited call recording</li>
-          <li>99.99% uptime SLA</li>
-          <li>Dedicated account manager</li>
-          <li>24/7 phone &amp; NOC support</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-solid" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);">Contact Sales</a>
-      </div>
-    </div>
 
-    <!-- Cloud VoIP Platforms row -->
-    <div class="pricing-cat-label reveal" style="margin-top:2.5rem;">
-      <div class="pcat-icon" style="background:#ECFEFF;">
-        <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M17.5 19H9a7 7 0 110-14c.93 0 1.83.18 2.66.5A7.001 7.001 0 0120 12.5a6.5 6.5 0 01-2.5 6.5z" stroke="#0891B2" stroke-width="2" stroke-linejoin="round"/></svg>
-      </div>
-      <span class="pcat-title">Cloud VoIP Management (per month)</span>
-      <div class="pcat-line"></div>
-    </div>
+        <div class="pc dark">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:rgba(255,255,255,0.1);">
+              <svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="rgba(255,255,255,0.8)" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="rgba(255,255,255,0.8)" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="rgba(255,255,255,0.8)" stroke-width="3.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Asterisk PBX</div>
+              <div class="pc-sub">Enterprise · Unlimited</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="599" data-a="479">599</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Unlimited ext · Multi-site cluster</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Multi-site</span><span class="pc-feat">Custom AGI</span><span class="pc-feat">ERP Integration</span><span class="pc-feat">99.99% SLA</span><span class="pc-feat">24/7 NOC</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Contact Sales</a>
+        </div>
 
-    <div class="pricing-grid reveal" style="grid-template-columns:repeat(3,1fr);">
-      <!-- 3CX -->
-      <div class="price-card">
-        <div class="price-service-logo" style="background:#E0F5FF;">
-          <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="16" width="4" height="10" rx="2" fill="#00AEEF"/><rect x="9" y="12" width="4" height="14" rx="2" fill="#00AEEF"/><rect x="15" y="8" width="4" height="18" rx="2" fill="#00AEEF"/><rect x="21" y="12" width="4" height="14" rx="2" fill="#00AEEF"/><rect x="27" y="16" width="3" height="10" rx="1.5" fill="#00AEEF"/></svg>
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#E0F5FF;">
+              <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="16" width="4" height="10" rx="2" fill="#00AEEF"/><rect x="9" y="12" width="4" height="14" rx="2" fill="#00AEEF"/><rect x="15" y="8" width="4" height="18" rx="2" fill="#00AEEF"/><rect x="21" y="12" width="4" height="14" rx="2" fill="#00AEEF"/><rect x="27" y="16" width="3" height="10" rx="1.5" fill="#00AEEF"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">3CX</div>
+              <div class="pc-sub">Managed · 25 users</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="199" data-a="159">199</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Hosted on your VPS · WebRTC + mobile apps</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">SIP Trunks</span><span class="pc-feat">Mobile Apps</span><span class="pc-feat">Live Chat</span><span class="pc-feat">WhatsApp Bridge</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
         </div>
-        <div class="price-name">3CX</div>
-        <div class="price-tier">Setup + Management</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="199" data-annual="159">199</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-note">Includes 25 users · Hosted on your VPS</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>3CX installation &amp; licensing</li>
-          <li>SIP trunk configuration</li>
-          <li>Mobile app setup (iOS + Android)</li>
-          <li>WebRTC browser calling</li>
-          <li>Monthly health checks</li>
-          <li>Live chat &amp; WhatsApp bridge</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-outline">Get Started</a>
-      </div>
 
-      <!-- RingCentral -->
-      <div class="price-card featured">
-        <div class="price-service-logo" style="background:#FFF2E0;">
-          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="10" stroke="#FF8800" stroke-width="2.5" fill="none"/><circle cx="16" cy="16" r="6" stroke="#FF8800" stroke-width="2.5" fill="none"/><circle cx="16" cy="16" r="3" fill="#FF8800"/></svg>
+        <div class="pc pop">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#FFF2E0;">
+              <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="10" stroke="#FF8800" stroke-width="2.5" fill="none"/><circle cx="16" cy="16" r="6" stroke="#FF8800" stroke-width="2.5" fill="none"/><circle cx="16" cy="16" r="3" fill="#FF8800"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">RingCentral</div>
+              <div class="pc-sub">Managed UCaaS · 30 users</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="249" data-a="199">249</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Full UCaaS management · Number porting</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">DID Config</span><span class="pc-feat">Auto Attendant</span><span class="pc-feat">MS365 SSO</span><span class="pc-feat">Analytics</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
         </div>
-        <div class="price-name">RingCentral</div>
-        <div class="price-tier">Managed UCaaS</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="249" data-annual="199">249</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-note">Up to 30 users · Full UCaaS management</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>RingCentral tenant setup</li>
-          <li>Number porting &amp; DID config</li>
-          <li>Call queues &amp; auto attendant</li>
-          <li>MS365 / Google Workspace SSO</li>
-          <li>Analytics &amp; reporting</li>
-          <li>Ongoing admin &amp; user support</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-solid">Get Started</a>
-      </div>
 
-      <!-- Zoom Phone + MS Teams bundle -->
-      <div class="price-card">
-        <div class="price-service-logo" style="background:#E6F2FF;">
-          <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="9" width="17" height="14" rx="4" fill="#2D8CFF"/><polygon points="22,12 29,8 29,24 22,20" fill="#2D8CFF"/></svg>
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#E6F2FF;">
+              <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="9" width="17" height="14" rx="4" fill="#2D8CFF"/><polygon points="22,12 29,8 29,24 22,20" fill="#2D8CFF"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Zoom / MS Teams</div>
+              <div class="pc-sub">Deployment · 50 users</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="179" data-a="143">179</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Per platform · Direct Routing setup</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Provisioning</span><span class="pc-feat">Direct Routing</span><span class="pc-feat">Number Porting</span><span class="pc-feat">Training</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
         </div>
-        <div class="price-name">Zoom Phone / MS Teams</div>
-        <div class="price-tier">Deployment &amp; Management</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="179" data-annual="143">179</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-note">Per platform · Up to 50 users</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>Platform provisioning &amp; setup</li>
-          <li>Direct Routing (MS Teams)</li>
-          <li>Number porting support</li>
-          <li>Call recording configuration</li>
-          <li>User onboarding &amp; training</li>
-          <li>Monthly support retainer</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-outline">Get Started</a>
+
       </div>
     </div>
 
-    <!-- ══ VPS & INFRASTRUCTURE ══ -->
-    <div class="pricing-cat-label reveal" style="margin-top:2.5rem;">
-      <div class="pcat-icon" style="background:#EFF6FF;">
-        <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><rect x="2" y="3" width="20" height="7" rx="2" stroke="#1E40AF" stroke-width="2"/><rect x="2" y="14" width="20" height="7" rx="2" stroke="#1E40AF" stroke-width="2"/><circle cx="19" cy="6.5" r="1.5" fill="#22C55E"/><circle cx="19" cy="17.5" r="1.5" fill="#22C55E"/></svg>
-      </div>
-      <span class="pcat-title">VPS &amp; IT Infrastructure</span>
-      <div class="pcat-line"></div>
-    </div>
+    <!-- ── VPS & Infrastructure Panel ── -->
+    <div class="pricing-panel" id="cat-vps">
+      <div class="price-row">
 
-    <div class="pricing-grid reveal" style="grid-template-columns:repeat(4,1fr);">
-      <div class="price-card">
-        <div class="price-service-logo" style="background:#EFF6FF;">
-          <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="5" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="8.5" r="2" fill="#22C55E"/><rect x="3" y="14" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="17.5" r="2" fill="#22C55E"/></svg>
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#EFF6FF;">
+              <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="5" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="8.5" r="2" fill="#22C55E"/><rect x="3" y="14" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="17.5" r="2" fill="#22C55E"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">VPS Starter</div>
+              <div class="pc-sub">2 vCPU · 4 GB · 80 GB SSD</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="49" data-a="39">49</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Managed hosting · Daily backups · 99.9% SLA</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Ubuntu/Debian</span><span class="pc-feat">7-day Backups</span><span class="pc-feat">Basic Firewall</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Order Now</a>
         </div>
-        <div class="price-name">VPS Starter</div>
-        <div class="price-tier">Managed Hosting</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="49" data-annual="39">49</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-note">2 vCPU · 4 GB RAM · 80 GB SSD</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>Ubuntu/Debian/CentOS</li>
-          <li>Daily backups (7-day retention)</li>
-          <li>Basic firewall rules</li>
-          <li>99.9% uptime SLA</li>
-          <li class="na">Managed updates</li>
-          <li class="na">Monitoring &amp; alerts</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-outline">Order Now</a>
-      </div>
 
-      <div class="price-card featured">
-        <div class="price-service-logo" style="background:#EFF6FF;">
-          <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="5" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="8.5" r="2" fill="#22C55E"/><rect x="3" y="14" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="17.5" r="2" fill="#22C55E"/><rect x="3" y="23" width="26" height="4" rx="2" fill="#1E40AF"/><circle cx="26" cy="25" r="1.5" fill="#F59E0B"/></svg>
+        <div class="pc pop">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#EFF6FF;">
+              <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="5" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="8.5" r="2" fill="#22C55E"/><rect x="3" y="14" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="17.5" r="2" fill="#22C55E"/><rect x="3" y="23" width="26" height="4" rx="2" fill="#1E40AF"/><circle cx="26" cy="25" r="1.5" fill="#F59E0B"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">VPS Professional</div>
+              <div class="pc-sub">4 vCPU · 8 GB · 160 GB SSD</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="99" data-a="79">99</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Fully managed · 30-day backups · Monitoring</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">OS Management</span><span class="pc-feat">24/7 Monitoring</span><span class="pc-feat">fail2ban</span><span class="pc-feat">SSL Setup</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Order Now</a>
         </div>
-        <div class="price-name">VPS Professional</div>
-        <div class="price-tier">Managed Hosting</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="99" data-annual="79">99</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-note">4 vCPU · 8 GB RAM · 160 GB SSD</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>Full OS management</li>
-          <li>Daily backups (30-day retention)</li>
-          <li>Advanced firewall &amp; fail2ban</li>
-          <li>24/7 uptime monitoring</li>
-          <li>Managed OS updates</li>
-          <li>SSL &amp; domain config</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-solid">Order Now</a>
-      </div>
 
-      <div class="price-card">
-        <div class="price-service-logo" style="background:#ECFDF5;">
-          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="5" stroke="#0F766E" stroke-width="2.5"/><path d="M16 2 L17.8 6.2 L22.4 5 L22.4 9 L26.6 11.2 L24 15.4 L26.6 19.6 L22.4 21.8 L22.4 25.8 L17.8 24.6 L16 28.8 L14.2 24.6 L9.6 25.8 L9.6 21.8 L5.4 19.6 L8 15.4 L5.4 11.2 L9.6 9 L9.6 5 L14.2 6.2 Z" stroke="#0F766E" stroke-width="2" fill="none"/></svg>
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#ECFDF5;">
+              <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="5" stroke="#0F766E" stroke-width="2.5"/><path d="M16 2L17.8 6.2L22.4 5L22.4 9L26.6 11.2L24 15.4L26.6 19.6L22.4 21.8L22.4 25.8L17.8 24.6L16 28.8L14.2 24.6L9.6 25.8L9.6 21.8L5.4 19.6L8 15.4L5.4 11.2L9.6 9L9.6 5L14.2 6.2Z" stroke="#0F766E" stroke-width="1.8" fill="none"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">IT Infrastructure</div>
+              <div class="pc-sub">One-time Setup Project</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="499" data-a="399">499</span><span class="pc-per">/project</span></div>
+          <div class="pc-cap">Network design + hardware + documentation</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">AD/DNS/DHCP</span><span class="pc-feat">Server Rack</span><span class="pc-feat">Cabling</span><span class="pc-feat">Docs Handover</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Quote</a>
         </div>
-        <div class="price-name">IT Infrastructure</div>
-        <div class="price-tier">Setup Project</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="499" data-annual="399">499</span>
-          <span class="price-period">/project</span>
-        </div>
-        <div class="price-note">One-time setup · Ongoing support add-on available</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>Network architecture design</li>
-          <li>Hardware procurement support</li>
-          <li>Server rack &amp; cabling</li>
-          <li>AD / DNS / DHCP setup</li>
-          <li>Documentation handover</li>
-          <li class="na">Ongoing managed support</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-outline">Get Quote</a>
-      </div>
 
-      <div class="price-card enterprise">
-        <div class="price-service-logo" style="background:rgba(255,255,255,0.1);">
-          <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="5" stroke="rgba(255,255,255,0.7)" stroke-width="2.5"/><path d="M16 2 L17.8 6.2 L22.4 5 L22.4 9 L26.6 11.2 L24 15.4 L26.6 19.6 L22.4 21.8 L22.4 25.8 L17.8 24.6 L16 28.8 L14.2 24.6 L9.6 25.8 L9.6 21.8 L5.4 19.6 L8 15.4 L5.4 11.2 L9.6 9 L9.6 5 L14.2 6.2 Z" stroke="rgba(255,255,255,0.7)" stroke-width="2" fill="none"/></svg>
+        <div class="pc dark">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:rgba(255,255,255,0.1);">
+              <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="5" stroke="rgba(255,255,255,0.7)" stroke-width="2.5"/><path d="M16 2L17.8 6.2L22.4 5L22.4 9L26.6 11.2L24 15.4L26.6 19.6L22.4 21.8L22.4 25.8L17.8 24.6L16 28.8L14.2 24.6L9.6 25.8L9.6 21.8L5.4 19.6L8 15.4L5.4 11.2L9.6 9L9.6 5L14.2 6.2Z" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" fill="none"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Managed IT</div>
+              <div class="pc-sub">Monthly Retainer · 25 devices</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="349" data-a="279">349</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Proactive monitoring · Patch management</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Helpdesk 8h SLA</span><span class="pc-feat">Monthly Report</span><span class="pc-feat">On-site Review</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Contact Sales</a>
         </div>
-        <div class="price-name">Managed IT</div>
-        <div class="price-tier">Monthly Retainer</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="349" data-annual="279">349</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-note">Up to 25 devices managed</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>Proactive monitoring</li>
-          <li>Patch &amp; update management</li>
-          <li>Helpdesk (8h response SLA)</li>
-          <li>Monthly IT health report</li>
-          <li>Incident response</li>
-          <li>Quarterly on-site review</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-solid" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);">Contact Sales</a>
+
       </div>
     </div>
 
-    <!-- ══ NETWORK & SECURITY ══ -->
-    <div class="pricing-cat-label reveal" style="margin-top:2.5rem;">
-      <div class="pcat-icon" style="background:#FEF2F2;">
-        <svg viewBox="0 0 24 24" fill="none" width="18" height="18"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#DC2626" stroke-width="2" stroke-linejoin="round"/></svg>
-      </div>
-      <span class="pcat-title">Network, Security &amp; Passive Infrastructure</span>
-      <div class="pcat-line"></div>
-    </div>
+    <!-- ── Network & Security Panel ── -->
+    <div class="pricing-panel" id="cat-net">
+      <div class="price-row">
 
-    <div class="pricing-grid reveal" style="grid-template-columns:repeat(3,1fr);">
-      <!-- System & Security -->
-      <div class="price-card">
-        <div class="price-service-logo" style="background:#FDF4FF;">
-          <svg viewBox="0 0 32 32" fill="none"><path d="M16 3 L27 7.5 L27 16 C27 22.5 22 27.5 16 29 C10 27.5 5 22.5 5 16 L5 7.5 Z" fill="#7C3AED" opacity="0.15" stroke="#7C3AED" stroke-width="2"/><path d="M11 16 L14.5 19.5 L21 12.5" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#FDF4FF;">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M16 3L27 7.5L27 16C27 22.5 22 27.5 16 29C10 27.5 5 22.5 5 16L5 7.5Z" fill="#7C3AED" opacity="0.15" stroke="#7C3AED" stroke-width="2"/><path d="M11 16L14.5 19.5L21 12.5" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">System &amp; Security</div>
+              <div class="pc-sub">Per Server · Min 3 months</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="299" data-a="239">299</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Hardening · Vulnerability assessment · IDS/IPS</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">CIS Benchmarks</span><span class="pc-feat">Patch Automation</span><span class="pc-feat">Monthly Report</span><span class="pc-feat">Incident Response</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
         </div>
-        <div class="price-name">System &amp; Security</div>
-        <div class="price-tier">Security Audit + Hardening</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="299" data-annual="239">299</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-note">Per server · Minimum 3-month engagement</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>Vulnerability assessment</li>
-          <li>OS hardening &amp; CIS benchmarks</li>
-          <li>Patch management automation</li>
-          <li>Intrusion detection (IDS/IPS)</li>
-          <li>Monthly security report</li>
-          <li>Incident response retainer</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-outline">Get Started</a>
-      </div>
 
-      <!-- Firewalls -->
-      <div class="price-card featured">
-        <div class="price-service-logo" style="background:#FEF2F2;">
-          <svg viewBox="0 0 32 32" fill="none"><path d="M16 29 C9 22 7 15 11.5 8 C13.5 14 16 12 16 12 C16 12 18.5 14 20.5 8 C25 15 23 22 16 29Z" fill="#EF4444"/><path d="M16 29 C12.5 24 11.5 19.5 13.5 15.5 C14.5 18 16 17 16 17 C16 17 17.5 18 18.5 15.5 C20.5 19.5 19.5 24 16 29Z" fill="#FCA5A5"/></svg>
+        <div class="pc pop">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#FEF2F2;">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M16 29C9 22 7 15 11.5 8C13.5 14 16 12 16 12C16 12 18.5 14 20.5 8C25 15 23 22 16 29Z" fill="#EF4444"/><path d="M16 29C12.5 24 11.5 19.5 13.5 15.5C14.5 18 16 17 16 17C16 17 17.5 18 18.5 15.5C20.5 19.5 19.5 24 16 29Z" fill="#FCA5A5"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Firewall Management</div>
+              <div class="pc-sub">Fortinet · pfSense · Palo Alto</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="249" data-a="199">249</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Deploy + manage + 24/7 alert monitoring</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">VPN Setup</span><span class="pc-feat">Geo-blocking</span><span class="pc-feat">Rule Audit</span><span class="pc-feat">Threat Feeds</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
         </div>
-        <div class="price-name">Firewall</div>
-        <div class="price-tier">Setup + Managed</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="249" data-annual="199">249</span>
-          <span class="price-period">/mo</span>
-        </div>
-        <div class="price-note">Fortinet / pfSense / Palo Alto</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>Firewall deployment &amp; config</li>
-          <li>Rule-set design &amp; review</li>
-          <li>VPN setup (site-to-site + SSL)</li>
-          <li>Geo-blocking &amp; threat feeds</li>
-          <li>Weekly rule audit</li>
-          <li>24/7 alert monitoring</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-solid">Get Started</a>
-      </div>
 
-      <!-- Routers & Switches + Passive Bundle -->
-      <div class="price-card">
-        <div class="price-service-logo" style="background:#ECFDF5;">
-          <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="12" width="26" height="9" rx="3" fill="#059669"/><circle cx="8" cy="16.5" r="2" fill="white"/><circle cx="14" cy="16.5" r="2" fill="white"/><circle cx="20" cy="16.5" r="2" fill="white"/><circle cx="26" cy="16.5" r="2" fill="white"/></svg>
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#ECFDF5;">
+              <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="12" width="26" height="9" rx="3" fill="#059669"/><circle cx="8" cy="16.5" r="2" fill="white"/><circle cx="14" cy="16.5" r="2" fill="white"/><circle cx="20" cy="16.5" r="2" fill="white"/><circle cx="26" cy="16.5" r="2" fill="white"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Routers &amp; Switches</div>
+              <div class="pc-sub">Installation Project</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="499" data-a="399">499</span><span class="pc-per">/project</span></div>
+          <div class="pc-cap">Cisco / Ubiquiti / MikroTik · VLAN + QoS</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">SD-WAN</span><span class="pc-feat">VoIP QoS</span><span class="pc-feat">Multi-WAN</span><span class="pc-feat">Full Docs</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Quote</a>
         </div>
-        <div class="price-name">Routers, Switches &amp; Passive</div>
-        <div class="price-tier">Installation Project</div>
-        <div class="price-amount">
-          <span class="price-currency">$</span>
-          <span class="price-value" data-monthly="699" data-annual="559">699</span>
-          <span class="price-period">/project</span>
+
+        <div class="pc dark">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:rgba(8,145,178,0.2);">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M4 22Q16 4 28 22" stroke="#67E8F9" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M8 25Q16 11 24 25" stroke="#67E8F9" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="16" cy="29.5" r="2" fill="#67E8F9"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Passive Network</div>
+              <div class="pc-sub">Structured Cabling Project</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="299" data-a="239">299</span><span class="pc-per">/project</span></div>
+          <div class="pc-cap">Cat6/6A cabling · Fiber · Patch panels</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Fiber Termination</span><span class="pc-feat">Server Room</span><span class="pc-feat">Labelling</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Contact Sales</a>
         </div>
-        <div class="price-note">Up to 24-port switch + structured cabling</div>
-        <div class="price-divider"></div>
-        <ul class="price-features">
-          <li>Cisco / Ubiquiti / MikroTik config</li>
-          <li>VLAN &amp; QoS for VoIP traffic</li>
-          <li>SD-WAN / multi-WAN failover</li>
-          <li>Structured Cat6/6A cabling</li>
-          <li>Fiber patch panel termination</li>
-          <li>Full network documentation</li>
-        </ul>
-        <a href="mailto:info@voipstars.com" class="price-cta price-cta-outline">Get Quote</a>
+
       </div>
     </div>
 
-    <p class="pricing-footnote reveal">
-      💡 All prices are starting rates in USD. Final pricing depends on scope, number of users, and location.<br>
-      Custom enterprise packages available — <a href="mailto:info@voipstars.com" style="color:var(--blue);font-weight:600;">email us</a> or call <a href="tel:+923183159409" style="color:var(--blue);font-weight:600;">+92 318 315 9409</a> for a tailored quote.
-    </p>
+    <!-- Footnote -->
+    <div class="pricing-footnote reveal">
+      💡 Starting rates in USD. Final pricing depends on scope &amp; scale. &nbsp;·&nbsp;
+      <a href="mailto:info@voipstars.com">info@voipstars.com</a> &nbsp;·&nbsp;
+      <a href="tel:+923183159409">+92 318 315 9409</a>
+    </div>
+
   </div>
 </section>
 
@@ -3657,13 +2673,21 @@ const countObs = new IntersectionObserver(entries => {
 }, { threshold: 0.4 });
 document.querySelectorAll('.hero-proof, .stats-panel').forEach(el => countObs.observe(el));
 
-/* PRICING TOGGLE */
+/* PRICING */
+let pricingMode = 'm';
 function setPricing(mode, btn) {
+  pricingMode = mode;
   document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  document.querySelectorAll('.price-value').forEach(el => {
+  document.querySelectorAll('.pc-amt').forEach(el => {
     el.textContent = el.dataset[mode];
   });
+}
+function showCat(cat, btn) {
+  document.querySelectorAll('.pcat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pricing-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('cat-' + cat).classList.add('active');
 }
 
 /* ═══════════════════════════════════════════
