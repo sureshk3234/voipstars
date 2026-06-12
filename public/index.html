@@ -1,1 +1,3101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VoIP Stars — Enterprise IT & Communications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:       #0B0F1A;
+  --ink2:      #1C2133;
+  --slate:     #2E3A55;
+  --body:      #4A5568;
+  --muted:     #8895A7;
+  --rule:      #E2E8F0;
+  --surface:   #F7F8FC;
+  --surface2:  #EEF1F8;
+  --white:     #FFFFFF;
+  --blue:      #1A56DB;
+  --blue-lt:   #EBF2FF;
+  --blue-md:   #3B6FEA;
+  --cyan:      #0891B2;
+  --cyan-lt:   #ECFEFF;
+  --gold:      #B45309;
+  --gold-lt:   #FFFBEB;
+  --green:     #059669;
+  --green-lt:  #ECFDF5;
+}
 
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── UTILS ─── */
+.serif { font-family: 'Instrument Serif', serif; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+@media(max-width:768px){ .container { padding: 0 24px; } }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 68px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule);
+  transition: box-shadow 0.3s;
+}
+nav.elevated { box-shadow: 0 4px 24px rgba(11,15,26,0.07); }
+.nav-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 48px;
+  height: 100%;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem;
+}
+
+.logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; flex-shrink: 0;
+}
+.logo-mark {
+  width: 36px; height: 36px;
+  background: var(--ink);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  flex-shrink: 0;
+}
+.logo-text {
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.logo-text span { color: var(--blue-md); }
+
+.nav-menu {
+  display: flex; align-items: center; gap: 2rem; list-style: none;
+}
+.nav-menu a {
+  text-decoration: none; color: var(--slate);
+  font-size: 0.875rem; font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-menu a:hover { color: var(--ink); }
+
+.nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+.btn-text {
+  font-size: 0.875rem; font-weight: 600; color: var(--slate);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-text:hover { background: var(--surface); color: var(--ink); }
+
+.btn-solid {
+  background: var(--ink);
+  color: #fff;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.875rem; font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-solid:hover { background: var(--ink2); transform: translateY(-1px); }
+
+/* ─── HERO ─── */
+#hero {
+  padding: 148px 0 100px;
+  position: relative;
+  overflow: hidden;
+  background: #f0f4ff;
+}
+
+#voip-canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+}
+
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none; z-index: 1;
+}
+.hero-bg svg { width: 100%; height: 100%; }
+
+/* Floating call bubbles */
+.call-bubble {
+  position: absolute;
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--ink);
+  box-shadow: 0 4px 20px rgba(11,15,26,0.08);
+  pointer-events: none; z-index: 2;
+  white-space: nowrap;
+}
+.call-bubble .cb-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.cb-dot-green  { background: #22C55E; animation: cbPulse 1.5s ease-in-out infinite; }
+.cb-dot-blue   { background: #3B6FEA; animation: cbPulse 1.5s 0.5s ease-in-out infinite; }
+.cb-dot-orange { background: #F59E0B; animation: cbPulse 1.5s 1s ease-in-out infinite; }
+@keyframes cbPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.5)} }
+
+.cb1 { top: 18%; left: 2%; animation: floatA 6s ease-in-out infinite; }
+.cb2 { top: 60%; left: 1%; animation: floatB 7s ease-in-out infinite; }
+.cb3 { top: 75%; right: 2%; animation: floatA 8s 1s ease-in-out infinite; }
+.cb4 { top: 22%; right: 2%; animation: floatB 5s 2s ease-in-out infinite; }
+@keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+@keyframes floatB { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: 5rem;
+  align-items: center;
+  position: relative;
+  z-index: 3;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--blue-md);
+  background: var(--blue-lt); border: 1px solid #C7D9FD;
+  padding: 5px 12px; border-radius: 100px;
+  margin-bottom: 1.5rem;
+}
+
+h1.hero-h1 {
+  font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+h1.hero-h1 em {
+  font-style: normal;
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  color: var(--blue-md);
+}
+
+.hero-desc {
+  font-size: 1.05rem;
+  color: var(--body);
+  line-height: 1.75;
+  max-width: 480px;
+  margin-bottom: 2.5rem;
+  font-weight: 400;
+}
+
+.hero-cta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+
+.btn-hero {
+  background: var(--blue);
+  color: #fff;
+  padding: 0.85rem 1.75rem;
+  border-radius: 10px;
+  font-size: 0.95rem; font-weight: 700;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 2px 12px rgba(26,86,219,0.3);
+}
+.btn-hero:hover { background: var(--blue-md); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,86,219,0.35); }
+
+.btn-outline {
+  border: 1.5px solid var(--rule);
+  color: var(--ink);
+  padding: 0.85rem 1.75rem;
+  border-radius: 10px;
+  font-size: 0.95rem; font-weight: 600;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.btn-outline:hover { border-color: var(--ink); background: var(--surface); }
+
+.hero-proof {
+  display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+}
+.proof-item { display: flex; flex-direction: column; }
+.proof-num {
+  font-size: 1.5rem; font-weight: 800; color: var(--ink);
+  letter-spacing: -0.03em; line-height: 1;
+}
+.proof-label { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
+.proof-divider { width: 1px; height: 32px; background: var(--rule); }
+
+/* Hero card panel */
+.hero-panel {
+  position: relative;
+}
+.panel-card {
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(11,15,26,0.08), 0 2px 8px rgba(11,15,26,0.04);
+}
+.panel-header {
+  background: var(--ink);
+  padding: 1.25rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.panel-title {
+  color: #fff; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.01em;
+}
+.panel-dots { display: flex; gap: 6px; }
+.panel-dots span {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+}
+.panel-dots span:first-child { background: #EF4444; }
+.panel-dots span:nth-child(2) { background: #F59E0B; }
+.panel-dots span:nth-child(3) { background: #10B981; }
+
+.panel-body { padding: 1.5rem; }
+
+.service-pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; }
+.service-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.78rem; font-weight: 600;
+  padding: 5px 12px; border-radius: 100px;
+  border: 1px solid;
+}
+.pill-blue { background: var(--blue-lt); color: var(--blue); border-color: #C7D9FD; }
+.pill-cyan { background: var(--cyan-lt); color: var(--cyan); border-color: #A5F3FC; }
+.pill-gold { background: var(--gold-lt); color: var(--gold); border-color: #FDE68A; }
+.pill-green { background: var(--green-lt); color: var(--green); border-color: #A7F3D0; }
+
+.metric-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
+.metric-box {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 1rem;
+}
+.metric-val { font-size: 1.3rem; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.metric-lbl { font-size: 0.72rem; color: var(--muted); margin-top: 2px; }
+
+.status-list { display: flex; flex-direction: column; gap: 8px; }
+.status-row {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 0.8rem;
+}
+.status-name { color: var(--slate); font-weight: 500; }
+.status-bar-wrap { flex: 1; height: 4px; background: var(--rule); border-radius: 4px; margin: 0 12px; }
+.status-bar {
+  height: 100%; border-radius: 4px;
+  background: var(--blue-md);
+  transition: width 1.5s ease;
+}
+.status-val { color: var(--muted); font-size: 0.75rem; width: 36px; text-align: right; }
+
+.floating-badge {
+  position: absolute;
+  background: var(--white);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 4px 20px rgba(11,15,26,0.1);
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.78rem; font-weight: 600;
+  animation: floatBadge 4s ease-in-out infinite;
+}
+.badge-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+}
+.badge1 { top: -20px; right: -20px; animation-delay: 0s; }
+.badge2 { bottom: -16px; left: -20px; animation-delay: -2s; }
+@keyframes floatBadge {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ─── TICKER ─── */
+#ticker {
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 1.25rem 0;
+  background: var(--surface);
+  overflow: hidden;
+}
+.ticker-label {
+  text-align: center; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 1rem;
+}
+.ticker-track {
+  display: flex; gap: 3rem; align-items: center;
+  white-space: nowrap;
+  animation: ticker 25s linear infinite;
+}
+.ticker-item {
+  font-size: 0.85rem; font-weight: 700; color: var(--muted);
+  letter-spacing: 0.02em; flex-shrink: 0;
+  transition: color 0.2s;
+}
+.ticker-item:hover { color: var(--ink); }
+.ticker-dot { color: var(--rule); margin-right: -2rem; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── SECTION COMMON ─── */
+.section { padding: 100px 0; }
+.section-alt { background: var(--surface); }
+.section-border { border-top: 1px solid var(--rule); }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--blue-md);
+  margin-bottom: 1rem;
+}
+.eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 18px; height: 2px;
+  background: var(--blue-md);
+  border-radius: 2px;
+}
+
+h2.h2 {
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+h2.h2 em {
+  font-style: normal;
+  font-family: 'Instrument Serif', serif;
+  font-weight: 400;
+  color: var(--blue-md);
+}
+
+.section-desc {
+  font-size: 1rem; color: var(--body); line-height: 1.75;
+  max-width: 480px; font-weight: 400;
+}
+
+/* ─── SERVICES ─── */
+.services-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 3rem; align-items: end;
+  margin-bottom: 4rem;
+}
+.services-header-right {
+  display: flex; align-items: flex-end;
+}
+
+.tag-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter-tag {
+  font-size: 0.78rem; font-weight: 600;
+  padding: 5px 14px; border-radius: 100px;
+  border: 1.5px solid var(--rule);
+  color: var(--muted);
+  background: none; cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.filter-tag.active, .filter-tag:hover {
+  background: var(--ink); color: #fff; border-color: var(--ink);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.svc-card {
+  background: var(--white);
+  padding: 2rem;
+  position: relative;
+  transition: background 0.2s;
+  cursor: default;
+}
+.svc-card:hover { background: var(--surface); }
+
+.svc-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; margin-bottom: 1.1rem;
+}
+.ic-blue { background: var(--blue-lt); }
+.ic-cyan { background: var(--cyan-lt); }
+.ic-gold { background: var(--gold-lt); }
+.ic-green { background: var(--green-lt); }
+
+.svc-cat {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 0.5rem;
+}
+.cat-voip { color: var(--blue-md); }
+.cat-infra { color: var(--cyan); }
+.cat-security { color: var(--gold); }
+.cat-network { color: var(--green); }
+
+.svc-card h3 { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+.svc-card p { font-size: 0.85rem; color: var(--body); line-height: 1.65; }
+
+.svc-arrow {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1.5px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; color: var(--muted);
+  transition: all 0.2s;
+}
+.svc-card:hover .svc-arrow {
+  border-color: var(--blue); color: var(--blue);
+  background: var(--blue-lt);
+}
+
+/* ─── FEATURES / WHY ─── */
+.features-layout {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: center;
+}
+.features-list { display: flex; flex-direction: column; gap: 0; }
+.feat {
+  display: flex; gap: 1.25rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--rule);
+  transition: padding-left 0.2s;
+  cursor: default;
+}
+.feat:first-child { border-top: 1px solid var(--rule); }
+.feat:hover { padding-left: 0.5rem; }
+
+.feat-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.6rem; color: var(--rule);
+  line-height: 1; flex-shrink: 0; width: 36px;
+  transition: color 0.2s;
+}
+.feat:hover .feat-num { color: var(--blue-lt); }
+.feat-body h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem; }
+.feat-body p { font-size: 0.85rem; color: var(--body); line-height: 1.65; }
+
+.stats-panel {
+  background: var(--ink);
+  border-radius: 20px;
+  padding: 2.5rem;
+  color: #fff;
+}
+.stats-panel-title {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+  margin-bottom: 2rem;
+}
+.big-stat { margin-bottom: 2rem; }
+.big-stat-num {
+  font-size: 3.5rem; font-weight: 800; letter-spacing: -0.04em;
+  line-height: 1; font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.big-stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-top: 4px; }
+.mini-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+.mini-stat {
+  background: rgba(255,255,255,0.07);
+  border-radius: 12px; padding: 1rem;
+}
+.mini-stat-val { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; }
+.mini-stat-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-top: 3px; }
+
+.uptime-bar {
+  background: rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 1rem;
+}
+.uptime-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.uptime-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+.uptime-val { font-size: 0.85rem; font-weight: 700; color: #10B981; }
+.uptime-track {
+  height: 6px; background: rgba(255,255,255,0.1);
+  border-radius: 4px; overflow: hidden;
+}
+.uptime-fill {
+  height: 100%; background: linear-gradient(90deg, #10B981, #34D399);
+  border-radius: 4px; width: 99.9%;
+}
+
+/* ─── PROCESS ─── */
+#process { text-align: center; }
+.process-grid {
+  display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem;
+  margin-top: 4rem;
+  position: relative;
+}
+.process-grid::before {
+  content: '';
+  position: absolute;
+  top: 28px; left: calc(12.5% + 14px); right: calc(12.5% + 14px);
+  height: 1px; background: var(--rule);
+}
+
+.step-card {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 1rem; padding: 1.5rem 1rem;
+  border-radius: 14px;
+  transition: background 0.2s, transform 0.2s;
+  cursor: default;
+}
+.step-card:hover { background: var(--surface); transform: translateY(-3px); }
+
+.step-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: var(--white); border: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem;
+  position: relative; z-index: 2;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.step-card:hover .step-icon {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 4px var(--blue-lt);
+}
+.step-num {
+  position: absolute; top: -8px; right: -8px;
+  width: 20px; height: 20px;
+  background: var(--blue); color: #fff;
+  border-radius: 50%; font-size: 0.65rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.step-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--ink); }
+.step-card p { font-size: 0.82rem; color: var(--body); line-height: 1.6; }
+
+/* ─── TESTIMONIAL / CTA ─── */
+#cta {
+  background: var(--ink);
+  color: #fff;
+  padding: 100px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+#cta::before {
+  content: '';
+  position: absolute; top: -300px; left: 50%;
+  transform: translateX(-50%);
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,86,219,0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+  margin-bottom: 1.5rem;
+}
+.cta-eyebrow::before { content:''; display:inline-block; width:18px; height:2px; background:rgba(255,255,255,0.2); border-radius:2px; }
+
+.cta-h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.1; margin-bottom: 1rem; color: #fff;
+}
+.cta-h2 em {
+  font-style: normal;
+  font-family: 'Instrument Serif', serif; font-weight: 400;
+  color: #93C5FD;
+}
+
+.cta-sub { font-size: 1rem; color: rgba(255,255,255,0.55); margin-bottom: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+
+.cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+.btn-white {
+  background: #fff; color: var(--ink);
+  padding: 0.85rem 1.75rem; border-radius: 10px;
+  font-size: 0.95rem; font-weight: 700;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-white:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.btn-ghost-white {
+  border: 1.5px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.85);
+  padding: 0.85rem 1.75rem; border-radius: 10px;
+  font-size: 0.95rem; font-weight: 600;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: background 0.2s, border-color 0.2s;
+}
+.btn-ghost-white:hover { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.4); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 64px 0 32px;
+  color: #fff;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 3rem;
+}
+
+.footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-bottom: 1rem; }
+.footer-logo-mark { width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 8px; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:16px; }
+.footer-logo-text { font-size: 1.05rem; font-weight:700; color:#fff; letter-spacing:-0.02em; }
+.footer-logo-text span { color: #93C5FD; }
+
+.footer-tagline { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 260px; margin-bottom: 1.5rem; }
+
+.footer-socials { display: flex; gap: 8px; }
+.social-btn {
+  width: 34px; height: 34px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.5); font-size: 0.8rem;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.social-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+
+.footer-col h5 {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+  margin-bottom: 1.25rem;
+}
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+.footer-col a {
+  font-size: 0.85rem; color: rgba(255,255,255,0.55);
+  text-decoration: none; transition: color 0.2s;
+}
+.footer-col a:hover { color: #fff; }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 1.5rem;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.3); }
+.footer-legal { display: flex; gap: 1.5rem; }
+.footer-legal a { font-size: 0.78rem; color: rgba(255,255,255,0.3); text-decoration: none; }
+.footer-legal a:hover { color: rgba(255,255,255,0.6); }
+
+/* ─── REVEAL ─── */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* ─── ANIMATED SVG LOGOS ─── */
+.svc-logo {
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.1rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.svc-card:hover .svc-logo { transform: scale(1.08); }
+.svc-logo svg { width: 32px; height: 32px; }
+
+/* Asterisk logo animation */
+@keyframes asteriskSpin { 0%,100%{transform:rotate(0deg)} 50%{transform:rotate(30deg)} }
+.logo-asterisk:hover svg { animation: asteriskSpin 0.6s ease; }
+
+/* Dialpad dots animation */
+@keyframes dialpadPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
+.svc-card:hover .dp-dot { animation: dialpadPulse 0.5s ease infinite; }
+.svc-card:hover .dp-dot:nth-child(2){animation-delay:0.08s}
+.svc-card:hover .dp-dot:nth-child(3){animation-delay:0.16s}
+.svc-card:hover .dp-dot:nth-child(4){animation-delay:0.24s}
+.svc-card:hover .dp-dot:nth-child(5){animation-delay:0.32s}
+.svc-card:hover .dp-dot:nth-child(6){animation-delay:0.4s}
+.svc-card:hover .dp-dot:nth-child(7){animation-delay:0.48s}
+.svc-card:hover .dp-dot:nth-child(8){animation-delay:0.56s}
+.svc-card:hover .dp-dot:nth-child(9){animation-delay:0.64s}
+
+/* 3CX wave animation */
+@keyframes waveBounce { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(1.6)} }
+.svc-card:hover .wave-bar { animation: waveBounce 0.5s ease infinite; }
+.svc-card:hover .wave-bar:nth-child(2){animation-delay:0.1s}
+.svc-card:hover .wave-bar:nth-child(3){animation-delay:0.2s}
+.svc-card:hover .wave-bar:nth-child(4){animation-delay:0.1s}
+
+/* RingCentral ring animation */
+@keyframes ringExpand { 0%{r:6;opacity:1} 100%{r:14;opacity:0} }
+.svc-card:hover .rc-pulse { animation: ringExpand 1s ease-out infinite; }
+
+/* Zoom animation */
+@keyframes zoomCam { 0%,100%{transform:translateX(0)} 50%{transform:translateX(3px)} }
+.svc-card:hover .zoom-cam { animation: zoomCam 0.5s ease infinite; }
+
+/* Teams animation */
+@keyframes teamsShift { 0%,100%{transform:translateX(0)} 50%{transform:translateX(-2px)} }
+.svc-card:hover .teams-t { animation: teamsShift 0.5s ease infinite; }
+
+/* VPS server blink */
+@keyframes serverBlink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.svc-card:hover .vps-light { animation: serverBlink 0.6s ease infinite; }
+.svc-card:hover .vps-light:nth-child(2){animation-delay:0.2s}
+.svc-card:hover .vps-light:nth-child(3){animation-delay:0.4s}
+
+/* Infrastructure gear */
+@keyframes gearSpin { from{transform:rotate(0deg) translate(-16px,-16px)} to{transform:rotate(360deg) translate(-16px,-16px)} }
+.svc-card:hover .gear-path { animation: gearSpin 2s linear infinite; transform-origin: 16px 16px; }
+
+/* Security shield pulse */
+@keyframes shieldPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+.svc-card:hover .shield-icon { animation: shieldPulse 0.6s ease infinite; }
+
+/* Passive network signal */
+@keyframes signalFade { 0%,100%{opacity:0.3} 50%{opacity:1} }
+.svc-card:hover .sig1{animation:signalFade 0.8s ease infinite;}
+.svc-card:hover .sig2{animation:signalFade 0.8s 0.15s ease infinite;}
+.svc-card:hover .sig3{animation:signalFade 0.8s 0.3s ease infinite;}
+
+/* Firewall flame */
+@keyframes flameDance { 0%,100%{d:path("M16 28 C10 22 8 16 12 10 C14 15 16 13 16 13 C16 13 18 15 20 10 C24 16 22 22 16 28Z")} 50%{d:path("M16 28 C9 21 7 15 13 9 C14 14 15 12 16 12 C16 12 18 14 19 9 C25 15 23 21 16 28Z")} }
+.svc-card:hover .flame { animation: flameDance 0.4s ease infinite; }
+
+/* Router signal waves */
+@keyframes routerPing { 0%{opacity:0;transform:scale(0.5)} 50%{opacity:1} 100%{opacity:0;transform:scale(1.3)} }
+.svc-card:hover .router-wave { animation: routerPing 1s ease-out infinite; }
+.svc-card:hover .router-wave:nth-child(2){animation-delay:0.3s}
+.svc-card:hover .router-wave:nth-child(3){animation-delay:0.6s}
+
+/* ─── LOGO TICKER ─── */
+.logo-ticker-wrap { overflow: hidden; }
+.logo-ticker {
+  display: flex; gap: 2.5rem; align-items: center;
+  animation: ticker 30s linear infinite;
+  width: max-content;
+}
+.logo-ticker-item {
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity 0.3s;
+  cursor: default;
+}
+.logo-ticker-item:hover { opacity: 1; }
+.logo-ticker-item svg { width: 28px; height: 28px; }
+.logo-ticker-item span {
+  font-size: 0.85rem; font-weight: 700;
+  color: var(--slate); white-space: nowrap;
+}
+.ticker-sep { color: var(--rule); font-size: 1.2rem; flex-shrink:0; }
+
+/* ─── SLOGANS MARQUEE ─── */
+#slogans {
+  background: var(--ink);
+  padding: 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.slogan-track-wrap { display: flex; flex-direction: column; gap: 0; }
+.slogan-row {
+  display: flex; align-items: center; gap: 0;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  white-space: nowrap;
+}
+.slogan-row:last-child { border-bottom: none; }
+.slogan-inner {
+  display: flex; gap: 3rem; align-items: center;
+  animation: ticker 35s linear infinite;
+}
+.slogan-inner.reverse { animation-direction: reverse; animation-duration: 28s; }
+.slogan-item {
+  display: inline-flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.slogan-text {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.01em;
+}
+.slogan-icon {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.slogan-dot {
+  width: 5px; height: 5px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.slogan-star {
+  font-size: 0.8rem;
+  color: #F59E0B;
+  flex-shrink: 0;
+}
+
+/* ─── CALLING SOLUTIONS SECTION ─── */
+#calling {
+  padding: 100px 0;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+#calling::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(circle at 10% 50%, rgba(26,86,219,0.04) 0%, transparent 50%),
+    radial-gradient(circle at 90% 50%, rgba(8,145,178,0.04) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.calling-header { text-align: center; margin-bottom: 4rem; }
+
+.calling-platforms {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.platform-card {
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  padding: 2rem;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  cursor: default;
+}
+.platform-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(11,15,26,0.1);
+  border-color: transparent;
+}
+.platform-card::before {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 20px;
+  padding: 1px;
+  background: var(--card-gradient);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.platform-card:hover::before { opacity: 1; }
+
+.platform-logo-wrap {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+.platform-logo-wrap svg { width: 40px; height: 40px; }
+
+.platform-ring {
+  position: absolute; inset: -4px;
+  border-radius: 20px;
+  border: 2px solid currentColor;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.3s, transform 0.3s;
+}
+.platform-card:hover .platform-ring {
+  opacity: 0.2; transform: scale(1);
+}
+
+.platform-name {
+  font-size: 1.1rem; font-weight: 800;
+  color: var(--ink); margin-bottom: 0.35rem;
+  letter-spacing: -0.02em;
+}
+.platform-tag {
+  display: inline-block;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 100px;
+  margin-bottom: 0.85rem;
+}
+.platform-desc {
+  font-size: 0.85rem; color: var(--body);
+  line-height: 1.65; margin-bottom: 1.25rem;
+}
+.platform-features {
+  display: flex; flex-direction: column; gap: 6px;
+}
+.platform-feat {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.8rem; color: var(--slate);
+}
+.platform-feat::before {
+  content: '';
+  width: 16px; height: 16px; flex-shrink: 0;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  background: var(--feat-bg);
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 10 10' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 5L4 7L8 3' stroke='%23059669' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Calling banner */
+.calling-banner {
+  background: var(--ink);
+  border-radius: 20px;
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  position: relative;
+  overflow: hidden;
+}
+.calling-banner::before {
+  content: '';
+  position: absolute; top: -80px; right: -80px;
+  width: 300px; height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26,86,219,0.3) 0%, transparent 70%);
+  pointer-events: none;
+}
+.calling-banner::after {
+  content: '';
+  position: absolute; bottom: -60px; left: -40px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(8,145,178,0.2) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.banner-left { position: relative; z-index: 1; }
+.banner-label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  margin-bottom: 0.6rem;
+}
+.banner-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2rem; font-weight: 400;
+  color: #fff; line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+.banner-sub { font-size: 0.9rem; color: rgba(255,255,255,0.5); }
+
+.banner-right {
+  display: flex; align-items: center; gap: 1rem;
+  flex-wrap: wrap; position: relative; z-index: 1;
+}
+
+/* Phone pulse animation */
+@keyframes phonePulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(26,86,219,0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(26,86,219,0); }
+}
+.phone-cta-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--blue);
+  color: #fff;
+  padding: 0.9rem 1.75rem;
+  border-radius: 100px;
+  font-size: 0.95rem; font-weight: 700;
+  text-decoration: none;
+  animation: phonePulse 2s ease-in-out infinite;
+  transition: background 0.2s;
+}
+.phone-cta-btn:hover { background: var(--blue-md); }
+
+.phone-icon-wrap {
+  width: 48px; height: 48px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ─── PRICING SECTION ─── */
+#pricing { padding: 80px 0; background: var(--surface); }
+
+/* Toggle pill */
+.pricing-toggle {
+  display: flex; align-items: center; justify-content: center; gap: 0;
+  background: var(--white); border: 1px solid var(--rule);
+  border-radius: 100px; padding: 4px;
+  width: fit-content; margin: 1.5rem auto 2.5rem;
+}
+.ptab {
+  padding: 0.45rem 1.25rem; border-radius: 100px;
+  font-size: 0.82rem; font-weight: 600; cursor: pointer;
+  border: none; background: none; color: var(--muted);
+  transition: all 0.2s; font-family: inherit; white-space: nowrap;
+}
+.ptab.active { background: var(--ink); color: #fff; }
+.save-badge {
+  background: #DCFCE7; color: #15803D;
+  font-size: 0.65rem; font-weight: 700;
+  padding: 1px 7px; border-radius: 100px; margin-left: 5px;
+}
+
+/* Category tabs */
+.pricing-cats {
+  display: flex; gap: 8px; margin-bottom: 2rem; flex-wrap: wrap;
+}
+.pcat-btn {
+  display: flex; align-items: center; gap: 7px;
+  padding: 0.45rem 1rem; border-radius: 8px;
+  border: 1px solid var(--rule); background: var(--white);
+  font-size: 0.8rem; font-weight: 600; color: var(--muted);
+  cursor: pointer; transition: all 0.2s; font-family: inherit;
+}
+.pcat-btn.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pcat-btn:not(.active):hover { border-color: var(--slate); color: var(--ink); }
+.pcat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* Compact pricing row */
+.pricing-panel { display: none; }
+.pricing-panel.active { display: block; animation: fadeUp 0.35s ease both; }
+
+.price-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+/* Compact price card */
+.pc {
+  background: var(--white); border: 1px solid var(--rule);
+  border-radius: 14px; padding: 1.25rem 1.25rem 1rem;
+  display: flex; flex-direction: column; gap: 0;
+  position: relative; overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: default;
+}
+.pc:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(11,15,26,0.09); border-color: var(--blue); }
+.pc.pop { border-color: var(--blue); background: linear-gradient(145deg,#EBF2FF,#fff 55%); box-shadow: 0 6px 24px rgba(26,86,219,0.13); }
+.pc.dark { background: var(--ink); border-color: var(--ink); }
+
+/* Popular ribbon */
+.pc.pop::after {
+  content: '★ Popular';
+  position: absolute; top: 0; right: 0;
+  background: var(--blue); color: #fff;
+  font-size: 0.6rem; font-weight: 800; letter-spacing: 0.06em;
+  padding: 3px 10px; border-radius: 0 14px 0 10px;
+}
+
+/* Header row inside card */
+.pc-head {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 0.75rem;
+}
+.pc-icon {
+  width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.pc-icon svg { width: 20px; height: 20px; }
+.pc-title { flex: 1; }
+.pc-name { font-size: 0.88rem; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.pc.dark .pc-name { color: #fff; }
+.pc-sub { font-size: 0.68rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; }
+.pc.dark .pc-sub { color: rgba(255,255,255,0.4); }
+
+/* Price */
+.pc-price {
+  display: flex; align-items: baseline; gap: 3px;
+  margin-bottom: 0.25rem;
+}
+.pc-curr { font-size: 0.9rem; font-weight: 700; color: var(--ink); }
+.pc.dark .pc-curr { color: #fff; }
+.pc-amt { font-size: 1.9rem; font-weight: 800; color: var(--ink); letter-spacing: -0.04em; line-height: 1; }
+.pc.dark .pc-amt { color: #fff; }
+.pc-per { font-size: 0.75rem; color: var(--muted); }
+.pc.dark .pc-per { color: rgba(255,255,255,0.4); }
+.pc-cap { font-size: 0.72rem; color: var(--muted); margin-bottom: 0.85rem; line-height: 1.4; }
+.pc.dark .pc-cap { color: rgba(255,255,255,0.35); }
+
+/* Divider */
+.pc-div { height: 1px; background: var(--rule); margin-bottom: 0.85rem; }
+.pc.dark .pc-div { background: rgba(255,255,255,0.1); }
+
+/* Features — compact chips */
+.pc-feats {
+  display: flex; flex-wrap: wrap; gap: 5px;
+  margin-bottom: 1rem; flex: 1;
+}
+.pc-feat {
+  font-size: 0.7rem; font-weight: 500; color: var(--slate);
+  background: var(--surface); border: 1px solid var(--rule);
+  padding: 2px 8px; border-radius: 100px;
+}
+.pc.dark .pc-feat { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.12); color: rgba(255,255,255,0.65); }
+.pc.pop .pc-feat { background: #EBF2FF; border-color: #C7D9FD; color: var(--blue); }
+
+/* CTA button */
+.pc-btn {
+  display: block; text-align: center; padding: 0.55rem;
+  border-radius: 8px; font-size: 0.8rem; font-weight: 700;
+  text-decoration: none; transition: all 0.2s;
+  border: 1.5px solid var(--rule); color: var(--ink);
+  margin-top: auto;
+}
+.pc-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pc.pop .pc-btn { background: var(--blue); color: #fff; border-color: var(--blue); }
+.pc.pop .pc-btn:hover { background: var(--blue-md); }
+.pc.dark .pc-btn { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.8); }
+.pc.dark .pc-btn:hover { background: rgba(255,255,255,0.12); }
+
+/* Footer note */
+.pricing-footnote {
+  text-align: center; font-size: 0.78rem; color: var(--muted);
+  margin-top: 2rem; line-height: 1.7;
+  padding: 1.25rem; background: var(--white);
+  border: 1px solid var(--rule); border-radius: 12px;
+}
+.pricing-footnote a { color: var(--blue); font-weight: 600; text-decoration: none; }
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+  .hero-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-panel { display: none; }
+  .services-grid { grid-template-columns: repeat(2,1fr); }
+  .features-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .calling-platforms { grid-template-columns: repeat(2,1fr); }
+  .pricing-grid { grid-template-columns: repeat(2,1fr); }
+  .pricing-grid.cols-4 { grid-template-columns: repeat(2,1fr); }
+  .pricing-grid.cols-2 { grid-template-columns: repeat(2,1fr); }
+}
+@media(max-width:768px){
+  .nav-menu { display: none; }
+  .services-header { grid-template-columns: 1fr; }
+  .process-grid { grid-template-columns: repeat(2,1fr); }
+  .process-grid::before { display: none; }
+  .services-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .calling-platforms { grid-template-columns: 1fr; }
+  .calling-banner { flex-direction: column; text-align: center; }
+  .banner-right { justify-content: center; }
+  .slogan-text { font-size: 1rem; }
+  .pricing-grid, .pricing-grid.cols-4, .pricing-grid.cols-2 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">VS</div>
+      <span class="logo-text">VoIP <span>Stars</span></span>
+    </a>
+    <ul class="nav-menu">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#cta">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="tel:+923183159409" class="btn-text">📞 &nbsp;+92 318 315 9409</a>
+      <a href="#cta" class="btn-solid">Get a Quote →</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="voip-canvas"></canvas>
+  <div class="hero-bg">
+    <svg viewBox="0 0 1440 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#C7D9FD" stroke-width="0.5"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#grid)" opacity="0.5"/>
+    </svg>
+  </div>
+
+  <!-- Floating call status bubbles -->
+  <div class="call-bubble cb1">
+    <span class="cb-dot cb-dot-green"></span> Active Call · Asterisk PBX
+  </div>
+  <div class="call-bubble cb2">
+    <span class="cb-dot cb-dot-blue"></span> 148 Lines Connected
+  </div>
+  <div class="call-bubble cb3">
+    <span class="cb-dot cb-dot-orange"></span> Routing via 3CX · 12ms
+  </div>
+  <div class="call-bubble cb4">
+    <span class="cb-dot cb-dot-green"></span> VoIP Network · Online
+  </div>
+
+  <div class="container">
+    <div class="hero-layout">
+      <div>
+        <div class="hero-eyebrow reveal">★ &nbsp;Enterprise IT &amp; VoIP Partner</div>
+        <h1 class="hero-h1 reveal delay-1">
+          Modern Comms &<br>
+          <em>IT Infrastructure</em><br>
+          That Scales With You
+        </h1>
+        <p class="hero-desc reveal delay-2">
+          From Asterisk to MS Teams, VPS to firewalls — VoIP Stars designs, deploys, and manages the full communications and IT stack for growing enterprises.
+        </p>
+        <div class="hero-cta reveal delay-3">
+          <a href="#services" class="btn-hero">Explore Services →</a>
+          <a href="#cta" class="btn-outline">Talk to an Expert</a>
+        </div>
+        <div class="hero-proof reveal delay-4">
+          <div class="proof-item">
+            <span class="proof-num" data-target="500">0</span>
+            <span class="proof-label">Clients Served</span>
+          </div>
+          <div class="proof-divider"></div>
+          <div class="proof-item">
+            <span class="proof-num" data-target="10" data-suffix="+yrs">0</span>
+            <span class="proof-label">Experience</span>
+          </div>
+          <div class="proof-divider"></div>
+          <div class="proof-item">
+            <span class="proof-num" data-target="99" data-suffix=".9%">0</span>
+            <span class="proof-label">Uptime SLA</span>
+          </div>
+          <div class="proof-divider"></div>
+          <div class="proof-item">
+            <span class="proof-num" data-target="24" data-suffix="/7">0</span>
+            <span class="proof-label">Support</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-panel reveal delay-2">
+        <div class="floating-badge badge1">
+          <div class="badge-icon" style="background:#ECFDF5;">✅</div>
+          <span style="color:#065F46">System Online</span>
+        </div>
+        <div class="panel-card">
+          <div class="panel-header">
+            <span class="panel-title">VoIP Stars Dashboard</span>
+            <div class="panel-dots"><span></span><span></span><span></span></div>
+          </div>
+          <div class="panel-body">
+            <div class="service-pill-row">
+              <span class="service-pill pill-blue">☎ Asterisk</span>
+              <span class="service-pill pill-cyan">💬 Dialpad</span>
+              <span class="service-pill pill-blue">🔵 3CX</span>
+              <span class="service-pill pill-gold">📡 RingCentral</span>
+              <span class="service-pill pill-green">🎙 Zoom Phone</span>
+              <span class="service-pill pill-cyan">🟦 MS Teams</span>
+            </div>
+            <div class="metric-row">
+              <div class="metric-box">
+                <div class="metric-val">2,847</div>
+                <div class="metric-lbl">Active Extensions</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-val">148</div>
+                <div class="metric-lbl">Concurrent Calls</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-val">99.9%</div>
+                <div class="metric-lbl">Uptime Today</div>
+              </div>
+              <div class="metric-box">
+                <div class="metric-val">12ms</div>
+                <div class="metric-lbl">Avg Latency</div>
+              </div>
+            </div>
+            <div class="status-list">
+              <div class="status-row">
+                <span class="status-name">VoIP Core</span>
+                <div class="status-bar-wrap"><div class="status-bar" style="width:97%"></div></div>
+                <span class="status-val" style="color:#059669">97%</span>
+              </div>
+              <div class="status-row">
+                <span class="status-name">Firewall</span>
+                <div class="status-bar-wrap"><div class="status-bar" style="width:100%;background:var(--green)"></div></div>
+                <span class="status-val" style="color:#059669">100%</span>
+              </div>
+              <div class="status-row">
+                <span class="status-name">VPS Cluster</span>
+                <div class="status-bar-wrap"><div class="status-bar" style="width:94%;background:var(--cyan)"></div></div>
+                <span class="status-val" style="color:#0891B2">94%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="floating-badge badge2">
+          <div class="badge-icon" style="background:#FFFBEB;">⚡</div>
+          <span style="color:#92400E">99.9% Uptime SLA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGO TICKER -->
+<div id="ticker">
+  <p class="ticker-label">Technology Partners &amp; Platforms</p>
+  <div class="logo-ticker-wrap">
+    <div class="logo-ticker" id="logoTicker">
+
+      <!-- Asterisk -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#FF6B00"/>
+          <line x1="16" y1="5" x2="16" y2="27" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <line x1="5.5" y1="10.5" x2="26.5" y2="21.5" stroke="white" stroke-width="3" stroke-linecap="round"/>
+          <line x1="26.5" y1="10.5" x2="5.5" y2="21.5" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <span>Asterisk</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Dialpad -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#7C3AED"/>
+          <circle class="dp-dot" cx="10" cy="10" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="16" cy="10" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="22" cy="10" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="10" cy="16" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="16" cy="16" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="22" cy="16" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="10" cy="22" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="16" cy="22" r="2.2" fill="white"/>
+          <circle class="dp-dot" cx="22" cy="22" r="2.2" fill="white"/>
+        </svg>
+        <span>Dialpad</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- 3CX -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#00AEEF"/>
+          <rect class="wave-bar" x="6" y="14" width="3" height="8" rx="1.5" fill="white" style="transform-origin:7.5px 18px"/>
+          <rect class="wave-bar" x="11" y="11" width="3" height="14" rx="1.5" fill="white" style="transform-origin:12.5px 18px"/>
+          <rect class="wave-bar" x="16" y="8" width="3" height="17" rx="1.5" fill="white" style="transform-origin:17.5px 18px"/>
+          <rect class="wave-bar" x="21" y="11" width="3" height="14" rx="1.5" fill="white" style="transform-origin:22.5px 18px"/>
+          <rect x="26" y="14" width="3" height="8" rx="1.5" fill="white"/>
+        </svg>
+        <span>3CX</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- RingCentral -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#FF8800"/>
+          <circle cx="16" cy="16" r="5" fill="white"/>
+          <circle class="rc-pulse" cx="16" cy="16" r="6" stroke="white" stroke-width="1.5" fill="none"/>
+          <circle cx="16" cy="16" r="2.5" fill="#FF8800"/>
+        </svg>
+        <span>RingCentral</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Zoom -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#2D8CFF"/>
+          <rect x="5" y="10" width="15" height="12" rx="3" fill="white"/>
+          <polygon class="zoom-cam" points="22,12 27,9 27,23 22,20" fill="white"/>
+        </svg>
+        <span>Zoom Phone</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- MS Teams -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#5059C9"/>
+          <rect x="14" y="9" width="12" height="10" rx="3" fill="#7B83EB"/>
+          <rect x="6" y="13" width="14" height="12" rx="3" fill="white"/>
+          <text class="teams-t" x="9" y="23" font-size="9" font-weight="800" fill="#5059C9" font-family="Arial">T</text>
+        </svg>
+        <span>MS Teams</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- VPS -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#1E293B"/>
+          <rect x="5" y="7" width="22" height="6" rx="2" fill="#334155"/>
+          <circle class="vps-light" cx="23" cy="10" r="1.5" fill="#22C55E"/>
+          <rect x="5" y="15" width="22" height="6" rx="2" fill="#334155"/>
+          <circle class="vps-light" cx="23" cy="18" r="1.5" fill="#22C55E"/>
+          <rect x="5" y="23" width="22" height="4" rx="2" fill="#334155"/>
+          <circle class="vps-light" cx="23" cy="25" r="1.5" fill="#F59E0B"/>
+        </svg>
+        <span>VPS</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- IT Infrastructure -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#0F766E"/>
+          <g transform="translate(16,16)">
+            <path class="gear-path" transform="translate(-8,-8)" d="M8 0 L9.5 3 L13 2 L13 5 L16 6.5 L14 9.5 L16 12.5 L13 14 L13 17 L9.5 16 L8 19 L6.5 16 L3 17 L3 14 L0 12.5 L2 9.5 L0 6.5 L3 5 L3 2 L6.5 3 Z" fill="white" opacity="0.9"/>
+            <circle cx="0" cy="0" r="3.5" fill="#0F766E"/>
+          </g>
+        </svg>
+        <span>IT Infrastructure</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Security -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#7C3AED"/>
+          <path class="shield-icon" d="M16 5 L26 9 L26 16 C26 21.5 21.5 26 16 27 C10.5 26 6 21.5 6 16 L6 9 Z" fill="white" opacity="0.95"/>
+          <path d="M12 16 L15 19 L20 13" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Security</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Passive Network -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#0891B2"/>
+          <path class="sig1" d="M8 20 Q16 8 24 20" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path class="sig2" d="M11 23 Q16 14 21 23" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path class="sig3" d="M13.5 26 Q16 20 18.5 26" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="16" cy="27" r="1.5" fill="white"/>
+        </svg>
+        <span>Passive Network</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Firewall -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#DC2626"/>
+          <path class="flame" d="M16 28 C10 22 8 16 12 10 C14 15 16 13 16 13 C16 13 18 15 20 10 C24 16 22 22 16 28Z" fill="white" opacity="0.95"/>
+          <path d="M16 28 C13 24 12 20 14 17 C15 19 16 18 16 18 C16 18 17 19 18 17 C20 20 19 24 16 28Z" fill="#DC2626"/>
+        </svg>
+        <span>Firewalls</span>
+      </div>
+      <span class="ticker-sep">·</span>
+
+      <!-- Routers & Switches -->
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="32" height="32" rx="8" fill="#059669"/>
+          <rect x="6" y="13" width="20" height="7" rx="3" fill="white"/>
+          <circle cx="10" cy="16.5" r="1.5" fill="#059669"/>
+          <circle cx="14" cy="16.5" r="1.5" fill="#059669"/>
+          <circle cx="18" cy="16.5" r="1.5" fill="#059669"/>
+          <circle cx="22" cy="16.5" r="1.5" fill="#059669"/>
+          <circle class="router-wave" cx="16" cy="16.5" r="9" stroke="white" stroke-width="1" fill="none" opacity="0"/>
+          <circle class="router-wave" cx="16" cy="16.5" r="6" stroke="white" stroke-width="1" fill="none" opacity="0"/>
+        </svg>
+        <span>Routers &amp; Switches</span>
+      </div>
+
+      <!-- DUPLICATE SET for seamless loop -->
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#FF6B00"/><line x1="16" y1="5" x2="16" y2="27" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="5.5" y1="10.5" x2="26.5" y2="21.5" stroke="white" stroke-width="3" stroke-linecap="round"/><line x1="26.5" y1="10.5" x2="5.5" y2="21.5" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>
+        <span>Asterisk</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#7C3AED"/><circle cx="10" cy="10" r="2.2" fill="white"/><circle cx="16" cy="10" r="2.2" fill="white"/><circle cx="22" cy="10" r="2.2" fill="white"/><circle cx="10" cy="16" r="2.2" fill="white"/><circle cx="16" cy="16" r="2.2" fill="white"/><circle cx="22" cy="16" r="2.2" fill="white"/><circle cx="10" cy="22" r="2.2" fill="white"/><circle cx="16" cy="22" r="2.2" fill="white"/><circle cx="22" cy="22" r="2.2" fill="white"/></svg>
+        <span>Dialpad</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#00AEEF"/><rect x="6" y="14" width="3" height="8" rx="1.5" fill="white"/><rect x="11" y="11" width="3" height="14" rx="1.5" fill="white"/><rect x="16" y="8" width="3" height="17" rx="1.5" fill="white"/><rect x="21" y="11" width="3" height="14" rx="1.5" fill="white"/><rect x="26" y="14" width="3" height="8" rx="1.5" fill="white"/></svg>
+        <span>3CX</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#FF8800"/><circle cx="16" cy="16" r="5" fill="white"/><circle cx="16" cy="16" r="2.5" fill="#FF8800"/></svg>
+        <span>RingCentral</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#2D8CFF"/><rect x="5" y="10" width="15" height="12" rx="3" fill="white"/><polygon points="22,12 27,9 27,23 22,20" fill="white"/></svg>
+        <span>Zoom Phone</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#5059C9"/><rect x="14" y="9" width="12" height="10" rx="3" fill="#7B83EB"/><rect x="6" y="13" width="14" height="12" rx="3" fill="white"/><text x="9" y="23" font-size="9" font-weight="800" fill="#5059C9" font-family="Arial">T</text></svg>
+        <span>MS Teams</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#1E293B"/><rect x="5" y="7" width="22" height="6" rx="2" fill="#334155"/><circle cx="23" cy="10" r="1.5" fill="#22C55E"/><rect x="5" y="15" width="22" height="6" rx="2" fill="#334155"/><circle cx="23" cy="18" r="1.5" fill="#22C55E"/><rect x="5" y="23" width="22" height="4" rx="2" fill="#334155"/><circle cx="23" cy="25" r="1.5" fill="#F59E0B"/></svg>
+        <span>VPS</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#0F766E"/><g transform="translate(16,16)"><path transform="translate(-8,-8)" d="M8 0 L9.5 3 L13 2 L13 5 L16 6.5 L14 9.5 L16 12.5 L13 14 L13 17 L9.5 16 L8 19 L6.5 16 L3 17 L3 14 L0 12.5 L2 9.5 L0 6.5 L3 5 L3 2 L6.5 3 Z" fill="white" opacity="0.9"/><circle cx="0" cy="0" r="3.5" fill="#0F766E"/></g></svg>
+        <span>IT Infrastructure</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#DC2626"/><path d="M16 28 C10 22 8 16 12 10 C14 15 16 13 16 13 C16 13 18 15 20 10 C24 16 22 22 16 28Z" fill="white" opacity="0.95"/><path d="M16 28 C13 24 12 20 14 17 C15 19 16 18 16 18 C16 18 17 19 18 17 C20 20 19 24 16 28Z" fill="#DC2626"/></svg>
+        <span>Firewalls</span>
+      </div>
+      <span class="ticker-sep">·</span>
+      <div class="logo-ticker-item">
+        <svg viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#059669"/><rect x="6" y="13" width="20" height="7" rx="3" fill="white"/><circle cx="10" cy="16.5" r="1.5" fill="#059669"/><circle cx="14" cy="16.5" r="1.5" fill="#059669"/><circle cx="18" cy="16.5" r="1.5" fill="#059669"/><circle cx="22" cy="16.5" r="1.5" fill="#059669"/></svg>
+        <span>Routers &amp; Switches</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- SLOGANS MARQUEE -->
+<section id="slogans">
+  <div class="slogan-track-wrap">
+
+    <!-- Row 1 — forward -->
+    <div class="slogan-row">
+      <div class="slogan-inner">
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(59,130,246,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="#3B6FEA"/></svg>
+          </div>
+          <span class="slogan-text">Your Voice, Everywhere</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(8,145,178,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#0891B2" stroke-width="2"/><path d="M12 6v6l4 2" stroke="#0891B2" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span class="slogan-text">Always On. Always Connected.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(245,158,11,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">Crystal Clear Calls, Zero Compromise</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(5,150,105,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#059669" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">Secure Lines. Smarter Business.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(124,58,237,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#7C3AED" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span class="slogan-text">One Platform. Infinite Reach.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(59,130,246,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.08 2.18 2 2 0 012.08 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" fill="#3B6FEA"/></svg>
+          </div>
+          <span class="slogan-text">Enterprise Calling, Simplified</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <!-- repeat for seamless loop -->
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(59,130,246,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="#3B6FEA"/></svg></div><span class="slogan-text">Your Voice, Everywhere</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(8,145,178,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#0891B2" stroke-width="2"/><path d="M12 6v6l4 2" stroke="#0891B2" stroke-width="2" stroke-linecap="round"/></svg></div><span class="slogan-text">Always On. Always Connected.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(245,158,11,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="slogan-text">Crystal Clear Calls, Zero Compromise</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(5,150,105,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#059669" stroke-width="2" stroke-linejoin="round"/></svg></div><span class="slogan-text">Secure Lines. Smarter Business.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(124,58,237,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" stroke="#7C3AED" stroke-width="2"/><path d="M8 21h8M12 17v4" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/></svg></div><span class="slogan-text">One Platform. Infinite Reach.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(59,130,246,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8 19.79 19.79 0 01.08 2.18 2 2 0 012.08 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" fill="#3B6FEA"/></svg></div><span class="slogan-text">Enterprise Calling, Simplified</span></div>
+      </div>
+    </div>
+
+    <!-- Row 2 — reverse -->
+    <div class="slogan-row">
+      <div class="slogan-inner reverse">
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(239,68,68,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#EF4444" stroke-width="2" stroke-linejoin="round"/><polyline points="9,22 9,12 15,12 15,22" stroke="#EF4444" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">Connect Every Office. Empower Every Call.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(59,130,246,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="#3B6FEA"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83" stroke="#3B6FEA" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span class="slogan-text">Built for Uptime. Designed for Growth.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(8,145,178,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#0891B2" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">From PBX to Cloud — We've Got You</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(245,158,11,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="#F59E0B" stroke-width="2" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">5-Star IT. Every Single Time.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(5,150,105,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <span class="slogan-text">99.9% Uptime. 100% Confidence.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item">
+          <div class="slogan-icon" style="background:rgba(124,58,237,0.15);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" stroke="#7C3AED" stroke-width="2"/><line x1="12" y1="18" x2="12.01" y2="18" stroke="#7C3AED" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <span class="slogan-text">Talk Smarter. Work Faster.</span>
+        </div>
+        <span class="slogan-star">★</span>
+        <!-- repeat -->
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(239,68,68,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke="#EF4444" stroke-width="2"/><polyline points="9,22 9,12 15,12 15,22" stroke="#EF4444" stroke-width="2"/></svg></div><span class="slogan-text">Connect Every Office. Empower Every Call.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(59,130,246,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" fill="#3B6FEA"/></svg></div><span class="slogan-text">Built for Uptime. Designed for Growth.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(8,145,178,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="#0891B2" stroke-width="2"/></svg></div><span class="slogan-text">From PBX to Cloud — We've Got You</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(245,158,11,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="#F59E0B" stroke-width="2"/></svg></div><span class="slogan-text">5-Star IT. Every Single Time.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(5,150,105,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="#059669" stroke-width="2" stroke-linecap="round"/></svg></div><span class="slogan-text">99.9% Uptime. 100% Confidence.</span></div>
+        <span class="slogan-star">★</span>
+        <div class="slogan-item"><div class="slogan-icon" style="background:rgba(124,58,237,0.15);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" stroke="#7C3AED" stroke-width="2"/></svg></div><span class="slogan-text">Talk Smarter. Work Faster.</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="section section-border">
+  <div class="container">
+    <div class="services-header">
+      <div>
+        <p class="eyebrow reveal">What We Do</p>
+        <h2 class="h2 reveal delay-1">Complete IT &amp; <em>VoIP Services</em><br>Under One Roof</h2>
+        <p class="section-desc reveal delay-2">One trusted partner for your telephony, infrastructure, and network — end to end.</p>
+      </div>
+      <div class="services-header-right reveal delay-2">
+        <div class="tag-row">
+          <button class="filter-tag active">All</button>
+          <button class="filter-tag">VoIP</button>
+          <button class="filter-tag">Infrastructure</button>
+          <button class="filter-tag">Network</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="services-grid reveal">
+      <!-- Asterisk -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo logo-asterisk" style="background:#FFF3E8;">
+          <svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg>
+        </div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>Asterisk PBX</h3>
+        <p>Custom IVR, call routing, voicemail and enterprise PBX on the world's most flexible open-source telephony engine.</p>
+      </div>
+
+      <!-- Dialpad -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo" style="background:#F3EEFF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle class="dp-dot" cx="10" cy="10" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="16" cy="10" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="22" cy="10" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="10" cy="16" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="16" cy="16" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="22" cy="16" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="10" cy="22" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="16" cy="22" r="2.5" fill="#7C3AED"/>
+            <circle class="dp-dot" cx="22" cy="22" r="2.5" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>Dialpad</h3>
+        <p>AI-powered cloud communications — voice, video, and messaging unified. Smart transcription built in.</p>
+      </div>
+
+      <!-- 3CX -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo" style="background:#E0F5FF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect class="wave-bar" x="3" y="16" width="4" height="10" rx="2" fill="#00AEEF" style="transform-origin:5px 21px"/>
+            <rect class="wave-bar" x="9" y="12" width="4" height="14" rx="2" fill="#00AEEF" style="transform-origin:11px 19px"/>
+            <rect class="wave-bar" x="15" y="8" width="4" height="18" rx="2" fill="#00AEEF" style="transform-origin:17px 17px"/>
+            <rect class="wave-bar" x="21" y="12" width="4" height="14" rx="2" fill="#00AEEF" style="transform-origin:23px 19px"/>
+            <rect x="27" y="16" width="3" height="10" rx="1.5" fill="#00AEEF"/>
+          </svg>
+        </div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>3CX</h3>
+        <p>Software PBX for Windows and Linux with WebRTC, mobile apps, and live chat integration out of the box.</p>
+      </div>
+
+      <!-- RingCentral -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo" style="background:#FFF2E0;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="10" stroke="#FF8800" stroke-width="2.5" fill="none"/>
+            <circle cx="16" cy="16" r="6" stroke="#FF8800" stroke-width="2.5" fill="none"/>
+            <circle class="rc-pulse" cx="16" cy="16" r="10" stroke="#FF8800" stroke-width="1.5" fill="none"/>
+            <circle cx="16" cy="16" r="3" fill="#FF8800"/>
+          </svg>
+        </div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>RingCentral</h3>
+        <p>Enterprise UCaaS — reliable cloud calling, team messaging, and HD video conferencing at scale.</p>
+      </div>
+
+      <!-- Zoom -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo" style="background:#E6F2FF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect x="3" y="9" width="17" height="14" rx="4" fill="#2D8CFF"/>
+            <polygon class="zoom-cam" points="22,12 29,8 29,24 22,20" fill="#2D8CFF"/>
+          </svg>
+        </div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>Zoom Phone</h3>
+        <p>Cloud phone fully integrated with Zoom meetings. One app, zero friction — calling and meetings in one.</p>
+      </div>
+
+      <!-- MS Teams -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo" style="background:#EDEEFF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect x="15" y="7" width="14" height="12" rx="3.5" fill="#7B83EB"/>
+            <rect x="4" y="12" width="17" height="14" rx="3.5" fill="#5059C9"/>
+            <text class="teams-t" x="8" y="23.5" font-size="10" font-weight="800" fill="white" font-family="Arial, sans-serif">T</text>
+          </svg>
+        </div>
+        <p class="svc-cat cat-voip">VoIP</p>
+        <h3>MS Teams Voice</h3>
+        <p>Direct Routing and Calling Plans that turn Microsoft Teams into a full enterprise phone system.</p>
+      </div>
+
+      <!-- VPS -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo" style="background:#EFF6FF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect x="3" y="5" width="26" height="7" rx="2.5" fill="#1E40AF"/>
+            <circle class="vps-light" cx="26" cy="8.5" r="2" fill="#22C55E"/>
+            <rect x="3" y="14" width="26" height="7" rx="2.5" fill="#1E40AF"/>
+            <circle class="vps-light" cx="26" cy="17.5" r="2" fill="#22C55E"/>
+            <rect x="3" y="23" width="26" height="5" rx="2.5" fill="#1E40AF"/>
+            <circle class="vps-light" cx="26" cy="25.5" r="2" fill="#F59E0B"/>
+          </svg>
+        </div>
+        <p class="svc-cat cat-infra">Infrastructure</p>
+        <h3>VPS Solutions</h3>
+        <p>High-performance virtual servers with managed hosting, automated backups, and guaranteed uptime SLAs.</p>
+      </div>
+
+      <!-- IT Infrastructure -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo" style="background:#ECFDF5;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="5" stroke="#0F766E" stroke-width="2.5"/>
+            <path class="gear-path" d="M16 2 L17.8 6.2 L22.4 5 L22.4 9 L26.6 11.2 L24 15.4 L26.6 19.6 L22.4 21.8 L22.4 25.8 L17.8 24.6 L16 28.8 L14.2 24.6 L9.6 25.8 L9.6 21.8 L5.4 19.6 L8 15.4 L5.4 11.2 L9.6 9 L9.6 5 L14.2 6.2 Z" stroke="#0F766E" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <p class="svc-cat cat-infra">Infrastructure</p>
+        <h3>IT Infrastructure</h3>
+        <p>End-to-end design, procurement, installation, and management of your entire IT environment.</p>
+      </div>
+
+      <!-- Security -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo" style="background:#FDF4FF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path class="shield-icon" d="M16 3 L27 7.5 L27 16 C27 22.5 22 27.5 16 29 C10 27.5 5 22.5 5 16 L5 7.5 Z" fill="#7C3AED" opacity="0.15" stroke="#7C3AED" stroke-width="2"/>
+            <path d="M11 16 L14.5 19.5 L21 12.5" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="svc-cat cat-security">Security</p>
+        <h3>System &amp; Security</h3>
+        <p>Hardening, patch management, vulnerability assessments, and incident response — proactive not reactive.</p>
+      </div>
+
+      <!-- Passive Network -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo" style="background:#ECFEFF;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path class="sig1" d="M4 22 Q16 4 28 22" stroke="#0891B2" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path class="sig2" d="M8 25 Q16 11 24 25" stroke="#0891B2" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path class="sig3" d="M12 28 Q16 19 20 28" stroke="#0891B2" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <circle cx="16" cy="29.5" r="2" fill="#0891B2"/>
+          </svg>
+        </div>
+        <p class="svc-cat cat-network">Network</p>
+        <h3>Passive Network</h3>
+        <p>Structured cabling, fiber optic, server room design, and data center physical layer installations.</p>
+      </div>
+
+      <!-- Firewall -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo" style="background:#FEF2F2;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <path class="flame" d="M16 29 C9 22 7 15 11.5 8 C13.5 14 16 12 16 12 C16 12 18.5 14 20.5 8 C25 15 23 22 16 29Z" fill="#EF4444"/>
+            <path d="M16 29 C12.5 24 11.5 19.5 13.5 15.5 C14.5 18 16 17 16 17 C16 17 17.5 18 18.5 15.5 C20.5 19.5 19.5 24 16 29Z" fill="#FCA5A5"/>
+          </svg>
+        </div>
+        <p class="svc-cat cat-security">Security</p>
+        <h3>Firewalls</h3>
+        <p>Next-gen firewall deployment and management — Fortinet, Palo Alto, pfSense for every scale.</p>
+      </div>
+
+      <!-- Routers & Switches -->
+      <div class="svc-card">
+        <div class="svc-arrow">↗</div>
+        <div class="svc-logo" style="background:#ECFDF5;">
+          <svg viewBox="0 0 32 32" fill="none">
+            <rect x="3" y="12" width="26" height="9" rx="3" fill="#059669"/>
+            <circle cx="8" cy="16.5" r="2" fill="white"/>
+            <circle cx="14" cy="16.5" r="2" fill="white"/>
+            <circle cx="20" cy="16.5" r="2" fill="white"/>
+            <circle cx="26" cy="16.5" r="2" fill="white"/>
+            <circle class="router-wave" cx="16" cy="16.5" r="12" stroke="#059669" stroke-width="1.5" fill="none"/>
+            <circle class="router-wave" cx="16" cy="16.5" r="8" stroke="#059669" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <p class="svc-cat cat-network">Network</p>
+        <h3>Routers &amp; Switches</h3>
+        <p>Layer 2/3 switching, SD-WAN, VLAN segmentation, and QoS tuned for crystal-clear VoIP traffic.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why" class="section section-alt section-border">
+  <div class="container">
+    <div class="features-layout">
+      <div>
+        <p class="eyebrow reveal">Why VoIP Stars</p>
+        <h2 class="h2 reveal delay-1">Built for Businesses<br>That <em>Can't Afford</em> Downtime</h2>
+        <p class="section-desc reveal delay-2" style="margin-bottom:2.5rem">Deep telecom expertise meets modern IT operations. We deliver solutions that work — and stay working.</p>
+        <div class="features-list">
+          <div class="feat reveal delay-1">
+            <span class="feat-num">01</span>
+            <div class="feat-body">
+              <h4>Certified Engineers, Not Salespeople</h4>
+              <p>Our team holds active Cisco, Microsoft, and VoIP platform certifications. You're talking to people who actually build the systems.</p>
+            </div>
+          </div>
+          <div class="feat reveal delay-2">
+            <span class="feat-num">02</span>
+            <div class="feat-body">
+              <h4>24/7 Monitoring &amp; Support</h4>
+              <p>Round-the-clock NOC monitoring with guaranteed SLAs and structured escalation — so issues are caught before you notice them.</p>
+            </div>
+          </div>
+          <div class="feat reveal delay-3">
+            <span class="feat-num">03</span>
+            <div class="feat-body">
+              <h4>End-to-End Delivery</h4>
+              <p>From needs assessment and architecture design to go-live and ongoing management — we own the full lifecycle.</p>
+            </div>
+          </div>
+          <div class="feat reveal delay-4">
+            <span class="feat-num">04</span>
+            <div class="feat-body">
+              <h4>Vendor-Agnostic Advice</h4>
+              <p>We recommend what fits your needs and budget. No vendor lock-in pressure, no inflated margins — just the right solution.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-panel reveal delay-2">
+        <p class="stats-panel-title">Performance at a Glance</p>
+        <div class="big-stat">
+          <div class="big-stat-num" data-target="500" data-suffix="+">0+</div>
+          <div class="big-stat-label">Happy clients across 20+ industries</div>
+        </div>
+        <div class="mini-stats">
+          <div class="mini-stat">
+            <div class="mini-stat-val" data-target="10" data-suffix="yrs">0</div>
+            <div class="mini-stat-lbl">Years in operation</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-val" data-target="48" data-suffix="h">0</div>
+            <div class="mini-stat-lbl">Avg. deployment time</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-val" data-target="15" data-suffix="min">0</div>
+            <div class="mini-stat-lbl">Support response time</div>
+          </div>
+          <div class="mini-stat">
+            <div class="mini-stat-val" data-target="20" data-suffix="+">0</div>
+            <div class="mini-stat-lbl">Tech certifications</div>
+          </div>
+        </div>
+        <div class="uptime-bar">
+          <div class="uptime-top">
+            <span class="uptime-label">Network Uptime (Last 90 Days)</span>
+            <span class="uptime-val">99.9%</span>
+          </div>
+          <div class="uptime-track"><div class="uptime-fill"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALLING SOLUTIONS -->
+<section id="calling" class="section-border">
+  <div class="container">
+    <div class="calling-header reveal">
+      <p class="eyebrow" style="justify-content:center">Calling Platforms</p>
+      <h2 class="h2" style="text-align:center">Industry-Leading <em>VoIP Platforms</em><br>We Deploy &amp; Manage</h2>
+      <p class="section-desc" style="margin:1rem auto 0;text-align:center">We are certified partners across every major cloud calling platform. Pick your stack — we'll make it work.</p>
+    </div>
+
+    <div class="calling-platforms">
+
+      <!-- Asterisk -->
+      <div class="platform-card reveal" style="--card-gradient:linear-gradient(135deg,#FF6B00,#FF9A3C);">
+        <div class="platform-ring" style="color:#FF6B00;"></div>
+        <div class="platform-logo-wrap" style="background:#FFF3E8;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <line x1="20" y1="3" x2="20" y2="37" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
+            <line x1="4" y1="11.5" x2="36" y2="28.5" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
+            <line x1="36" y1="11.5" x2="4" y2="28.5" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="platform-name">Asterisk PBX</div>
+        <span class="platform-tag" style="background:#FFF3E8;color:#FF6B00;">Open Source</span>
+        <p class="platform-desc">The world's most widely deployed open-source telephony engine. Fully customisable IVR, call flows, and integrations.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Custom IVR &amp; Call Routing</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">SIP Trunking &amp; Codecs</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Voicemail &amp; Conference</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">CRM &amp; API Integration</span>
+        </div>
+      </div>
+
+      <!-- Dialpad -->
+      <div class="platform-card reveal delay-1" style="--card-gradient:linear-gradient(135deg,#7C3AED,#A855F7);">
+        <div class="platform-ring" style="color:#7C3AED;"></div>
+        <div class="platform-logo-wrap" style="background:#F3EEFF;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="12" cy="12" r="3.5" fill="#7C3AED"/>
+            <circle cx="20" cy="12" r="3.5" fill="#7C3AED"/>
+            <circle cx="28" cy="12" r="3.5" fill="#7C3AED"/>
+            <circle cx="12" cy="20" r="3.5" fill="#7C3AED"/>
+            <circle cx="20" cy="20" r="3.5" fill="#7C3AED"/>
+            <circle cx="28" cy="20" r="3.5" fill="#7C3AED"/>
+            <circle cx="12" cy="28" r="3.5" fill="#7C3AED"/>
+            <circle cx="20" cy="28" r="3.5" fill="#7C3AED"/>
+            <circle cx="28" cy="28" r="3.5" fill="#7C3AED"/>
+          </svg>
+        </div>
+        <div class="platform-name">Dialpad</div>
+        <span class="platform-tag" style="background:#F3EEFF;color:#7C3AED;">AI-Powered</span>
+        <p class="platform-desc">AI-native cloud communications with real-time transcription, sentiment analysis, and unified voice + messaging.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Real-Time AI Transcription</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Voice + Video + SMS</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Google Workspace Integration</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Analytics Dashboard</span>
+        </div>
+      </div>
+
+      <!-- 3CX -->
+      <div class="platform-card reveal delay-2" style="--card-gradient:linear-gradient(135deg,#00AEEF,#38BDF8);">
+        <div class="platform-ring" style="color:#00AEEF;"></div>
+        <div class="platform-logo-wrap" style="background:#E0F5FF;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="4" y="20" width="5" height="14" rx="2.5" fill="#00AEEF"/>
+            <rect x="12" y="15" width="5" height="19" rx="2.5" fill="#00AEEF"/>
+            <rect x="20" y="9" width="5" height="25" rx="2.5" fill="#00AEEF"/>
+            <rect x="28" y="15" width="5" height="19" rx="2.5" fill="#00AEEF"/>
+          </svg>
+        </div>
+        <div class="platform-name">3CX</div>
+        <span class="platform-tag" style="background:#E0F5FF;color:#0284C7;">Software PBX</span>
+        <p class="platform-desc">Feature-rich software PBX for Windows & Linux with WebRTC browser calling, mobile apps, and live chat.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">WebRTC Browser Calling</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">iOS &amp; Android Apps</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Live Chat &amp; WhatsApp</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Video Conferencing</span>
+        </div>
+      </div>
+
+      <!-- RingCentral -->
+      <div class="platform-card reveal" style="--card-gradient:linear-gradient(135deg,#FF8800,#FFA940);">
+        <div class="platform-ring" style="color:#FF8800;"></div>
+        <div class="platform-logo-wrap" style="background:#FFF2E0;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <circle cx="20" cy="20" r="14" stroke="#FF8800" stroke-width="3" fill="none"/>
+            <circle cx="20" cy="20" r="8" stroke="#FF8800" stroke-width="3" fill="none"/>
+            <circle cx="20" cy="20" r="4" fill="#FF8800"/>
+            <line x1="20" y1="6" x2="20" y2="2" stroke="#FF8800" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="34" y1="20" x2="38" y2="20" stroke="#FF8800" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="platform-name">RingCentral</div>
+        <span class="platform-tag" style="background:#FFF2E0;color:#FF8800;">Enterprise UCaaS</span>
+        <p class="platform-desc">Global cloud communications platform with enterprise-grade voice, team messaging, and HD video conferencing.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Global PSTN Coverage</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Team Messaging &amp; Files</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">HD Video Meetings</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Salesforce &amp; MS365 Integration</span>
+        </div>
+      </div>
+
+      <!-- Zoom Phone -->
+      <div class="platform-card reveal delay-1" style="--card-gradient:linear-gradient(135deg,#2D8CFF,#60A5FA);">
+        <div class="platform-ring" style="color:#2D8CFF;"></div>
+        <div class="platform-logo-wrap" style="background:#E6F2FF;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="3" y="11" width="22" height="18" rx="5" fill="#2D8CFF"/>
+            <polygon points="27,15 37,10 37,30 27,25" fill="#2D8CFF"/>
+            <rect x="9" y="17" width="10" height="2.5" rx="1.25" fill="white" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="platform-name">Zoom Phone</div>
+        <span class="platform-tag" style="background:#E6F2FF;color:#2D8CFF;">Cloud Calling</span>
+        <p class="platform-desc">Native cloud phone system inside Zoom. Switch between calls and meetings instantly with one unified app.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Seamless Zoom Meetings</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Call Recording &amp; Voicemail</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Auto Attendant</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Number Porting</span>
+        </div>
+      </div>
+
+      <!-- MS Teams -->
+      <div class="platform-card reveal delay-2" style="--card-gradient:linear-gradient(135deg,#5059C9,#818CF8);">
+        <div class="platform-ring" style="color:#5059C9;"></div>
+        <div class="platform-logo-wrap" style="background:#EDEEFF;">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="20" y="8" width="17" height="14" rx="4" fill="#7B83EB"/>
+            <rect x="5" y="16" width="22" height="18" rx="4" fill="#5059C9"/>
+            <text x="10" y="30" font-size="13" font-weight="800" fill="white" font-family="Arial, sans-serif">T</text>
+          </svg>
+        </div>
+        <div class="platform-name">MS Teams Voice</div>
+        <span class="platform-tag" style="background:#EDEEFF;color:#5059C9;">Microsoft 365</span>
+        <p class="platform-desc">Transform Microsoft Teams into a full enterprise phone system via Direct Routing or Microsoft Calling Plans.</p>
+        <div class="platform-features">
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Direct Routing Setup</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Microsoft 365 Integration</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Auto Attendant &amp; Hunt Groups</span>
+          <span class="platform-feat" style="--feat-bg:#ECFDF5;">Compliance Recording</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Calling Banner -->
+    <div class="calling-banner reveal">
+      <div class="banner-left">
+        <p class="banner-label">Ready to upgrade your communications?</p>
+        <h3 class="banner-title">Not sure which platform fits?<br>We'll choose for you — free.</h3>
+        <p class="banner-sub">Our engineers analyse your team size, workflow, and budget to recommend the perfect fit.</p>
+      </div>
+      <div class="banner-right">
+        <div class="phone-icon-wrap">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="rgba(255,255,255,0.6)"/></svg>
+        </div>
+        <a href="tel:+923183159409" class="phone-cta-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="white"/></svg>
+          Call Now — It's Free
+        </a>
+        <a href="mailto:info@voipstars.com" class="btn-ghost-white" style="border-radius:100px;">Get a Proposal →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="container">
+
+    <div style="text-align:center;" class="reveal">
+      <p class="eyebrow" style="justify-content:center">Transparent Pricing</p>
+      <h2 class="h2">Simple Plans, <em>Competitive Rates</em></h2>
+      <p class="section-desc" style="margin:.75rem auto 0;text-align:center">No hidden fees. All prices in USD. Save 20% on annual billing.</p>
+    </div>
+
+    <!-- Billing toggle -->
+    <div class="pricing-toggle reveal">
+      <button class="ptab active" onclick="setPricing('m',this)">Monthly</button>
+      <button class="ptab" onclick="setPricing('a',this)">Annual <span class="save-badge">-20%</span></button>
+    </div>
+
+    <!-- Category tabs -->
+    <div class="pricing-cats reveal">
+      <button class="pcat-btn active" onclick="showCat('voip',this)">
+        <span class="pcat-dot" style="background:#1A56DB;"></span>VoIP Platforms
+      </button>
+      <button class="pcat-btn" onclick="showCat('vps',this)">
+        <span class="pcat-dot" style="background:#0891B2;"></span>VPS &amp; Infrastructure
+      </button>
+      <button class="pcat-btn" onclick="showCat('net',this)">
+        <span class="pcat-dot" style="background:#DC2626;"></span>Network &amp; Security
+      </button>
+    </div>
+
+    <!-- ── VoIP Panel ── -->
+    <div class="pricing-panel active" id="cat-voip">
+      <div class="price-row">
+
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#FFF3E8;">
+              <svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Asterisk PBX</div>
+              <div class="pc-sub">Starter · 10 ext</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="149" data-a="119">149</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">2 SIP trunks · Basic IVR · Voicemail</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">IVR Setup</span><span class="pc-feat">Call Recording</span><span class="pc-feat">Voicemail to Email</span><span class="pc-feat">Business Hours</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
+        </div>
+
+        <div class="pc pop">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#FFF3E8;">
+              <svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="#FF6B00" stroke-width="3.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Asterisk PBX</div>
+              <div class="pc-sub">Professional · 50 ext</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="299" data-a="239">299</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">10 SIP trunks · Advanced IVR · CRM integration</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Call Queues</span><span class="pc-feat">CRM Sync</span><span class="pc-feat">Analytics</span><span class="pc-feat">Failover</span><span class="pc-feat">Priority Support</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
+        </div>
+
+        <div class="pc dark">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:rgba(255,255,255,0.1);">
+              <svg viewBox="0 0 32 32" fill="none"><line x1="16" y1="3" x2="16" y2="29" stroke="rgba(255,255,255,0.8)" stroke-width="3.5" stroke-linecap="round"/><line x1="3.5" y1="9.5" x2="28.5" y2="22.5" stroke="rgba(255,255,255,0.8)" stroke-width="3.5" stroke-linecap="round"/><line x1="28.5" y1="9.5" x2="3.5" y2="22.5" stroke="rgba(255,255,255,0.8)" stroke-width="3.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Asterisk PBX</div>
+              <div class="pc-sub">Enterprise · Unlimited</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="599" data-a="479">599</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Unlimited ext · Multi-site cluster</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Multi-site</span><span class="pc-feat">Custom AGI</span><span class="pc-feat">ERP Integration</span><span class="pc-feat">99.99% SLA</span><span class="pc-feat">24/7 NOC</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Contact Sales</a>
+        </div>
+
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#E0F5FF;">
+              <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="16" width="4" height="10" rx="2" fill="#00AEEF"/><rect x="9" y="12" width="4" height="14" rx="2" fill="#00AEEF"/><rect x="15" y="8" width="4" height="18" rx="2" fill="#00AEEF"/><rect x="21" y="12" width="4" height="14" rx="2" fill="#00AEEF"/><rect x="27" y="16" width="3" height="10" rx="1.5" fill="#00AEEF"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">3CX</div>
+              <div class="pc-sub">Managed · 25 users</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="199" data-a="159">199</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Hosted on your VPS · WebRTC + mobile apps</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">SIP Trunks</span><span class="pc-feat">Mobile Apps</span><span class="pc-feat">Live Chat</span><span class="pc-feat">WhatsApp Bridge</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
+        </div>
+
+        <div class="pc pop">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#FFF2E0;">
+              <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="10" stroke="#FF8800" stroke-width="2.5" fill="none"/><circle cx="16" cy="16" r="6" stroke="#FF8800" stroke-width="2.5" fill="none"/><circle cx="16" cy="16" r="3" fill="#FF8800"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">RingCentral</div>
+              <div class="pc-sub">Managed UCaaS · 30 users</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="249" data-a="199">249</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Full UCaaS management · Number porting</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">DID Config</span><span class="pc-feat">Auto Attendant</span><span class="pc-feat">MS365 SSO</span><span class="pc-feat">Analytics</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
+        </div>
+
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#E6F2FF;">
+              <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="9" width="17" height="14" rx="4" fill="#2D8CFF"/><polygon points="22,12 29,8 29,24 22,20" fill="#2D8CFF"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Zoom / MS Teams</div>
+              <div class="pc-sub">Deployment · 50 users</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="179" data-a="143">179</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Per platform · Direct Routing setup</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Provisioning</span><span class="pc-feat">Direct Routing</span><span class="pc-feat">Number Porting</span><span class="pc-feat">Training</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── VPS & Infrastructure Panel ── -->
+    <div class="pricing-panel" id="cat-vps">
+      <div class="price-row">
+
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#EFF6FF;">
+              <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="5" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="8.5" r="2" fill="#22C55E"/><rect x="3" y="14" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="17.5" r="2" fill="#22C55E"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">VPS Starter</div>
+              <div class="pc-sub">2 vCPU · 4 GB · 80 GB SSD</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="49" data-a="39">49</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Managed hosting · Daily backups · 99.9% SLA</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Ubuntu/Debian</span><span class="pc-feat">7-day Backups</span><span class="pc-feat">Basic Firewall</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Order Now</a>
+        </div>
+
+        <div class="pc pop">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#EFF6FF;">
+              <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="5" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="8.5" r="2" fill="#22C55E"/><rect x="3" y="14" width="26" height="7" rx="2.5" fill="#1E40AF"/><circle cx="26" cy="17.5" r="2" fill="#22C55E"/><rect x="3" y="23" width="26" height="4" rx="2" fill="#1E40AF"/><circle cx="26" cy="25" r="1.5" fill="#F59E0B"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">VPS Professional</div>
+              <div class="pc-sub">4 vCPU · 8 GB · 160 GB SSD</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="99" data-a="79">99</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Fully managed · 30-day backups · Monitoring</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">OS Management</span><span class="pc-feat">24/7 Monitoring</span><span class="pc-feat">fail2ban</span><span class="pc-feat">SSL Setup</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Order Now</a>
+        </div>
+
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#ECFDF5;">
+              <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="5" stroke="#0F766E" stroke-width="2.5"/><path d="M16 2L17.8 6.2L22.4 5L22.4 9L26.6 11.2L24 15.4L26.6 19.6L22.4 21.8L22.4 25.8L17.8 24.6L16 28.8L14.2 24.6L9.6 25.8L9.6 21.8L5.4 19.6L8 15.4L5.4 11.2L9.6 9L9.6 5L14.2 6.2Z" stroke="#0F766E" stroke-width="1.8" fill="none"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">IT Infrastructure</div>
+              <div class="pc-sub">One-time Setup Project</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="499" data-a="399">499</span><span class="pc-per">/project</span></div>
+          <div class="pc-cap">Network design + hardware + documentation</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">AD/DNS/DHCP</span><span class="pc-feat">Server Rack</span><span class="pc-feat">Cabling</span><span class="pc-feat">Docs Handover</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Quote</a>
+        </div>
+
+        <div class="pc dark">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:rgba(255,255,255,0.1);">
+              <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="5" stroke="rgba(255,255,255,0.7)" stroke-width="2.5"/><path d="M16 2L17.8 6.2L22.4 5L22.4 9L26.6 11.2L24 15.4L26.6 19.6L22.4 21.8L22.4 25.8L17.8 24.6L16 28.8L14.2 24.6L9.6 25.8L9.6 21.8L5.4 19.6L8 15.4L5.4 11.2L9.6 9L9.6 5L14.2 6.2Z" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" fill="none"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Managed IT</div>
+              <div class="pc-sub">Monthly Retainer · 25 devices</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="349" data-a="279">349</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Proactive monitoring · Patch management</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Helpdesk 8h SLA</span><span class="pc-feat">Monthly Report</span><span class="pc-feat">On-site Review</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Contact Sales</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── Network & Security Panel ── -->
+    <div class="pricing-panel" id="cat-net">
+      <div class="price-row">
+
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#FDF4FF;">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M16 3L27 7.5L27 16C27 22.5 22 27.5 16 29C10 27.5 5 22.5 5 16L5 7.5Z" fill="#7C3AED" opacity="0.15" stroke="#7C3AED" stroke-width="2"/><path d="M11 16L14.5 19.5L21 12.5" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">System &amp; Security</div>
+              <div class="pc-sub">Per Server · Min 3 months</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="299" data-a="239">299</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Hardening · Vulnerability assessment · IDS/IPS</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">CIS Benchmarks</span><span class="pc-feat">Patch Automation</span><span class="pc-feat">Monthly Report</span><span class="pc-feat">Incident Response</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
+        </div>
+
+        <div class="pc pop">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#FEF2F2;">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M16 29C9 22 7 15 11.5 8C13.5 14 16 12 16 12C16 12 18.5 14 20.5 8C25 15 23 22 16 29Z" fill="#EF4444"/><path d="M16 29C12.5 24 11.5 19.5 13.5 15.5C14.5 18 16 17 16 17C16 17 17.5 18 18.5 15.5C20.5 19.5 19.5 24 16 29Z" fill="#FCA5A5"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Firewall Management</div>
+              <div class="pc-sub">Fortinet · pfSense · Palo Alto</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="249" data-a="199">249</span><span class="pc-per">/mo</span></div>
+          <div class="pc-cap">Deploy + manage + 24/7 alert monitoring</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">VPN Setup</span><span class="pc-feat">Geo-blocking</span><span class="pc-feat">Rule Audit</span><span class="pc-feat">Threat Feeds</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Started</a>
+        </div>
+
+        <div class="pc">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:#ECFDF5;">
+              <svg viewBox="0 0 32 32" fill="none"><rect x="3" y="12" width="26" height="9" rx="3" fill="#059669"/><circle cx="8" cy="16.5" r="2" fill="white"/><circle cx="14" cy="16.5" r="2" fill="white"/><circle cx="20" cy="16.5" r="2" fill="white"/><circle cx="26" cy="16.5" r="2" fill="white"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Routers &amp; Switches</div>
+              <div class="pc-sub">Installation Project</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="499" data-a="399">499</span><span class="pc-per">/project</span></div>
+          <div class="pc-cap">Cisco / Ubiquiti / MikroTik · VLAN + QoS</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">SD-WAN</span><span class="pc-feat">VoIP QoS</span><span class="pc-feat">Multi-WAN</span><span class="pc-feat">Full Docs</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Get Quote</a>
+        </div>
+
+        <div class="pc dark">
+          <div class="pc-head">
+            <div class="pc-icon" style="background:rgba(8,145,178,0.2);">
+              <svg viewBox="0 0 32 32" fill="none"><path d="M4 22Q16 4 28 22" stroke="#67E8F9" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M8 25Q16 11 24 25" stroke="#67E8F9" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="16" cy="29.5" r="2" fill="#67E8F9"/></svg>
+            </div>
+            <div class="pc-title">
+              <div class="pc-name">Passive Network</div>
+              <div class="pc-sub">Structured Cabling Project</div>
+            </div>
+          </div>
+          <div class="pc-price"><span class="pc-curr">$</span><span class="pc-amt" data-m="299" data-a="239">299</span><span class="pc-per">/project</span></div>
+          <div class="pc-cap">Cat6/6A cabling · Fiber · Patch panels</div>
+          <div class="pc-div"></div>
+          <div class="pc-feats">
+            <span class="pc-feat">Fiber Termination</span><span class="pc-feat">Server Room</span><span class="pc-feat">Labelling</span>
+          </div>
+          <a href="mailto:info@voipstars.com" class="pc-btn">Contact Sales</a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footnote -->
+    <div class="pricing-footnote reveal">
+      💡 Starting rates in USD. Final pricing depends on scope &amp; scale. &nbsp;·&nbsp;
+      <a href="mailto:info@voipstars.com">info@voipstars.com</a> &nbsp;·&nbsp;
+      <a href="tel:+923183159409">+92 318 315 9409</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process" class="section section-border">
+  <div class="container">
+    <p class="eyebrow reveal" style="justify-content:center">How It Works</p>
+    <h2 class="h2 reveal delay-1" style="text-align:center">From First Call to <em>Go-Live</em><br>in Four Clear Steps</h2>
+
+    <div class="process-grid">
+      <div class="step-card reveal">
+        <div class="step-icon">
+          🔍
+          <span class="step-num">1</span>
+        </div>
+        <h4>Discovery</h4>
+        <p>We audit your current setup, map out your goals, and identify gaps in your infrastructure.</p>
+      </div>
+      <div class="step-card reveal delay-1">
+        <div class="step-icon">
+          📐
+          <span class="step-num">2</span>
+        </div>
+        <h4>Architecture</h4>
+        <p>Our engineers produce a tailored solution design with full documentation and a clear cost breakdown.</p>
+      </div>
+      <div class="step-card reveal delay-2">
+        <div class="step-icon">
+          🚀
+          <span class="step-num">3</span>
+        </div>
+        <h4>Deployment</h4>
+        <p>Seamless implementation with minimal disruption — we handle migration, config, and testing.</p>
+      </div>
+      <div class="step-card reveal delay-3">
+        <div class="step-icon">
+          🛠️
+          <span class="step-num">4</span>
+        </div>
+        <h4>Manage &amp; Optimize</h4>
+        <p>Ongoing monitoring, support, and continuous tuning so your systems improve over time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-eyebrow reveal">Ready to get started</div>
+    <h2 class="cta-h2 reveal delay-1">Let's Build <em>Something</em><br>Exceptional Together</h2>
+    <p class="cta-sub reveal delay-2">Whether you need one VoIP line or a complete infrastructure overhaul — we're ready to scope it out, free of charge.</p>
+    <div class="cta-buttons reveal delay-3">
+      <a href="mailto:info@voipstars.com" class="btn-white">📩 &nbsp;info@voipstars.com</a>
+      <a href="tel:+923183159409" class="btn-ghost-white">📞 &nbsp;+92 318 315 9409</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a href="#" class="footer-logo">
+          <div class="footer-logo-mark">VS</div>
+          <span class="footer-logo-text">VoIP <span>Stars</span></span>
+        </a>
+        <p class="footer-tagline">Enterprise IT Services &amp; VoIP solutions for businesses that demand reliability, performance, and expert support.</p>
+
+        <!-- Contact info -->
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1.5rem;">
+          <a href="mailto:info@voipstars.com" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:rgba(255,255,255,0.6);font-size:0.85rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">
+            <span style="width:30px;height:30px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="rgba(255,255,255,0.6)" stroke-width="2"/><path d="M2 7l10 7 10-7" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            info@voipstars.com
+          </a>
+          <a href="tel:+923183159409" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:rgba(255,255,255,0.6);font-size:0.85rem;transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.6)'">
+            <span style="width:30px;height:30px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" fill="rgba(255,255,255,0.6)"/></svg>
+            </span>
+            +92 318 315 9409
+          </a>
+        </div>
+
+        <div class="footer-socials">
+          <a href="#" class="social-btn">𝕏</a>
+          <a href="#" class="social-btn">in</a>
+          <a href="#" class="social-btn">f</a>
+          <a href="#" class="social-btn">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>VoIP Services</h5>
+        <ul>
+          <li><a href="#">Asterisk PBX</a></li>
+          <li><a href="#">Dialpad</a></li>
+          <li><a href="#">3CX</a></li>
+          <li><a href="#">RingCentral</a></li>
+          <li><a href="#">Zoom Phone</a></li>
+          <li><a href="#">MS Teams Voice</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>IT Services</h5>
+        <ul>
+          <li><a href="#">VPS Hosting</a></li>
+          <li><a href="#">IT Infrastructure</a></li>
+          <li><a href="#">System &amp; Security</a></li>
+          <li><a href="#">Passive Network</a></li>
+          <li><a href="#">Firewalls</a></li>
+          <li><a href="#">Routers &amp; Switches</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact Us</h5>
+        <ul>
+          <li><a href="mailto:info@voipstars.com">info@voipstars.com</a></li>
+          <li><a href="tel:+923183159409">+92 318 315 9409</a></li>
+          <li style="margin-top:0.5rem;"><a href="#">About Us</a></li>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 VoIP Stars. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* NAV */
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('elevated', window.scrollY > 20);
+});
+
+/* REVEAL */
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+/* COUNT-UP */
+function countUp(el, target, suffix) {
+  const dur = 1600, start = Date.now();
+  const tick = () => {
+    const p = Math.min((Date.now() - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(ease * target) + (suffix || '');
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+const countObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-target]').forEach(el => {
+        countUp(el, +el.dataset.target, el.dataset.suffix || '+');
+      });
+      countObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.4 });
+document.querySelectorAll('.hero-proof, .stats-panel').forEach(el => countObs.observe(el));
+
+/* PRICING */
+let pricingMode = 'm';
+function setPricing(mode, btn) {
+  pricingMode = mode;
+  document.querySelectorAll('.ptab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pc-amt').forEach(el => {
+    el.textContent = el.dataset[mode];
+  });
+}
+function showCat(cat, btn) {
+  document.querySelectorAll('.pcat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.pricing-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('cat-' + cat).classList.add('active');
+}
+
+/* ═══════════════════════════════════════════
+   VOIP TELECOM ANIMATED CANVAS BACKGROUND
+═══════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('voip-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+    rebuildScene();
+  }
+
+  /* ── Palette ── */
+  const C = {
+    blue:   [59,  111, 234],
+    cyan:   [8,   145, 178],
+    green:  [5,   150, 105],
+    purple: [124, 58,  237],
+    orange: [245, 158, 11],
+  };
+  const ALL_C = Object.values(C);
+  function rgb(c, a=1) { return `rgba(${c[0]},${c[1]},${c[2]},${a})`; }
+  function rndC() { return ALL_C[Math.floor(Math.random()*ALL_C.length)]; }
+
+  /* ════════════════════════════════════
+     1. NETWORK NODES (phones/PBX/towers)
+  ════════════════════════════════════ */
+  let nodes = [];
+  const NODE_ICONS = {
+    phone:  (ctx,r)=>{ ctx.font=`${r*1.1}px serif`; ctx.fillText('☎',0,r*0.35); },
+    pbx:    (ctx,r)=>{ ctx.font=`bold ${r*0.9}px sans-serif`; ctx.fillText('PBX',0,r*0.35); },
+    server: (ctx,r)=>{ const s=r*0.55; ctx.fillRect(-s,-s*1.2,s*2,s*0.7); ctx.fillRect(-s,0,s*2,s*0.7); },
+    tower:  (ctx,r)=>{ ctx.beginPath(); ctx.moveTo(0,-r*1.1); ctx.lineTo(r*0.5,r*0.5); ctx.lineTo(-r*0.5,r*0.5); ctx.closePath(); ctx.fill(); },
+    switch: (ctx,r)=>{ for(let i=-1;i<=1;i++){ctx.fillRect(i*r*0.7-1,-r*0.5,2,r);} },
+    voip:   (ctx,r)=>{ ctx.font=`bold ${r*0.7}px sans-serif`; ctx.fillText('VoIP',0,r*0.35); },
+  };
+  const ICON_KEYS = Object.keys(NODE_ICONS);
+
+  function mkNode() {
+    const col = rndC();
+    return {
+      x: 60 + Math.random() * (canvas.width  - 120),
+      y: 60 + Math.random() * (canvas.height - 120),
+      vx: (Math.random()-0.5)*0.35,
+      vy: (Math.random()-0.5)*0.35,
+      r:  5 + Math.random()*5,
+      col, type: ICON_KEYS[Math.floor(Math.random()*ICON_KEYS.length)],
+      pulse: Math.random()*Math.PI*2, ps: 0.018+Math.random()*0.025,
+      active: Math.random()>0.3,
+      callRing: 0, // incremented when "ringing"
+    };
+  }
+
+  function rebuildScene() {
+    const count = Math.max(14, Math.min(28, Math.floor(canvas.width/60)));
+    nodes = Array.from({length:count}, mkNode);
+  }
+
+  /* ════════════════════════════════════
+     2. SIGNALS (data packets)
+  ════════════════════════════════════ */
+  let signals = [];
+  function mkSignal(a, b) {
+    return {
+      ax:a.x, ay:a.y, bx:b.x, by:b.y,
+      t:0, spd:0.003+Math.random()*0.007,
+      col: rndC(), sz:2.5+Math.random()*2.5,
+      trail:[], destCol:b.col, destX:b.x, destY:b.y,
+      arc: (Math.random()-0.5)*80, // curved path
+    };
+  }
+
+  /* ════════════════════════════════════
+     3. CALL ARCS (big curved call connections)
+  ════════════════════════════════════ */
+  let callArcs = [];
+  function mkCallArc(a, b) {
+    const col = a.col;
+    return {
+      ax:a.x, ay:a.y, bx:b.x, by:b.y,
+      col, progress:0, spd:0.004+Math.random()*0.004,
+      alpha:0.5, decay:false,
+      nodeA:a, nodeB:b,
+    };
+  }
+
+  /* ════════════════════════════════════
+     4. RIPPLES (call-connect rings)
+  ════════════════════════════════════ */
+  let ripples = [];
+  function mkRipple(x, y, col, big=false) {
+    for(let i=0;i<(big?3:2);i++){
+      ripples.push({
+        x, y, r: big?8:4,
+        maxR: (big?70:45)+Math.random()*20,
+        alpha:0.5, col,
+        spd:0.5+Math.random()*0.5,
+        delay:i*250,
+        born:Date.now(),
+      });
+    }
+  }
+
+  /* ════════════════════════════════════
+     5. WAVEFORMS (audio waves)
+  ════════════════════════════════════ */
+  let waveforms = [];
+  function mkWaveforms() {
+    waveforms = [];
+    for(let i=0;i<6;i++){
+      waveforms.push({
+        x: 80+Math.random()*(canvas.width-160),
+        y: 40+Math.random()*(canvas.height-80),
+        phase:Math.random()*Math.PI*2, ps:0.035+Math.random()*0.03,
+        amp:6+Math.random()*16, freq:0.035+Math.random()*0.04,
+        len:70+Math.random()*80,
+        col:rndC(), alpha:0.18+Math.random()*0.15,
+        bars: Math.random()>0.5, // bar-style or wave-style
+        barCount:7+Math.floor(Math.random()*6),
+      });
+    }
+  }
+
+  /* ════════════════════════════════════
+     6. FLOATING PROTOCOL TAGS
+  ════════════════════════════════════ */
+  const TAGS = ['SIP','RTP','TCP','UDP','SRTP','TLS','WebRTC','H.323','IAX2','G.711','OPUS','PBX'];
+  let floatTags = [];
+  function mkFloatTags() {
+    floatTags = TAGS.map((t,i)=>({
+      text:t,
+      x: 60+Math.random()*(canvas.width-120),
+      y: 40+i*(canvas.height/TAGS.length),
+      vy: -(0.1+Math.random()*0.15),
+      alpha: 0.1+Math.random()*0.1,
+      sz: 8+Math.random()*4,
+      col:rndC(),
+    }));
+  }
+
+  /* ════════════════════════════════════
+     7. GRID DOTS (telecom grid backdrop)
+  ════════════════════════════════════ */
+  function drawGrid() {
+    const gap=44, dotR=1;
+    ctx.save();
+    for(let x=0;x<canvas.width;x+=gap){
+      for(let y=0;y<canvas.height;y+=gap){
+        ctx.beginPath();
+        ctx.arc(x,y,dotR,0,Math.PI*2);
+        ctx.fillStyle='rgba(59,111,234,0.08)';
+        ctx.fill();
+      }
+    }
+    ctx.restore();
+  }
+
+  /* ════════════════════════════════════
+     DRAW FUNCTIONS
+  ════════════════════════════════════ */
+  function drawNode(n) {
+    n.pulse += n.ps;
+    const glowR = n.r * (2.2 + Math.sin(n.pulse)*0.4);
+
+    // Glow halo
+    const grd = ctx.createRadialGradient(n.x,n.y,n.r*0.2,n.x,n.y,glowR*2.2);
+    grd.addColorStop(0, rgb(n.col, n.active?0.2:0.08));
+    grd.addColorStop(1, rgb(n.col, 0));
+    ctx.beginPath(); ctx.arc(n.x,n.y,glowR*2.2,0,Math.PI*2);
+    ctx.fillStyle=grd; ctx.fill();
+
+    // Active ring pulse
+    if(n.active){
+      ctx.beginPath(); ctx.arc(n.x,n.y,glowR,0,Math.PI*2);
+      ctx.strokeStyle=rgb(n.col,0.2); ctx.lineWidth=1.5; ctx.stroke();
+    }
+
+    // Core
+    ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    ctx.fillStyle=rgb(n.col, n.active?0.92:0.4);
+    ctx.fill();
+
+    // White border
+    ctx.beginPath(); ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+    ctx.strokeStyle='rgba(255,255,255,0.6)'; ctx.lineWidth=1.2; ctx.stroke();
+
+    // Icon
+    ctx.save();
+    ctx.translate(n.x,n.y);
+    ctx.fillStyle='rgba(255,255,255,0.9)';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.globalAlpha=0.85;
+    NODE_ICONS[n.type](ctx, n.r);
+    ctx.restore();
+  }
+
+  function drawEdge(a, b) {
+    const dx=b.x-a.x, dy=b.y-a.y;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist>250) return false;
+    const alpha=(1-dist/250)*0.14;
+    ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+    ctx.strokeStyle=`rgba(59,111,234,${alpha})`;
+    ctx.lineWidth=0.7; ctx.setLineDash([3,7]); ctx.stroke(); ctx.setLineDash([]);
+    return true;
+  }
+
+  function drawSignal(s) {
+    // Curved bezier path
+    const mx=(s.ax+s.bx)/2 - s.arc, my=(s.ay+s.by)/2 - s.arc;
+    const t=s.t;
+    const x=(1-t)*(1-t)*s.ax + 2*(1-t)*t*mx + t*t*s.bx;
+    const y=(1-t)*(1-t)*s.ay + 2*(1-t)*t*my + t*t*s.by;
+
+    s.trail.push({x,y});
+    if(s.trail.length>16) s.trail.shift();
+
+    // Trail
+    for(let i=0;i<s.trail.length;i++){
+      const a=(i/s.trail.length)*0.55;
+      const r=s.sz*(i/s.trail.length)*0.9;
+      ctx.beginPath(); ctx.arc(s.trail[i].x,s.trail[i].y,r,0,Math.PI*2);
+      ctx.fillStyle=rgb(s.col,a); ctx.fill();
+    }
+    // Head glow
+    const hgrd=ctx.createRadialGradient(x,y,0,x,y,s.sz*2.5);
+    hgrd.addColorStop(0,rgb(s.col,0.9)); hgrd.addColorStop(1,rgb(s.col,0));
+    ctx.beginPath(); ctx.arc(x,y,s.sz*2.5,0,Math.PI*2);
+    ctx.fillStyle=hgrd; ctx.fill();
+    // Head
+    ctx.beginPath(); ctx.arc(x,y,s.sz,0,Math.PI*2);
+    ctx.fillStyle=rgb(s.col,1); ctx.fill();
+
+    s.t+=s.spd;
+    if(s.t>=1){ mkRipple(s.bx,s.by,s.destCol,true); return false; }
+    return true;
+  }
+
+  function drawCallArc(arc) {
+    if(arc.decay){ arc.alpha-=0.008; if(arc.alpha<=0) return false; }
+
+    const {ax,ay,bx,by,col,progress} = arc;
+    const mx=(ax+bx)/2, my=(ay+by)/2 - Math.sqrt((bx-ax)**2+(by-ay)**2)*0.45;
+
+    ctx.beginPath();
+    ctx.moveTo(ax,ay);
+    // Partial quadratic bezier drawn up to `progress`
+    const steps=60;
+    const upto=Math.floor(progress*steps);
+    for(let i=0;i<=upto;i++){
+      const t=i/steps;
+      const x=(1-t)*(1-t)*ax+2*(1-t)*t*mx+t*t*bx;
+      const y=(1-t)*(1-t)*ay+2*(1-t)*t*my+t*t*by;
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle=rgb(col, arc.alpha*0.6);
+    ctx.lineWidth=1.8; ctx.stroke();
+
+    // Moving dot on arc
+    if(!arc.decay){
+      const t2=progress;
+      const px=(1-t2)*(1-t2)*ax+2*(1-t2)*t2*mx+t2*t2*bx;
+      const py=(1-t2)*(1-t2)*ay+2*(1-t2)*t2*my+t2*t2*by;
+      ctx.beginPath(); ctx.arc(px,py,4,0,Math.PI*2);
+      ctx.fillStyle=rgb(col,0.9); ctx.fill();
+    }
+
+    arc.progress+=arc.spd;
+    if(arc.progress>=1){ arc.decay=true; mkRipple(bx,by,col,true); }
+    return true;
+  }
+
+  function drawRipple(r) {
+    if(Date.now()-r.born < r.delay) return true;
+    r.r+=r.spd; r.alpha-=0.013;
+    if(r.alpha<=0||r.r>r.maxR) return false;
+    ctx.beginPath(); ctx.arc(r.x,r.y,r.r,0,Math.PI*2);
+    ctx.strokeStyle=rgb(r.col,r.alpha);
+    ctx.lineWidth=1.5; ctx.stroke();
+    return true;
+  }
+
+  function drawWaveform(w) {
+    w.phase+=w.ps;
+    ctx.save(); ctx.globalAlpha=w.alpha;
+    if(w.bars){
+      // EQ bar style
+      const bw=5, gap=3;
+      const totalW=w.barCount*(bw+gap)-gap;
+      const startX=w.x-totalW/2;
+      for(let i=0;i<w.barCount;i++){
+        const bh=(Math.sin(w.phase+i*w.freq*10)+1)*w.amp*0.8+4;
+        const bx=startX+i*(bw+gap), by=w.y-bh/2;
+        const grad=ctx.createLinearGradient(bx,by,bx,by+bh);
+        grad.addColorStop(0,rgb(w.col,0.8)); grad.addColorStop(1,rgb(w.col,0.15));
+        ctx.fillStyle=grad;
+        ctx.beginPath(); ctx.roundRect(bx,by,bw,bh,2); ctx.fill();
+      }
+    } else {
+      // Sine wave
+      ctx.beginPath();
+      for(let i=0;i<=60;i++){
+        const px=w.x-w.len/2+(i/60)*w.len;
+        const py=w.y+Math.sin(i*w.freq*Math.PI*2+w.phase)*w.amp;
+        i===0?ctx.moveTo(px,py):ctx.lineTo(px,py);
+      }
+      ctx.strokeStyle=rgb(w.col,0.7);
+      ctx.lineWidth=1.8; ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  function drawFloatTag(ft) {
+    ft.y+=ft.vy;
+    if(ft.y<-20){ ft.y=canvas.height+10; ft.x=60+Math.random()*(canvas.width-120); }
+    ctx.save();
+    ctx.font=`700 ${ft.sz}px 'Plus Jakarta Sans',monospace`;
+    ctx.fillStyle=rgb(ft.col,ft.alpha);
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(ft.text, ft.x, ft.y);
+    ctx.restore();
+  }
+
+  /* ════════════════════════════════════
+     MAIN LOOP
+  ════════════════════════════════════ */
+  let frame=0;
+  function tick() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    frame++;
+
+    drawGrid();
+
+    // Move nodes
+    for(const n of nodes){
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<-20) n.x=canvas.width+20;
+      if(n.x>canvas.width+20) n.x=-20;
+      if(n.y<-20) n.y=canvas.height+20;
+      if(n.y>canvas.height+20) n.y=-20;
+    }
+
+    // Edges
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const connected=drawEdge(nodes[i],nodes[j]);
+        // Spawn signals on connected edges
+        if(connected && frame % 80 === (i*7+j*3)%80 && signals.length<30){
+          signals.push(mkSignal(nodes[i], nodes[j]));
+        }
+      }
+    }
+
+    // Spawn call arcs occasionally
+    if(frame%200===0 && callArcs.length<8){
+      const a=nodes[Math.floor(Math.random()*nodes.length)];
+      const b=nodes[Math.floor(Math.random()*nodes.length)];
+      if(a!==b) callArcs.push(mkCallArc(a,b));
+    }
+
+    // Draw call arcs
+    callArcs = callArcs.filter(a=>drawCallArc(a));
+
+    // Waveforms
+    for(const w of waveforms) drawWaveform(w);
+
+    // Float tags
+    for(const ft of floatTags) drawFloatTag(ft);
+
+    // Ripples
+    ripples = ripples.filter(r=>drawRipple(r));
+
+    // Signals
+    signals = signals.filter(s=>drawSignal(s));
+
+    // Nodes on top
+    for(const n of nodes) drawNode(n);
+
+    requestAnimationFrame(tick);
+  }
+
+  // Init
+  rebuildScene();
+  mkWaveforms();
+  mkFloatTags();
+  window.addEventListener('resize', ()=>{
+    resize();
+    mkWaveforms();
+    mkFloatTags();
+  });
+  resize();
+
+  // Seed initial ripples
+  setTimeout(()=>{
+    for(let i=0;i<6;i++){
+      setTimeout(()=>{
+        const n=nodes[Math.floor(Math.random()*nodes.length)];
+        mkRipple(n.x,n.y,n.col,i%2===0);
+      },i*400);
+    }
+  },500);
+
+  tick();
+})();
+</script>
+</body>
+</html>
