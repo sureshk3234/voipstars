@@ -1630,8 +1630,132 @@ h1.hero-h1 em {
 .dpill:hover { background:rgba(26,86,219,0.2); border-color:rgba(26,86,219,0.4); color:#fff; transform:translateY(-2px); }
 @media(max-width:768px){ .device-stage{height:280px;} .device-monitor,.device-tablet{display:none;} .device-phone{margin:0 auto;} }
 @media(max-width:480px){ .device-stage{height:240px;} }
+/* ══════════════════════════════════════════
+   FOUNDER SECTION
+══════════════════════════════════════════ */
+.founder-layout {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+/* Photo */
+.founder-photo-wrap {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.founder-photo-ring {
+  width: 340px; height: 340px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(26,86,219,0.4), rgba(8,145,178,0.2));
+  padding: 4px;
+  animation: founderRingSpin 8s linear infinite;
+}
+@keyframes founderRingSpin {
+  0%   { box-shadow: 0 0 0 0 rgba(26,86,219,0.3), 0 0 40px rgba(26,86,219,0.15); }
+  50%  { box-shadow: 0 0 30px 8px rgba(26,86,219,0.4), 0 0 60px rgba(8,145,178,0.2); }
+  100% { box-shadow: 0 0 0 0 rgba(26,86,219,0.3), 0 0 40px rgba(26,86,219,0.15); }
+}
+.founder-photo-ring2 {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  background: var(--ink2);
+  padding: 6px;
+  overflow: hidden;
+}
+.founder-photo {
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  filter: brightness(1.02) contrast(1.02);
+}
+
+/* Floating badges */
+.founder-badge {
+  position: absolute;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 10px;
+  bottom: 20px; left: -10px;
+  animation: founderBadgeFloat 4s ease-in-out infinite;
+}
+.founder-badge2 {
+  bottom: auto; top: 20px; left: auto; right: -10px;
+  animation-delay: -2s;
+}
+@keyframes founderBadgeFloat {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+.fb-icon {
+  width: 34px; height: 34px;
+  background: rgba(26,86,219,0.25);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.fb-num {
+  font-size: 0.95rem; font-weight: 800; color: #fff;
+  letter-spacing: -0.02em; line-height: 1;
+}
+.fb-lbl { font-size: 0.68rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+/* Cert pills */
+.founder-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; font-weight: 600;
+  padding: 5px 12px; border-radius: 100px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75);
+  transition: all 0.2s;
+}
+.founder-pill:hover {
+  background: rgba(26,86,219,0.2);
+  border-color: rgba(26,86,219,0.4);
+  color: #fff;
+}
+
+/* Stats */
+.founder-stats {
+  display: flex; align-items: center; gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  flex-wrap: wrap;
+}
+.founder-stat { text-align: center; }
+.fst-num {
+  font-size: 1.6rem; font-weight: 800;
+  color: #fff; letter-spacing: -0.03em;
+  line-height: 1;
+}
+.fst-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.45); margin-top: 4px; }
+.founder-stat-div {
+  width: 1px; height: 36px;
+  background: rgba(255,255,255,0.12);
+}
+
+/* Responsive */
+@media(max-width:1024px) {
+  .founder-layout { grid-template-columns: 1fr; gap: 3rem; }
+  .founder-photo-wrap { justify-content: center; }
+}
+@media(max-width:768px) {
+  .founder-photo-ring { width: 260px; height: 260px; }
+  .founder-badge { display: none; }
+  .founder-stats { gap: 1rem; justify-content: center; }
+  .founder-stat-div { display: none; }
+}
 </style>
-<body>
 <div id="scroll-progress"></div>
 
 <!-- NAV -->
@@ -3022,6 +3146,108 @@ h1.hero-h1 em {
         </div>
         <h4>Manage &amp; Optimize</h4>
         <p>Ongoing monitoring, support, and continuous tuning so your systems improve over time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section id="founder" style="padding:100px 0;background:var(--ink);position:relative;overflow:hidden;">
+
+  <!-- Background texture -->
+  <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(59,111,234,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(59,111,234,0.05) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;"></div>
+  <div style="position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(26,86,219,0.18) 0%,transparent 70%);pointer-events:none;border-radius:50%;"></div>
+  <div style="position:absolute;bottom:-100px;left:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(8,145,178,0.1) 0%,transparent 70%);pointer-events:none;border-radius:50%;"></div>
+
+  <div class="container" style="position:relative;z-index:2;">
+    <div class="founder-layout">
+
+      <!-- Photo -->
+      <div class="founder-photo-wrap reveal-left">
+        <div class="founder-photo-ring">
+          <div class="founder-photo-ring2">
+            <img src="founder.png" alt="Suresh — Founder, VoIP Stars" class="founder-photo"/>
+          </div>
+        </div>
+        <!-- Experience badge -->
+        <div class="founder-badge">
+          <div class="fb-icon">⭐</div>
+          <div>
+            <div class="fb-num">3+</div>
+            <div class="fb-lbl">Years Experience</div>
+          </div>
+        </div>
+        <!-- Cert badge -->
+        <div class="founder-badge founder-badge2">
+          <div class="fb-icon">🏅</div>
+          <div>
+            <div class="fb-num">3CX</div>
+            <div class="fb-lbl">Advanced Certified</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="founder-content reveal-right">
+
+        <p class="eyebrow" style="color:#93C5FD;justify-content:flex-start;">Meet the Founder</p>
+
+        <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-0.03em;color:#fff;line-height:1.1;margin-bottom:0.5rem;">
+          Suresh Kumar
+        </h2>
+        <p style="font-family:'Instrument Serif',serif;font-style:italic;font-size:1.1rem;color:#93C5FD;margin-bottom:1.75rem;">
+          Founder & Lead VoIP Engineer, VoIP Stars
+        </p>
+
+        <p style="font-size:1rem;color:rgba(255,255,255,0.7);line-height:1.8;margin-bottom:1.25rem;">
+          With over <strong style="color:#fff;">3 years of hands-on experience</strong> in VoIP and Unified Communications engineering, Suresh founded VoIP Stars with a single mission: to make enterprise-grade communication infrastructure accessible to every business — regardless of size or budget.
+        </p>
+
+        <p style="font-size:1rem;color:rgba(255,255,255,0.7);line-height:1.8;margin-bottom:1.25rem;">
+          Based in <strong style="color:#fff;">Karachi, Pakistan</strong> and serving clients across the region, Suresh has personally designed and deployed VoIP systems for businesses ranging from 10-seat startups to multi-site enterprises with hundreds of extensions. His expertise spans <strong style="color:#fff;">Asterisk PBX, 3CX, RingCentral, Zoom Phone, and Microsoft Teams Voice</strong> — as well as the full IT infrastructure stack that powers them.
+        </p>
+
+        <p style="font-size:1rem;color:rgba(255,255,255,0.7);line-height:1.8;margin-bottom:2rem;">
+          A graduate of <strong style="color:#fff;">Dawood University (BE, Computer Systems Engineering)</strong>, Suresh holds active certifications in <strong style="color:#fff;">3CX Advanced, Sangoma SBC Essentials, and Asterisk Essentials</strong>. He believes great VoIP isn't just about clear calls — it's about uptime, security, and a system that grows with your business.
+        </p>
+
+        <!-- Cert pills -->
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:2rem;">
+          <span class="founder-pill">🎓 BE Computer Systems Engineering</span>
+          <span class="founder-pill">✅ 3CX Advanced Certified</span>
+          <span class="founder-pill">✅ Sangoma SBC Essentials</span>
+          <span class="founder-pill">✅ Asterisk Essentials</span>
+          <span class="founder-pill">📍 Karachi, Pakistan</span>
+        </div>
+
+        <!-- Stats row -->
+        <div class="founder-stats">
+          <div class="founder-stat">
+            <div class="fst-num">500+</div>
+            <div class="fst-lbl">Systems Deployed</div>
+          </div>
+          <div class="founder-stat-div"></div>
+          <div class="founder-stat">
+            <div class="fst-num">3+</div>
+            <div class="fst-lbl">Years in VoIP</div>
+          </div>
+          <div class="founder-stat-div"></div>
+          <div class="founder-stat">
+            <div class="fst-num">99.9%</div>
+            <div class="fst-lbl">Uptime Delivered</div>
+          </div>
+        </div>
+
+        <!-- Contact row -->
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;">
+          <a href="mailto:info@voipstars.com" style="display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;padding:0.75rem 1.5rem;border-radius:10px;font-size:0.9rem;font-weight:700;text-decoration:none;transition:background 0.2s;" onmouseover="this.style.background='#3B6FEA'" onmouseout="this.style.background='var(--blue)'">
+            ✉️ &nbsp;info@voipstars.com
+          </a>
+          <a href="tel:+923183159409" style="display:inline-flex;align-items:center;gap:8px;border:1.5px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.85);padding:0.75rem 1.5rem;border-radius:10px;font-size:0.9rem;font-weight:600;text-decoration:none;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.5)';this.style.color='#fff'" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)';this.style.color='rgba(255,255,255,0.85)'">
+            📞 &nbsp;+92 318 315 9409
+          </a>
+        </div>
+
       </div>
     </div>
   </div>
