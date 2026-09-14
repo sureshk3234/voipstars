@@ -49,13 +49,37 @@ body {
 /* ─── NAV ─── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  height: 68px;
-  background: rgba(244,246,251,0.92);
+  height: 72px;
+  background: rgba(11,15,26,0.96);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   transition: box-shadow 0.3s;
 }
-nav.elevated { box-shadow: 0 4px 24px rgba(11,15,26,0.07); }
+nav.elevated { box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+.nav-menu a {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.875rem; font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-menu a:hover { color: #fff; }
+.nav-menu a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0;
+  width: 0; height: 2px;
+  background: #3B6FEA; border-radius: 2px;
+  transition: width 0.3s cubic-bezier(.22,1,.36,1);
+}
+.nav-menu a:hover::after { width: 100%; }
+.btn-text {
+  font-size: 0.875rem; font-weight: 600; color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-text:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.hamburger span { background: rgba(255,255,255,0.85); }
 .nav-inner {
   max-width: 1200px; margin: 0 auto; padding: 0 48px;
   height: 100%;
@@ -108,20 +132,21 @@ nav.elevated { box-shadow: 0 4px 24px rgba(11,15,26,0.07); }
 .btn-text:hover { background: var(--surface); color: var(--ink); }
 
 .btn-solid {
-  background: var(--ink);
+  background: linear-gradient(135deg, #6D28D9, #1A56DB);
   color: #fff;
   padding: 0.5rem 1.25rem;
   border-radius: 8px;
   font-size: 0.875rem; font-weight: 600;
   text-decoration: none;
-  transition: background 0.2s, transform 0.15s;
+  transition: opacity 0.2s, transform 0.15s;
   display: inline-flex; align-items: center; gap: 6px;
+  box-shadow: 0 2px 12px rgba(109,40,217,0.4);
 }
-.btn-solid:hover { background: var(--ink2); transform: translateY(-1px); }
+.btn-solid:hover { opacity: 0.9; transform: translateY(-1px); }
 
 /* ─── HERO ─── */
 #hero {
-  padding: 148px 0 100px;
+  padding: 154px 0 100px;
   position: relative;
   overflow: hidden;
   background: linear-gradient(160deg, #EBF0FF 0%, #F4F6FB 40%, #EAF4FF 100%);
@@ -1219,32 +1244,32 @@ footer {
 
 .mobile-nav {
   display: none;
-  position: fixed; top: 68px; left: 0; right: 0;
-  background: rgba(240,243,250,0.98);
+  position: fixed; top: 72px; left: 0; right: 0;
+  background: rgba(11,15,26,0.98);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   padding: 1rem 24px 1.5rem;
   z-index: 199;
   flex-direction: column; gap: 0;
-  box-shadow: 0 8px 32px rgba(26,86,219,0.1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
 }
 .mobile-nav.open { display: flex; }
 .mobile-nav a {
   display: block; padding: 0.85rem 0;
-  border-bottom: 1px solid var(--rule);
-  font-size: 0.95rem; font-weight: 600; color: var(--ink);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  font-size: 0.95rem; font-weight: 600; color: rgba(255,255,255,0.75);
   text-decoration: none; transition: color 0.2s;
 }
 .mobile-nav a:last-child { border-bottom: none; }
-.mobile-nav a:hover { color: var(--blue); }
+.mobile-nav a:hover { color: #fff; }
 .mobile-nav .mobile-cta {
   margin-top: 1rem;
-  background: var(--ink); color: #fff;
+  background: var(--blue); color: #fff;
   padding: 0.85rem; border-radius: 10px;
   text-align: center; font-size: 0.9rem; font-weight: 700;
   border-bottom: none;
 }
-.mobile-nav .mobile-cta:hover { background: var(--blue); color: #fff; }
+.mobile-nav .mobile-cta:hover { background: var(--blue-md); color: #fff; }
 
 @media(max-width:768px){
   .hamburger { display: flex; }
@@ -1763,8 +1788,7 @@ h1.hero-h1 em {
 <nav id="nav">
   <div class="nav-inner">
     <a href="#" class="logo">
-      <div class="logo-mark">Vo</div>
-      <span class="logo-text">Vox<span>ara</span></span>
+      <img src="logo.png" alt="Voxara" style="height:42px;width:auto;display:block;filter:none;" />
     </a>
     <ul class="nav-menu">
       <li><a href="#services">Services</a></li>
@@ -3278,8 +3302,7 @@ h1.hero-h1 em {
     <div class="footer-grid">
       <div>
         <a href="#" class="footer-logo">
-          <div class="footer-logo-mark">Vo</div>
-          <span class="footer-logo-text">Vox<span>ara</span></span>
+          <img src="logo.png" alt="Voxara" style="height:48px;width:auto;display:block;" />
         </a>
         <p class="footer-tagline">Enterprise IT Services &amp; VoIP solutions for businesses that demand reliability, performance, and expert support.</p>
 
